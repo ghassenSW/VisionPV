@@ -22,7 +22,7 @@ api_key = os.getenv("MISTRAL_API_KEY")
 if not api_key:
     raise ValueError("MISTRAL_API_KEY is missing from environment variables")
 PVs_FOLDER_PATH = r"C:\Users\ghass\OneDrive\Desktop\PFE\PV dataset\Export PVs\PVs-06-2021"
-
+ 
 # Change this number to select a different PV from the folder 
 pv_num=16
 
