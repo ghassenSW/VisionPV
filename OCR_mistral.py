@@ -154,30 +154,24 @@ def _ocr_full_pdf(pdf_path):
 
 
 def _extract_date_depot_from_stamp_crops(pil_image, page_num):
-    """Run stamp crops on page image, return date_depot. No text needed."""
+    """Run 2 stamp crops (top-right, bottom-right) per page. Stamp is in one of them."""
     w, h = pil_image.size
     split_y = int(h * 0.7)
     stamp_top_right = pil_image.crop((w // 2, 0, w, split_y))
     stamp_bottom_right = pil_image.crop((w // 2, split_y, w, h))
-    top_part = pil_image.crop((0, 0, w, split_y))
-    bottom_part = pil_image.crop((0, split_y, w, h))
 
-    logger.info("Page %d: stamp crops for date_depot extraction", page_num)
+    logger.info("Page %d: 2 stamp crops (top-right, bottom-right)", page_num)
     _, stamp_tr_date = _ocr_single_image(stamp_top_right)
     time.sleep(1.5)
     _, stamp_br_date = _ocr_single_image(stamp_bottom_right)
-    time.sleep(1.5)
-    _, top_date = _ocr_single_image(top_part)
-    time.sleep(1.5)
-    _, bottom_date = _ocr_single_image(bottom_part)
 
     if page_num:
-        logger.info("Page %d STAMP ZONE top-right: date=%r", page_num, stamp_tr_date)
-        logger.info("Page %d STAMP ZONE bottom-right: date=%r", page_num, stamp_br_date)
+        logger.info("Page %d STAMP top-right: date=%r", page_num, stamp_tr_date)
+        logger.info("Page %d STAMP bottom-right: date=%r", page_num, stamp_br_date)
 
-    date_depot = stamp_tr_date or stamp_br_date or top_date or bottom_date
+    date_depot = stamp_tr_date or stamp_br_date
     if page_num and date_depot:
-        src = "top-right" if stamp_tr_date else "bottom-right" if stamp_br_date else "top" if top_date else "bottom"
+        src = "top-right" if stamp_tr_date else "bottom-right"
         logger.info("Page %d: date_depot=%r from %s", page_num, date_depot, src)
     return date_depot
 
