@@ -188,9 +188,8 @@ def process_pv(ocr_text, pdf_path):
         date_depot = ""
     
     # 2. Quota Safety Gap
-    if ref_ftusa or date_depot:
-        logger.info("Pause finale de synchronisation API (15s)...")
-        time.sleep(15)
+    # REMOVED: time.sleep(15) is unnecessary because Gemini and Mistral APIs have separate quotas!
+    logger.info("Passage direct a l'analyse texte Mistral sans attendre...")
 
     # 3. Process Text with Large 3
     # Inject Vision results into the Text prompt

@@ -54,9 +54,11 @@ def is_page_relevant(pil_image):
 @log_timing
 def ocr_page_mistral(pil_image):
     img_byte_arr = io.BytesIO()
-    pil_image.save(img_byte_arr, format='PNG')
+    # OPTIMIZATION: Saving as JPEG instead of PNG massively reduces payload size
+    # and drastically speeds up the network upload to Mistral without losing text quality.
+    pil_image.save(img_byte_arr, format='JPEG', quality=85)
     encoded_string = base64.b64encode(img_byte_arr.getvalue()).decode('utf-8')
-    data_url = f"data:image/png;base64,{encoded_string}"
+    data_url = f"data:image/jpeg;base64,{encoded_string}"
     
     response = client.ocr.process(
         model="mistral-ocr-latest",
@@ -67,7 +69,9 @@ def ocr_page_mistral(pil_image):
 @log_timing
 def process_entire_pdf(pdf_path):
     logger.info(f"Loading PDF pages...")
-    pages = convert_from_path(pdf_path, 300) 
+    # OPTIMIZATION: Reduced from 300 to 200 DPI. Mistral is highly capable at 200, 
+    # and this reduces the image memory size by more than 50%, speeding up conversion and upload.
+    pages = convert_from_path(pdf_path, 200) 
     full_document_text = ""
     
     for i, page in enumerate(pages):
