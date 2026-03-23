@@ -4,19 +4,20 @@ import uuid
 import logging
 import time
 import uvicorn
-from fastapi import FastAPI, UploadFile, File, HTTPException
+from fastapi import APIRouter, FastAPI, UploadFile, File, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
 
-# Configure logging
 logging.basicConfig(
     level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s"
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
 logger = logging.getLogger(__name__)
 
-# Import your existing modules
 from OCR_mistral import process_entire_pdf
 from LLM_mistral import process_pv
+from schemas import PVExtractionResponse, HealthResponse
+
+MAX_UPLOAD_SIZE = 50 * 1024 * 1024  # 50 MB
 
 app = FastAPI(
     title="Tunisian PV Extraction API",
@@ -31,59 +32,90 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# API v1 router
+api_v1 = APIRouter(prefix="/api/v1", tags=["v1"])
+
 # Temporary directory for processing
 UPLOAD_DIR = "temp_uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
-@app.post("/vision-pv")
-async def vision_pv_endpoint(file: UploadFile = File(...)):
-    # 1. Validation
-    if not file.filename.lower().endswith(".pdf"):
-        raise HTTPException(status_code=400, detail="Seuls les fichiers PDF sont acceptés.")
 
-    # Generate unique ID and Path
+def validate_pdf_upload(file: UploadFile = File(...)) -> UploadFile:
+    """Validate uploaded file is PDF and within size limits."""
+    if not file.filename or not file.filename.lower().endswith(".pdf"):
+        raise HTTPException(
+            status_code=400,
+            detail="Seuls les fichiers PDF sont acceptés."
+        )
+    return file
+
+
+@api_v1.post("/vision-pv", response_model=PVExtractionResponse)
+async def vision_pv_endpoint(
+    file: UploadFile = Depends(validate_pdf_upload)
+):
     request_id = str(uuid.uuid4())
     temp_pdf_path = os.path.join(UPLOAD_DIR, f"{request_id}_{file.filename}")
 
     try:
         start_total = time.time()
-        
-        # 2. Save uploaded PDF locally
-        t0 = time.time()
+
         logger.info(f"[{request_id}] Saving file: {file.filename}")
+        t0 = time.time()
         with open(temp_pdf_path, "wb") as buffer:
             shutil.copyfileobj(file.file, buffer)
-        logger.info(f"[{request_id}] File saving took {time.time() - t0:.2f} seconds.")
 
-        # 3. PHASE 1: OCR (PDF -> Text)
+        file_size = os.path.getsize(temp_pdf_path)
+        if file_size > MAX_UPLOAD_SIZE:
+            raise HTTPException(
+                status_code=413,
+                detail=f"Fichier trop volumineux ({file_size // (1024*1024)} MB). Limite: {MAX_UPLOAD_SIZE // (1024*1024)} MB."
+            )
+        logger.info(f"[{request_id}] File saved ({file_size // 1024} KB) in {time.time() - t0:.2f}s")
+
         t1 = time.time()
         logger.info(f"[{request_id}] Starting OCR processing...")
-        full_ocr_text = process_entire_pdf(temp_pdf_path)
-        logger.info(f"[{request_id}] OCR processing took {time.time() - t1:.2f} seconds.")
+        full_ocr_text, ref_ftusa, date_depot = process_entire_pdf(temp_pdf_path)
+        logger.info(f"[{request_id}] OCR processing took {time.time() - t1:.2f}s")
 
-        # 4. PHASE 2: LLM EXTRACTION (OCR Text + PDF Path -> JSON)
         t2 = time.time()
-        logger.info(f"[{request_id}] Starting LLM Feature Extraction...")
-        final_json = process_pv(full_ocr_text, temp_pdf_path)
-        logger.info(f"[{request_id}] LLM Extraction took {time.time() - t2:.2f} seconds.")
+        logger.info(f"[{request_id}] Starting LLM extraction...")
+        final_json = process_pv(full_ocr_text, ref_ftusa=ref_ftusa, date_depot=date_depot)
+        logger.info(f"[{request_id}] LLM extraction took {time.time() - t2:.2f}s")
 
-        # 5. Return JSON to Client
-        logger.info(f"[{request_id}] Extraction successful. Total time: {time.time() - start_total:.2f} seconds.")
-        return final_json
+        logger.info(f"[{request_id}] Extraction successful. Total: {time.time() - start_total:.2f}s")
+        return PVExtractionResponse.from_extraction_dict(final_json)
+
+    except HTTPException:
+        raise
 
     except Exception as e:
-        logger.error(f"[{request_id}] Error: {str(e)}")
+        logger.error(f"[{request_id}] Error: {str(e)}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Erreur lors du traitement: {str(e)}")
 
     finally:
-        # 6. Cleanup: Remove the temporary file from the server
         if os.path.exists(temp_pdf_path):
             os.remove(temp_pdf_path)
             logger.info(f"[{request_id}] Temporary file cleaned up.")
 
-@app.get("/")
+
+@api_v1.get("/", response_model=HealthResponse)
 def health_check():
-    return {"status": "running", "message": "PV Extraction API is active"}
+    return HealthResponse()
+
+
+@api_v1.get("/health", response_model=HealthResponse)
+def health_check_explicit():
+    return HealthResponse()
+
+
+app.include_router(api_v1)
+
+# Root redirect for backwards compatibility
+@app.get("/")
+def root_redirect():
+    return {"status": "running", "message": "PV Extraction API is active. Use /api/v1/ for endpoints."}
+
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
