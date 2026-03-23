@@ -101,10 +101,7 @@ def process_entire_pdf(pdf_path):
                 return (i, "")
 
     results = []
-    # OPTIMIZATION: Process up to 2 pages in parallel.
-    # Since you are on a Free Trial API key with Mistral (1 requests/second limit),
-    # setting max_workers too high will just trigger massive 429 Rate Limits and take longer.
-    # 2 workers ensures we don't bombard the API and hit the 429 timeouts constantly.
+    
     with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
         futures = {executor.submit(process_single_page, i, page): i for i, page in enumerate(pages)}
         
