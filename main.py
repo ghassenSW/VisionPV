@@ -1,9 +1,18 @@
 import os
 import shutil
 import uuid
+import logging
+import time
 import uvicorn
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
+logger = logging.getLogger(__name__)
 
 # Import your existing modules
 from OCR_mistral import process_entire_pdf
@@ -37,33 +46,40 @@ async def extract_pv_endpoint(file: UploadFile = File(...)):
     temp_pdf_path = os.path.join(UPLOAD_DIR, f"{request_id}_{file.filename}")
 
     try:
+        start_total = time.time()
+        
         # 2. Save uploaded PDF locally
-        print(f"[{request_id}] Saving file: {file.filename}")
+        t0 = time.time()
+        logger.info(f"[{request_id}] Saving file: {file.filename}")
         with open(temp_pdf_path, "wb") as buffer:
             shutil.copyfileobj(file.file, buffer)
+        logger.info(f"[{request_id}] File saving took {time.time() - t0:.2f} seconds.")
 
         # 3. PHASE 1: OCR (PDF -> Text)
-        print(f"[{request_id}] Starting OCR processing...")
+        t1 = time.time()
+        logger.info(f"[{request_id}] Starting OCR processing...")
         full_ocr_text = process_entire_pdf(temp_pdf_path)
+        logger.info(f"[{request_id}] OCR processing took {time.time() - t1:.2f} seconds.")
 
         # 4. PHASE 2: LLM EXTRACTION (OCR Text + PDF Path -> JSON)
-        # Based on your requirement: process_pv handles Vision and Text logic
-        print(f"[{request_id}] Starting LLM Feature Extraction...")
+        t2 = time.time()
+        logger.info(f"[{request_id}] Starting LLM Feature Extraction...")
         final_json = process_pv(full_ocr_text, temp_pdf_path)
+        logger.info(f"[{request_id}] LLM Extraction took {time.time() - t2:.2f} seconds.")
 
         # 5. Return JSON to Client
-        print(f"[{request_id}] Extraction successful.")
+        logger.info(f"[{request_id}] Extraction successful. Total time: {time.time() - start_total:.2f} seconds.")
         return final_json
 
     except Exception as e:
-        print(f"[{request_id}] Error: {str(e)}")
+        logger.error(f"[{request_id}] Error: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Erreur lors du traitement: {str(e)}")
 
     finally:
         # 6. Cleanup: Remove the temporary file from the server
         if os.path.exists(temp_pdf_path):
             os.remove(temp_pdf_path)
-            print(f"[{request_id}] Temporary file cleaned up.")
+            logger.info(f"[{request_id}] Temporary file cleaned up.")
 
 @app.get("/")
 def health_check():

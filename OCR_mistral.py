@@ -4,11 +4,29 @@ import time
 import io
 import cv2
 import numpy as np
+import logging
+from functools import wraps
 from PIL import Image
 from pdf2image import convert_from_path
 from mistralai import Mistral
 from mistralai.models import SDKError
 from dotenv import load_dotenv
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
+logger = logging.getLogger(__name__)
+
+def log_timing(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        start = time.time()
+        result = func(*args, **kwargs)
+        logger.info(f"{func.__name__} took {time.time() - start:.2f} seconds")
+        return result
+    return wrapper
 
 load_dotenv()
 
@@ -18,6 +36,7 @@ if not api_key:
     raise ValueError("MISTRAL_API_KEY is missing from environment variables")
 client = Mistral(api_key=api_key)
 
+@log_timing
 def is_page_relevant(pil_image):
     open_cv_image = np.array(pil_image.convert('RGB'))
     gray = cv2.cvtColor(open_cv_image, cv2.COLOR_BGR2GRAY)
@@ -32,6 +51,7 @@ def is_page_relevant(pil_image):
     except:
         return True
 
+@log_timing
 def ocr_page_mistral(pil_image):
     img_byte_arr = io.BytesIO()
     pil_image.save(img_byte_arr, format='PNG')
@@ -44,19 +64,20 @@ def ocr_page_mistral(pil_image):
     )
     return response.pages[0].markdown
 
+@log_timing
 def process_entire_pdf(pdf_path):
-    print(f"Loading PDF pages...")
+    logger.info(f"Loading PDF pages...")
     pages = convert_from_path(pdf_path, 300) 
     full_document_text = ""
     
     for i, page in enumerate(pages):
-        print(f"Checking Page {i+1}/{len(pages)}...")
+        logger.info(f"Checking Page {i+1}/{len(pages)}...")
         
         if not is_page_relevant(page):
-            print(f"⏩ Skipping Page {i+1}")
+            logger.info(f"Skipping Page {i+1} (not relevant)")
             continue
             
-        print(f"📝 Calling Mistral for Page {i+1}...")
+        logger.info(f"Calling Mistral OCR for Page {i+1}...")
         
         success = False
         while not success:
@@ -64,20 +85,16 @@ def process_entire_pdf(pdf_path):
                 page_text = ocr_page_mistral(page)
                 full_document_text += f"\n\n--- PAGE {i+1} ---\n\n" + page_text
                 success = True
-                
-                # --- OPTIMIZATION 1: REMOVED FIXED SLEEP ---
-                # Instead of waiting 30s every time, we wait only 1s 
-                # to allow the network buffer to clear.
                 if i < len(pages) - 1:
                     time.sleep(1) 
                     
             except SDKError as e:
                 if e.status_code == 429:
                     # --- OPTIMIZATION 2: DYNAMIC RETRY ---
-                    print("Rate limit hit! Waiting 65s before retry...")
+                    logger.warning("Rate limit hit! Waiting 65s before retry...")
                     time.sleep(65)
                 else:
-                    print(f"Error on page {i+1}: {e}")
+                    logger.error(f"Error on page {i+1}: {e}")
                     break
                     
     return full_document_text
