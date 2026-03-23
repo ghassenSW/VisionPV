@@ -143,7 +143,7 @@ def run_text_step(truncated_text, ref_ftusa, date_depot):
     import os
     
     # Read the prompt from the external text file
-    prompt_path = os.path.join(os.path.dirname(__file__), "mistral_prompt.txt")
+    prompt_path = os.path.join(os.path.dirname(__file__), "prompt.txt")
     with open(prompt_path, "r", encoding="utf-8") as f:
         prompt_template = f.read()
 
@@ -242,5 +242,15 @@ def process_pv(ocr_text, pdf_path):
             # Remove birth date from final output
             if birth_key in data_final:
                 del data_final[birth_key]
+                
+    # Delete the reasoning fields from the final layout so they don't appear in the JSON
+    fields_to_remove = [
+        "_reasoning_contexte", 
+        "_reasoning_causes", 
+        "_reasoning_vehicules", 
+        "_reasoning_victimes"
+    ]
+    for field in fields_to_remove:
+        data_final.pop(field, None)
             
     return data_final

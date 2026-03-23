@@ -35,8 +35,8 @@ app.add_middleware(
 UPLOAD_DIR = "temp_uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
-@app.post("/extract-pv")
-async def extract_pv_endpoint(file: UploadFile = File(...)):
+@app.post("/vision-pv")
+async def vision_pv_endpoint(file: UploadFile = File(...)):
     # 1. Validation
     if not file.filename.lower().endswith(".pdf"):
         raise HTTPException(status_code=400, detail="Seuls les fichiers PDF sont acceptés.")

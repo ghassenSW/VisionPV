@@ -1,9 +1,9 @@
-mistralai
+mistralai==1.12.3
 google-genai
 python-dotenv
 pdf2image
 Pillow
-opencv-python
+opencv-python-headless
 numpy
 fastapi
 uvicorn

@@ -5,6 +5,7 @@ import io
 import cv2
 import numpy as np
 import logging
+import concurrent.futures
 from functools import wraps
 from PIL import Image
 from pdf2image import convert_from_path
@@ -72,33 +73,49 @@ def process_entire_pdf(pdf_path):
     # OPTIMIZATION: Reduced from 300 to 200 DPI. Mistral is highly capable at 200, 
     # and this reduces the image memory size by more than 50%, speeding up conversion and upload.
     pages = convert_from_path(pdf_path, 200) 
-    full_document_text = ""
     
-    for i, page in enumerate(pages):
+    def process_single_page(i, page):
         logger.info(f"Checking Page {i+1}/{len(pages)}...")
         
         if not is_page_relevant(page):
             logger.info(f"Skipping Page {i+1} (not relevant)")
-            continue
+            return (i, "")
             
         logger.info(f"Calling Mistral OCR for Page {i+1}...")
         
-        success = False
-        while not success:
+        while True:
             try:
                 page_text = ocr_page_mistral(page)
-                full_document_text += f"\n\n--- PAGE {i+1} ---\n\n" + page_text
-                success = True
-                if i < len(pages) - 1:
-                    time.sleep(1) 
-                    
+                # Small safety delay strictly to protect free-tier quotas (1 request / second limit)
+                time.sleep(1.5)
+                return (i, f"\n\n--- PAGE {i+1} ---\n\n" + page_text)
             except SDKError as e:
                 if e.status_code == 429:
-                    # --- OPTIMIZATION 2: DYNAMIC RETRY ---
-                    logger.warning("Rate limit hit! Waiting 65s before retry...")
+                    logger.warning(f"Rate limit hit! Waiting 65s before retry for page {i+1}...")
                     time.sleep(65)
                 else:
                     logger.error(f"Error on page {i+1}: {e}")
-                    break
+                    return (i, "")
+            except Exception as ex:
+                logger.error(f"Unexpected error on page {i+1}: {ex}")
+                return (i, "")
+
+    results = []
+    # OPTIMIZATION: Process up to 2 pages in parallel.
+    # Since you are on a Free Trial API key with Mistral (1 requests/second limit),
+    # setting max_workers too high will just trigger massive 429 Rate Limits and take longer.
+    # 2 workers ensures we don't bombard the API and hit the 429 timeouts constantly.
+    with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
+        futures = {executor.submit(process_single_page, i, page): i for i, page in enumerate(pages)}
+        
+        for future in concurrent.futures.as_completed(futures):
+            try:
+                results.append(future.result())
+            except Exception as e:
+                logger.error(f"Error yielding future: {e}")
+
+    # Reassemble pages sequentially so the document remains in the correct order
+    results.sort(key=lambda x: x[0])
+    full_document_text = "".join([res[1] for res in results])
                     
     return full_document_text
