@@ -4,7 +4,6 @@ import base64
 import time
 import io
 import logging
-import concurrent.futures
 from pdf2image import convert_from_path
 from mistralai import Mistral
 from mistralai.models import SDKError
@@ -116,91 +115,102 @@ def _ocr_single_image(pil_image):
     return page.markdown, date_depot
 
 
-@log_timing
-def ocr_page_mistral(pil_image, split_for_stamp=False, page_num=None):
-    """Run OCR on page. If split_for_stamp: split in two halves for better stamp detection."""
-    if not split_for_stamp:
-        text, date = _ocr_single_image(pil_image)
-        return text, "", date
+def _merge_pages_markdown(response):
+    """Combine markdown from all pages of OCR response."""
+    parts = []
+    for i, page in enumerate(response.pages):
+        parts.append(f"\n\n--- PAGE {i + 1} ---\n\n" + (page.markdown or ""))
+    return "".join(parts)
 
-    # Pages 1-2: split 70% top / 30% bottom for text; stamp crops for date
+
+@log_timing
+def _ocr_full_pdf(pdf_path):
+    """OCR entire PDF in one call. Returns full document text."""
+    logger.info("Uploading PDF for full-document OCR...")
+    with open(pdf_path, "rb") as f:
+        content = f.read()
+
+    uploaded = client.files.upload(
+        file={"file_name": os.path.basename(pdf_path), "content": content},
+        purpose="ocr"
+    )
+    file_id = uploaded.id
+    try:
+        signed = client.files.get_signed_url(file_id=file_id)
+        doc_url = signed.url
+        logger.info("Calling Mistral OCR on full PDF...")
+        time.sleep(1)
+        response = client.ocr.process(
+            model="mistral-ocr-latest",
+            document={"type": "document_url", "document_url": doc_url},
+            include_image_base64=False
+        )
+        return _merge_pages_markdown(response)
+    finally:
+        try:
+            client.files.delete(file_id=file_id)
+        except Exception as e:
+            logger.warning(f"Could not delete temp file {file_id}: {e}")
+
+
+def _extract_date_depot_from_stamp_crops(pil_image, page_num):
+    """Run stamp crops on page image, return date_depot. No text needed."""
     w, h = pil_image.size
     split_y = int(h * 0.7)
+    stamp_top_right = pil_image.crop((w // 2, 0, w, split_y))
+    stamp_bottom_right = pil_image.crop((w // 2, split_y, w, h))
     top_part = pil_image.crop((0, 0, w, split_y))
     bottom_part = pil_image.crop((0, split_y, w, h))
 
-    logger.info("Pages 1–2: splitting 70%% top / 30%% bottom for stamp extraction")
-    top_md, top_date = _ocr_single_image(top_part)
-    time.sleep(1.5)
-    bottom_md, bottom_date = _ocr_single_image(bottom_part)
-
-    # Stamp crops: top-right AND bottom-right (stamp location varies by document)
-    stamp_top_right = pil_image.crop((w // 2, 0, w, split_y))  # right half of top 70%
-    stamp_bottom_right = pil_image.crop((w // 2, split_y, w, h))  # right half of bottom 30%
-    time.sleep(1.5)
+    logger.info("Page %d: stamp crops for date_depot extraction", page_num)
     _, stamp_tr_date = _ocr_single_image(stamp_top_right)
     time.sleep(1.5)
     _, stamp_br_date = _ocr_single_image(stamp_bottom_right)
+    time.sleep(1.5)
+    _, top_date = _ocr_single_image(top_part)
+    time.sleep(1.5)
+    _, bottom_date = _ocr_single_image(bottom_part)
+
     if page_num:
         logger.info("Page %d STAMP ZONE top-right: date=%r", page_num, stamp_tr_date)
         logger.info("Page %d STAMP ZONE bottom-right: date=%r", page_num, stamp_br_date)
 
-    merged_md = top_md + "\n\n" + bottom_md
-    # Take date from whichever stamp crop has it (handles both top-right and bottom-right stamps)
     date_depot = stamp_tr_date or stamp_br_date or top_date or bottom_date
     if page_num and date_depot:
-        src = "top-right stamp" if stamp_tr_date else "bottom-right stamp" if stamp_br_date else "top" if top_date else "bottom"
+        src = "top-right" if stamp_tr_date else "bottom-right" if stamp_br_date else "top" if top_date else "bottom"
         logger.info("Page %d: date_depot=%r from %s", page_num, date_depot, src)
-
-    return merged_md, "", date_depot
+    return date_depot
 
 
 @log_timing
 def process_entire_pdf(pdf_path):
-    logger.info(f"Loading PDF pages...")
-    # OPTIMIZATION: Reduced from 300 to 200 DPI. Mistral is highly capable at 200, 
-    # and this reduces the image memory size by more than 50%, speeding up conversion and upload.
-    pages = convert_from_path(pdf_path, 200) 
-    
-    def process_single_page(i, page):
-        logger.info(f"Calling Mistral OCR for Page {i+1}/{len(pages)}...")
-        split_for_stamp = i < 2  # Pages 1 and 2: split in half for better stamp detection
-        while True:
-            try:
-                page_text, ref_ftusa, date_depot = ocr_page_mistral(
-                    page, split_for_stamp=split_for_stamp, page_num=i + 1
-                )
-                time.sleep(1.5)
-                return (i, f"\n\n--- PAGE {i+1} ---\n\n" + page_text, ref_ftusa, date_depot)
-            except SDKError as e:
-                if e.status_code == 429:
-                    logger.warning(f"Rate limit hit! Waiting 65s before retry for page {i+1}...")
-                    time.sleep(65)
-                else:
-                    logger.error(f"Error on page {i+1}: {e}")
-                    return (i, "", "", "")
-            except Exception as ex:
-                logger.error(f"Unexpected error on page {i+1}: {ex}")
-                return (i, "", "", "")
+    """
+    Hybrid: full PDF OCR for text + stamp crops on pages 1-2 for date_depot.
+    """
+    # 1. Full PDF → all OCR text (1 call)
+    full_document_text = _ocr_full_pdf(pdf_path)
 
-    results = []
-    with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
-        futures = {executor.submit(process_single_page, i, page): i for i, page in enumerate(pages)}
-        for future in concurrent.futures.as_completed(futures):
-            try:
-                results.append(future.result())
-            except Exception as e:
-                logger.error(f"Error yielding future: {e}")
-
-    results.sort(key=lambda x: x[0])
-    full_document_text = "".join([res[1] for res in results])
-    ref_ftusa, date_depot = "", ""
-    for r in results:
-        if r[2] or r[3]:
-            ref_ftusa = ref_ftusa or r[2]
-            date_depot = date_depot or r[3]
+    # 2. Pages 1-2: stamp crops for date_depot only
+    logger.info("Loading pages 1-2 for stamp extraction...")
+    pages = convert_from_path(pdf_path, 200, first_page=1, last_page=2)
+    date_depot = ""
+    for i, page in enumerate(pages):
+        page_num = i + 1
+        try:
+            date_depot = _extract_date_depot_from_stamp_crops(page, page_num)
             if date_depot:
                 break
+        except SDKError as e:
+            if e.status_code == 429:
+                logger.warning("Rate limit on page %d, waiting 65s...", page_num)
+                time.sleep(65)
+                date_depot = _extract_date_depot_from_stamp_crops(page, page_num)
+            else:
+                logger.error("Error on page %d: %s", page_num, e)
+        except Exception as ex:
+            logger.error("Error on page %d: %s", page_num, ex)
+        time.sleep(1.5)
+
     if date_depot:
-        logger.info(f"Extracted date_depot from stamp: {date_depot!r}")
-    return full_document_text, ref_ftusa, date_depot
+        logger.info("Extracted date_depot from stamp: %r", date_depot)
+    return full_document_text, "", date_depot

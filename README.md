@@ -59,10 +59,8 @@ curl -X POST "http://localhost:8000/api/v1/vision-pv" \
 
 ## Pipeline
 
-1. **PDF → images** (200 DPI)
-2. **OCR** (Mistral OCR):
-   - Pages 1–2: 4 crops each (top 70%, bottom 30%, stamp top-right, stamp bottom-right)
-   - Pages 3+: full page
+1. **Full PDF OCR** (1 call): Upload PDF → Mistral OCR returns all pages text
+2. **Stamp crops** (pages 1–2 only): 4 crops per page (top 70%, bottom 30%, stamp top-right, stamp bottom-right) for date_depot extraction
 3. **Extraction** (Mistral Large): OCR text + stamp date → structured JSON
 4. **Post-processing**: Age calculation from birth dates, reasoning fields removed
 
