@@ -5,4 +5,6 @@ pdf2image
 Pillow
 opencv-python
 numpy
-pytesseract
+fastapi
+uvicorn
+python-multipart

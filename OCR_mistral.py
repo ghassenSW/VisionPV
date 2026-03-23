@@ -4,7 +4,6 @@ import time
 import io
 import cv2
 import numpy as np
-import pytesseract
 from PIL import Image
 from pdf2image import convert_from_path
 from mistralai import Mistral
@@ -27,14 +26,7 @@ def is_page_relevant(pil_image):
     line_count = 0 if lines is None else len(lines)
 
     try:
-        width, height = pil_image.size
-        top_crop = pil_image.crop((0, 0, width, height // 3))
-        local_text = pytesseract.image_to_string(top_crop, lang='ara')
-        keywords = ["الجمهورية", "وزارة", "محضر", "بحث", "الحرس", "الشرطة"]
-        has_keywords = any(key in local_text for key in keywords)
-        if has_keywords:
-            return True
-        if len(local_text.strip()) < 30 and line_count < 5:
+        if line_count < 5:
             return False
         return True
     except:
@@ -89,16 +81,3 @@ def process_entire_pdf(pdf_path):
                     break
                     
     return full_document_text
-
-if __name__ == "__main__":
-    pdf_path = r"C:\Users\ghass\OneDrive\Desktop\PFE\PV dataset\Export PVs\PVs-06-2021\PV-16_06_2021-77.pdf"
-    if os.path.exists(pdf_path):
-        final_text = process_entire_pdf(pdf_path)
-        output_dir = r"C:\Users\ghass\OneDrive\Desktop\PFE\mistral\ocr_text"
-        os.makedirs(output_dir, exist_ok=True)
-        output_file = os.path.join(output_dir, "test_16.txt")
-        with open(output_file, "w", encoding="utf-8") as f:
-            f.write(final_text)
-        print(f"Success! Full document scanned. Saved to {output_file}")
-    else:
-        print(f"Error: The file {pdf_path} does not exist.")

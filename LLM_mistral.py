@@ -21,15 +21,6 @@ gemini_client = genai.Client(api_key=gemini_api_key)
 api_key = os.getenv("MISTRAL_API_KEY")
 if not api_key:
     raise ValueError("MISTRAL_API_KEY is missing from environment variables")
-PVs_FOLDER_PATH = r"C:\Users\ghass\OneDrive\Desktop\PFE\PV dataset\Export PVs\PVs-06-2021"
- 
-# Change this number to select a different PV from the folder 
-pv_num=16
-
-pv_files = sorted([f for f in os.listdir(PVs_FOLDER_PATH) if f.lower().endswith('.pdf')])
-PDF_PATH = os.path.join(PVs_FOLDER_PATH, pv_files[pv_num-1])
-TEXT_FILE_PATH = fr"C:\Users\ghass\OneDrive\Desktop\PFE\mistral\ocr_text\test_{pv_num}.txt"
-FINAL_OUTPUT_NAME = f"accident_data_complet_{pv_num}.json"
 
 client = Mistral(api_key=api_key)
 
@@ -131,6 +122,12 @@ def run_text_step(truncated_text, ref_ftusa, date_depot):
     prompt = f"""
     Vous êtes un expert en analyse de rapports d'accidents tunisiens (PV). 
     Vous allez recevoir un texte OCR ainsi que deux valeurs déjà extraites par un module de vision de haute précision.
+
+    ### MÉTHODOLOGIE DE RÉFLEXION OBLIGATOIRE (CHAIN-OF-THOUGHT) :
+    Avant d'extraire les valeurs finales, vous devez impérativement utiliser les champs `_reasoning_...` au début du JSON pour :
+    1. Comprendre la dynamique de l'accident (qui fait quoi).
+    2. Citer les passages exacts du texte justifiant vos choix pour les causes, les assurances et les victimes.
+    3. Filtrer explicitement les victimes (exclure formellement les personnes indemnes) avant de les extraire.
 
     ### RÈGLE CRUCIALE : DONNÉES DÉJÀ EXTRAITES (NE PAS CHERCHER) :
     Les deux valeurs suivantes sont DÉFINITIVES. Ne les cherchez pas dans le texte OCR. Vous devez les recopier MOT À MOT dans le JSON final, sans modifier un seul caractère, même si le format paraît inhabituel :
@@ -258,6 +255,11 @@ def run_text_step(truncated_text, ref_ftusa, date_depot):
 
     ### STRUCTURE JSON ATTENDUE :
     {{
+        "_reasoning_contexte": "1. Résumez la dynamique de l'accident : qui conduisait quoi, dans quelle direction, et que s'est-il passé ?",
+        "_reasoning_causes": "2. Citez le passage précis traitant de l'infraction/panne, puis déduisez-en formellement le terme STRICT dans la liste officielle.",
+        "_reasoning_vehicules": "3. Listez les véhicules impliqués. Pour chaque assurance trouvée, appliquez le mapping autorisé (ex: 'AMI' devient 'BNA Assurances').",
+        "_reasoning_victimes": "4. Cherchez la rubrique des dégâts corporels. Comptez les blessés et les morts. Identifiez leur date de naissance ou âge. EXCLUEZ explicitement les personnes indemnes.",
+        
         "Référence FTUSA": "{ref_ftusa}",
         "N° du PV": "Valeur extraite",
         "Date du dépôt du PV": "{date_depot}",
@@ -382,33 +384,3 @@ def process_pv(ocr_text, pdf_path):
                 del data_final[birth_key]
             
     return data_final
-
-def main():
-    if not os.path.exists(PDF_PATH) or not os.path.exists(TEXT_FILE_PATH):
-        print("❌ Erreur : Fichier PDF ou TXT introuvable.")
-        return
-
-    try:
-        # Read text for the current PV
-        with open(TEXT_FILE_PATH, "r", encoding="utf-8") as f:
-            ocr_text = f.read()
-
-        # Run extraction pipeline
-        data_final = process_pv(ocr_text, PDF_PATH)
-
-        # 6. Save in accident_data folder
-        output_dir = r"C:\Users\ghass\OneDrive\Desktop\PFE\mistral\accident_data"
-        os.makedirs(output_dir, exist_ok=True)
-        output_path = os.path.join(output_dir, FINAL_OUTPUT_NAME)
-
-        with open(output_path, "w", encoding="utf-8") as f:
-            json.dump(data_final, f, ensure_ascii=False, indent=4)
-
-        print(f"\n✅ TERMINÉ ! Fichier créé : {output_path}")
-        print(json.dumps(data_final, indent=4, ensure_ascii=False))
-
-    except Exception as e:
-        print(f"❌ Erreur critique : {e}")
-
-if __name__ == "__main__":
-    main()
