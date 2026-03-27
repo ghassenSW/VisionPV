@@ -152,53 +152,42 @@ def _ocr_full_pdf(pdf_path):
         except Exception as e:
             logger.warning(f"Could not delete temp file {file_id}: {e}")
 
+# see the accuracty_barchart_V2.png for this version of code
+def _extract_date_depot_from_page(pil_image, page_num):
+    """Run stamp extraction on the entire full page directly without any cropping."""
+    logger.info("Page %d: analyzing full page for stamp...", page_num)
+    
+    _, page_date = _ocr_single_image(pil_image)
 
-def _extract_date_depot_from_stamp_crops(pil_image, page_num):
-    """Run 2 stamp crops (top-right, bottom-right) per page. Stamp is in one of them."""
-    w, h = pil_image.size
-    split_y = int(h * 0.7)
-    stamp_top_right = pil_image.crop((w // 2, 0, w, split_y))
-    stamp_bottom_right = pil_image.crop((w // 2, split_y, w, h))
-
-    logger.info("Page %d: 2 stamp crops (top-right, bottom-right)", page_num)
-    _, stamp_tr_date = _ocr_single_image(stamp_top_right)
-    time.sleep(1.5)
-    _, stamp_br_date = _ocr_single_image(stamp_bottom_right)
-
-    if page_num:
-        logger.info("Page %d STAMP top-right: date=%r", page_num, stamp_tr_date)
-        logger.info("Page %d STAMP bottom-right: date=%r", page_num, stamp_br_date)
-
-    date_depot = stamp_tr_date or stamp_br_date
-    if page_num and date_depot:
-        src = "top-right" if stamp_tr_date else "bottom-right"
-        logger.info("Page %d: date_depot=%r from %s", page_num, date_depot, src)
-    return date_depot
+    if page_num and page_date:
+        logger.info("Page %d: date_depot=%r found on full page", page_num, page_date)
+        
+    return page_date
 
 
 @log_timing
 def process_entire_pdf(pdf_path):
     """
-    Hybrid: full PDF OCR for text + stamp crops on pages 1-2 for date_depot.
+    Hybrid: full PDF OCR for text + stamp extraction on full pages 1-2 for date_depot.
     """
     # 1. Full PDF → all OCR text (1 call)
     full_document_text = _ocr_full_pdf(pdf_path)
 
-    # 2. Pages 1-2: stamp crops for date_depot only
+    # 2. Pages 1-2: stamp extraction for date_depot only
     logger.info("Loading pages 1-2 for stamp extraction...")
     pages = convert_from_path(pdf_path, 200, first_page=1, last_page=2)
     date_depot = ""
     for i, page in enumerate(pages):
         page_num = i + 1
         try:
-            date_depot = _extract_date_depot_from_stamp_crops(page, page_num)
+            date_depot = _extract_date_depot_from_page(page, page_num)
             if date_depot:
                 break
         except SDKError as e:
             if e.status_code == 429:
                 logger.warning("Rate limit on page %d, waiting 65s...", page_num)
                 time.sleep(65)
-                date_depot = _extract_date_depot_from_stamp_crops(page, page_num)
+                date_depot = _extract_date_depot_from_page(page, page_num)
             else:
                 logger.error("Error on page %d: %s", page_num, e)
         except Exception as ex:
