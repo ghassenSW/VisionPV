@@ -31,7 +31,7 @@ AI-powered API for extracting structured data from scanned Tunisian accident rep
 python main.py
 ```
 
-Server runs at `http://localhost:8000`.
+Server runs at `http://localhost:8080` (see `main.py` / `uvicorn` for the port).
 
 ### Run with Docker
 
@@ -43,14 +43,14 @@ docker compose build && docker compose up
 
 | Method | Path | Description |
 |--------|------|-------------|
-| POST | `/api/v1/vision-pv` | Upload PDF → structured JSON |
-| GET | `/api/v1/` | Health check |
-| GET | `/api/v1/health` | Health check |
+| POST | `/api/v1/pv/pv-extraction` | Upload PDF → structured JSON |
+| GET | `/api/v1/pv/` | Health check (+ `uris` in JSON) |
+| GET | `/api/v1/pv/health` | Health check |
 
 ### Example request
 
 ```bash
-curl -X POST "http://localhost:8000/api/v1/vision-pv" \
+curl -X POST "http://localhost:8080/api/v1/pv/pv-extraction" \
   -F "file=@your_pv.pdf"
 ```
 
@@ -60,14 +60,14 @@ curl -X POST "http://localhost:8000/api/v1/vision-pv" \
 ## Pipeline
 
 1. **Full PDF OCR** (1 call): Upload PDF → Mistral OCR returns all pages text
-2. **Stamp crops** (pages 1–2 only): 4 crops per page (top 70%, bottom 30%, stamp top-right, stamp bottom-right) for date_depot extraction
+2. **Stamp crops** (pages 1–2 only): 2 crops per page (stamp top-right, stamp bottom-right) for date_depot extraction
 3. **Extraction** (Mistral Large): OCR text + stamp date → structured JSON
 4. **Post-processing**: Age calculation from birth dates, reasoning fields removed
 
 ## Project structure
 
 ```
-├── main.py          # FastAPI app, /api/v1/ routes
+├── main.py          # FastAPI app, /api/v1/pv/ routes
 ├── OCR_mistral.py   # PDF → OCR text + date_depot
 ├── LLM_mistral.py   # Text → structured JSON
 ├── prompt.py        # Extraction prompt template

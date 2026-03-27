@@ -1,7 +1,7 @@
 """Pydantic schemas for API request/response validation."""
 
 from typing import Any
-from pydantic import BaseModel, RootModel
+from pydantic import BaseModel, Field, RootModel
 
 
 # --- Response ---
@@ -21,6 +21,15 @@ class PVExtractionResponse(RootModel[dict[str, Any]]):
 
 # --- Health ---
 
+def _default_api_uris() -> dict[str, str]:
+    return {
+        "root": "/api/v1/pv/",
+        "pv_extraction": "/api/v1/pv/pv-extraction",
+        "health": "/api/v1/pv/health",
+    }
+
+
 class HealthResponse(BaseModel):
     status: str = "running"
     message: str = "PV Extraction API is active"
+    uris: dict[str, str] = Field(default_factory=_default_api_uris)

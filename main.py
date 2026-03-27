@@ -33,7 +33,7 @@ app.add_middleware(
 )
 
 # API v1 router
-api_v1 = APIRouter(prefix="/api/v1", tags=["v1"])
+api_v1 = APIRouter(prefix="/api/v1/pv", tags=["v1"])
 
 # Temporary directory for processing
 UPLOAD_DIR = "temp_uploads"
@@ -50,8 +50,8 @@ def validate_pdf_upload(file: UploadFile = File(...)) -> UploadFile:
     return file
 
 
-@api_v1.post("/vision-pv", response_model=PVExtractionResponse)
-async def vision_pv_endpoint(
+@api_v1.post("/pv-extraction", response_model=PVExtractionResponse)
+async def pv_extraction_endpoint(
     file: UploadFile = Depends(validate_pdf_upload)
 ):
     request_id = str(uuid.uuid4())
@@ -114,8 +114,11 @@ app.include_router(api_v1)
 # Root redirect for backwards compatibility
 @app.get("/")
 def root_redirect():
-    return {"status": "running", "message": "PV Extraction API is active. Use /api/v1/ for endpoints."}
+    return {
+        "status": "running",
+        "message": "PV Extraction API is active. Use /api/v1/pv/ for endpoints.",
+    }
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8080)
