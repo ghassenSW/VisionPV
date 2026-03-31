@@ -11,7 +11,18 @@ Avant d'extraire les valeurs finales, vous devez impérativement utiliser les ch
 ### INSTRUCTIONS D'EXTRACTION :
 1. **Référence FTUSA** : {ref_ftusa_instruction}
 2. **Date du dépôt du PV** : {date_depot_instruction}
-3. **N° du PV** : Identifiez le numéro situé dans l'en-tête administratif, au tout début du document (souvent parmi les toutes premières lignes de texte). Cherchez impérativement le numéro qui suit ou accompagne les mots arabes "رقم" ou "عدد" (ex: 21.5.11).
+3. **N° du PV** : Identifiez le numéro d'identification officiel du dossier.
+Localisation : Ce numéro est situé à la fin du bloc administratif initial (juste après la désignation de l'unité, ex: "الفرقة الخامسة").
+Détection par mots-clés : Cherchez le chiffre qui suit immédiatement les mentions "عدد :" (Nombre/Numéro) ou "رقم" (Chiffre/Numéro).
+Logique multi-pages (Format XX/YYY) : Dans les dossiers de plusieurs pages, le numéro est souvent écrit sous la forme "numéro de page / numéro de PV" (ex: 01/214, 02/214, 03/214).
+Règle d'extraction : Si vous rencontrez une barre oblique "/", vous devez extraire uniquement la partie représentant le numéro de PV (le nombre situé après la barre oblique "/") et ignorer le numéro de page situé avant. Si le numéro est simple (sans slash), extrayez-le tel quel.
+Règle d'exclusion CRUCIALE : Ne prenez JAMAIS un numéro écrit seul ou à la main tout en haut de la page (ex: "324"), car il s'agit souvent d'une référence d'archive. Le vrai numéro est celui qui est sémantiquement lié au texte imprimé du libellé administratif du poste.
+Exemples cibles :
+    "عدد : 145"→ "145"
+    "رقم 2021" → "2021"
+    "محضر بحث عدد 205" → "205"
+    "عدد : 01/214" → "214"
+    "عدد : 214" → "214"
 4. **Date du PV** : Cherchez la date située sur la première page, souvent à côté de "بتاريخ" près du numéro de PV.
 5. **Date d'Accident** : Cherchez dans le récit des faits commençant par "جد الحادث jour...". Format JJ/MM/AAAA.
 6. **Causes de sinistre** : (LOGIQUE PAR ÉTAPES) :
@@ -137,7 +148,7 @@ Exemple : "محمد بن شادلي منصوري" doit devenir Prénom: Mohamed,
     "_reasoning_victimes": "4. Cherchez la rubrique des dégâts corporels. Comptez les blessés et les morts. Identifiez leur date de naissance ou âge. EXCLUEZ explicitement les personnes indemnes.",
     
     "Référence FTUSA": "Valeur extraite (chiffres*étoiles) ou ''",
-    "N° du PV": "Valeur extraite",
+    "N° du PV": "Valeur numérique après 'عدد' ou 'رقم' (ex: 145)",
     "Date du dépôt du PV": "JJ/MM/AAAA ou ''",
     "Date d'Accident": "JJ/MM/AAAA",
     "Date du PV": "JJ/MM/AAAA",
