@@ -92,34 +92,35 @@ def run_text_step(truncated_text, ref_ftusa="", date_depot=""):
 @log_timing
 def process_pv(ocr_text, ref_ftusa="", date_depot=""):
     """Processes a single PV via Mistral text extraction and post-processing."""
-    # 1. Extract structured data from OCR text (ref_ftusa/date_depot from bbox annotation if available)
+    # 1. Extract structured data from OCR text
     data_final = run_text_step(ocr_text, ref_ftusa=ref_ftusa, date_depot=date_depot)
+
+    # Make sure 'pv_info' exists to avoid KeyErrors
+    if "pv_info" not in data_final:
+        data_final["pv_info"] = {}
 
     # 2. Override with bbox-extracted values when we have them (vision on stamp image)
     if ref_ftusa:
-        data_final["Référence FTUSA"] = ref_ftusa
+        data_final["pv_info"]["Référence FTUSA"] = ref_ftusa
     if date_depot:
-        data_final["Date du dépôt du PV"] = date_depot
+        data_final["pv_info"]["Date du dépôt du PV"] = date_depot
 
-    ref_ftusa = data_final.get("Référence FTUSA", "")
-    date_depot = data_final.get("Date du dépôt du PV", "")
+    extracted_ref = data_final["pv_info"].get("Référence FTUSA", "")
+    extracted_date = data_final["pv_info"].get("Date du dépôt du PV", "")
 
-    if not ref_ftusa:
+    if not extracted_ref:
         logger.warning("Référence FTUSA est vide")
-    if not date_depot:
+    if not extracted_date:
         logger.warning("Date du dépôt du PV est vide")
 
-    # 3. Calculate ages from birth dates
-    date_du_pv = data_final.get("Date du PV", "").strip()
+    # 3. Calculate ages from birth dates for nested victims list
+    date_du_pv = data_final["pv_info"].get("Date du PV", "").strip()
     logger.info("Calcul des ages des victimes...")
 
-    for i in range(1, 11):
-        age_key = f"Age victime {i}"
-        birth_key = f"Date naissance victime {i}"
-
-        if birth_key in data_final and data_final[birth_key]:
-            birth_date = str(data_final[birth_key]).strip()
-            current_age = data_final.get(age_key, 0)
+    if "victimes" in data_final and isinstance(data_final["victimes"], list):
+        for i, victime in enumerate(data_final["victimes"]):
+            birth_date = str(victime.get("Date naissance", "")).strip()
+            current_age = victime.get("Age", 0)
 
             if current_age == "" or current_age is None:
                 current_age = 0
@@ -128,19 +129,20 @@ def process_pv(ocr_text, ref_ftusa="", date_depot=""):
                 if birth_date and date_du_pv:
                     calculated_age = calculate_age_from_dates(birth_date, date_du_pv)
                     if calculated_age is not None:
-                        data_final[age_key] = calculated_age
-                        logger.info(f"Victime {i}: Age calcule = {calculated_age} ans (ne le {birth_date})")
+                        victime["Age"] = calculated_age
+                        logger.info(f"Victime {i+1}: Age calcule = {calculated_age} ans (ne le {birth_date})")
                     else:
-                        logger.warning(f"Victime {i}: Erreur de calcul d'age (dates invalides)")
+                        logger.warning(f"Victime {i+1}: Erreur de calcul d'age (dates invalides)")
                 else:
-                    logger.info(f"Victime {i}: Donnees manquantes pour calcul d'age")
+                    logger.info(f"Victime {i+1}: Donnees manquantes pour calcul d'age")
             else:
-                logger.info(f"Victime {i}: Age deja present = {current_age} ans")
+                logger.info(f"Victime {i+1}: Age deja present = {current_age} ans")
 
-            del data_final[birth_key]
+            # Remove the 'Date naissance' from the final output
+            victime.pop("Date naissance", None)
 
     # 4. Remove chain-of-thought reasoning fields
-    for field in ("_reasoning_contexte", "_reasoning_causes", "_reasoning_vehicules", "_reasoning_victimes"):
+    for field in ("_reasoning_contexte", "_reasoning_causes", "_reasoning_lieu", "_reasoning_vehicules", "_reasoning_victimes"):
         data_final.pop(field, None)
 
     return data_final

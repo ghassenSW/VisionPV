@@ -8,14 +8,18 @@ from pydantic import BaseModel, Field, RootModel
 
 class PVExtractionResponse(RootModel[dict[str, Any]]):
     """
-    PV extraction response. Excludes Référence FTUSA.
-    Validates and serializes the full extraction dict.
+    PV extraction response. Excludes Référence FTUSA if required.
+    Validates and serializes the full extraction dict in its new nested format.
     """
 
     @classmethod
     def from_extraction_dict(cls, data: dict[str, Any]) -> "PVExtractionResponse":
-        """Build response from process_pv output, excluding Référence FTUSA."""
-        cleaned = {k: v for k, v in data.items() if k != "Référence FTUSA"}
+        """Build response from process_pv output."""
+        cleaned = data.copy()
+        # If you still want to remove it from the new nested structure:
+        if "pv_info" in cleaned and "Référence FTUSA" in cleaned["pv_info"]:
+            del cleaned["pv_info"]["Référence FTUSA"]
+            
         return cls(root=cleaned)
 
 

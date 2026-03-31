@@ -136,13 +136,46 @@ def _ocr_full_pdf(pdf_path):
     )
     file_id = uploaded.id
     try:
-        signed = client.files.get_signed_url(file_id=file_id)
+        logger.info(f"File uploaded (ID: {file_id}). Waiting for it to become ready...")
+        
+        # Wait until the file status is 'ready' before getting signed URL
+        import time
+        max_retries = 15
+        for _ in range(max_retries):
+            try:
+                file_info = client.files.retrieve(file_id=file_id)
+                if getattr(file_info, "status", None) == "ready" or getattr(file_info, "status", None) == "ok":
+                    break
+                elif getattr(file_info, "status", None) == "error":
+                    raise Exception("File upload failed with error status.")
+            except Exception as e:
+                logger.warning(f"Intermittent error checking file status: {e}. Retrying...")
+            time.sleep(2)
+        else:
+            logger.warning("Timeout waiting for file to become ready. Trying anyway...")
+
+        # Get signed URL with a small retry loop in case of 404s or 500s
+        signed = None
+        for _ in range(3):
+            try:
+                signed = client.files.get_signed_url(file_id=file_id)
+                break
+            except Exception as e:
+                logger.warning(f"Error getting signed URL: {e}. Retrying...")
+                time.sleep(2)
+
+        if not signed:
+            raise Exception("Critical Error: Failed to get signed URL from Mistral after uploading.")
+
         doc_url = signed.url
+
         logger.info("Calling Mistral OCR on full PDF...")
-        time.sleep(1)
         response = client.ocr.process(
             model="mistral-ocr-latest",
-            document={"type": "document_url", "document_url": doc_url},
+            document={
+                "type": "document_url",
+                "document_url": doc_url
+            },
             include_image_base64=False
         )
         return _merge_pages_markdown(response)
