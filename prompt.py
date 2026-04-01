@@ -26,54 +26,23 @@ Exemples cibles :
 4. **Date du PV** : Cherchez la date située sur la première page, souvent à côté de "بتاريخ" près du numéro de PV.
 5. **Date d'Accident** : Cherchez dans le récit des faits commençant par "جد الحادث jour...". Format JJ/MM/AAAA.
 6. **Lieu d'Accident** : Après avoir compris le contexte, cherchez le lieu exact de l'accident (ex: nom de la rue, route nationale, point kilométrique, etc.) souvent mentionné juste après la date de l'accident au début du récit des faits ou dans la rubrique "مكان الحادث".
-7. **Causes de sinistre** : (LOGIQUE PAR ÉTAPES) :
-    Étape A : Identifiez d'abord l'infraction ou le problème technique décrit dans le récit du PV (ex: un pneu a éclaté, le conducteur a grillé un feu, etc.).
-    Étape B : Recherchez dans la liste ci-dessous le terme qui correspond le mieux à cette réalité.
-    Étape C : Si aucune cause spécifique ne correspond parfaitement, utilisez par défaut "Ne pas prendre les précautions nécessaires" (si c'est une erreur humaine) ou "Panne mécanique / technique" (si c'est un problème véhicule).
-    * LISTE OBLIGATOIRE (Sélectionnez une seule valeur exacte) :  
-        Marcher sur la chaussé
-        Stationnement innaproprié
-        Dépassement interdit
-        Excès de vitesse
-        Non respect de la priorité
-        Téléphone portable au volant
-        Ne pas prendre les précautions nécessaires
-        Non respect des signalisations de l'agent  de Police de la circulation
-        Non respect de la distance de sécurité
-        Non respect des signalisations
-        Non respect du panneau "céder le passage"
-        Sortie (soudaine) de la route/chaussée /pavé
-        Non mentionné / Non déterminé
-        Panneau "Attention Travaux" non affiché
-        Ne pas signaler "véhicule en panne"
-        Nouveau en conduite
-        Panne technique
-        Ne pas prendre les précautions nécessaires lors du dépassement au rond point "céder le passage"
-        Véhicule non destiné pour le transport des marchandises
-        Non respect des feux de signalisations
-        Interdiction de circuler des poids lourds
-        Conduite sans assurance + sans permis de conduire
-        Acte de violence
-        Chute du / des piéton(s)
-        Panne mécanique / technique
-        Arrêt innaproprié
-        Défaut d'attention
-        accidents en chaine
-        Changer de direction
-        Collision par l'arrière
-        Chutes sur la route
-        Passage à niveau
-        Rouler dans un sens interdit
-        Vitesse réduite
-        Circulation sur trottoir
-        Circulation sur passage piétons
-        Infraction routière
-        Conduire en état d'ébriété
-        Conduire en état de fatigue
-        Rouler sans lumière la nuit
-        Fraude
-        Explosion d'une roue
-        Route glissante
+7. **Causes de sinistre** (CLASSIFICATION UNIQUE ET STRICTE) :
+    - VOTRE MISSION : Vous devez agir comme un classifieur de données. Vous ne devez pas inventer de texte. Votre but est de faire correspondre le récit de l'accident à UNE SEULE ET UNIQUE VALEUR de la liste officielle ci-dessous.
+- LOGIQUE DE DÉCISION (À SUIVRE DANS L'ORDRE) :
+    Analyse des faits : Identifiez le "fait générateur" (l'élément qui a déclenché l'accident) dans le récit.
+    Recherche de correspondance exacte : Parcourez la liste ci-dessous. Si une valeur correspond précisément à l'infraction citée (ex: l'alcool est mentionné -> "Conduire en état d'ébriété"), sélectionnez-la immédiatement.
+    Gestion des causes multiples : Si plusieurs infractions sont citées, choisissez uniquement la cause principale (celle qui a provoqué l'impact).
+    # Application des SOLUTIONS DE SECOURS (FALLBACKS) :
+    # Si vous identifiez une erreur humaine mais qu'aucun terme de la liste n'est assez précis, utilisez obligatoirement : "Ne pas prendre les précautions nécessaires".
+    # Si vous identifiez un problème sur le véhicule (freins, moteur, direction) sans plus de précision, utilisez obligatoirement : "Panne mécanique / technique".
+    # Si le texte est totalement muet sur la cause ou contradictoire, utilisez obligatoirement : "Non mentionné / Non déterminé".
+- RÈGLES CRUCIALES :
+    INTERDICTION ABSOLUE de créer une nouvelle catégorie ou de modifier l'orthographe de la liste.
+    UN SEUL CHOIX : Ne retournez pas plusieurs causes.
+    COPIER-COLLER EXACT : La valeur dans le JSON doit être identique caractère par caractère à la liste ci-dessous.
+- LISTE OFFICIELLE OBLIGATOIRE :
+    Marcher sur la chaussé, Stationnement innaproprié, Dépassement interdit, Excès de vitesse, Non respect de la priorité, Téléphone portable au volant, Ne pas prendre les précautions nécessaires, Non respect des signalisations de l'agent de Police de la circulation, Non respect de la distance de sécurité, Non respect des signalisations, Non respect du panneau "céder le passage", Sortie (soudaine) de la route/chaussée /pavé, Non mentionné / Non déterminé, Panneau "Attention Travaux" non affiché, Ne pas signaler "véhicule en panne", Nouveau en conduite, Panne technique, Ne pas prendre les précautions nécessaires lors du dépassement au rond point "céder le passage", Véhicule non destiné pour le transport des marchandises, Non respect des feux de signalisations, Interdiction de circuler des poids lourds, Conduite sans assurance + sans permis de conduire, Acte de violence, Chute du / des piéton(s), Panne mécanique / technique, Arrêt innaproprié, Défaut d'attention, accidents en chaine, Changer de direction, Collision par l'arrière, Chutes sur la route, Passage à niveau, Rouler dans un sens interdit, Vitesse réduite, Circulation sur trottoir, Circulation sur passage piétons, Infraction routière, Conduire en état d'ébriété, Conduire en état de fatigue, Rouler sans lumière la nuit, Fraude, Explosion d'une roue, Route glissante.
+
 8. **Nom du poste / Délégation** : Identifiez le nom géographique principal (la ville ou région) en analysant les en-têtes administratifs situés en haut à droite de chaque page. Ce nom se trouve généralement à la fin d'une ligne hiérarchique, souvent précédé de la particule "ب" (en/à).
 Exemples de structures à repérer :
 "... لحوادث المرور بمنوبة" → extraire "Manouba".

@@ -172,15 +172,33 @@ def _ocr_full_pdf(pdf_path):
 
 # see the accuracty_barchart_V2.png for this version of code
 def _extract_date_depot_from_page(pil_image, page_num):
-    """Run stamp extraction on the entire full page directly without any cropping."""
-    logger.info("Page %d: analyzing full page for stamp...", page_num)
+    """Run stamp extraction by cropping the page into 4 equal quadrants."""
+    logger.info("Page %d: analyzing 4 quadrants for stamp...", page_num)
     
-    _, page_date = _ocr_single_image(pil_image)
-
-    if page_num and page_date:
-        logger.info("Page %d: date_depot=%r found on full page", page_num, page_date)
+    width, height = pil_image.size
+    mid_x, mid_y = width // 2, height // 2
+    
+    # Define the 4 corners/quadrants
+    quadrants = [
+        ("upper_left", (0, 0, mid_x, mid_y)),
+        ("upper_right", (mid_x, 0, width, mid_y)),
+        ("bottom_left", (0, mid_y, mid_x, height)),
+        ("bottom_right", (mid_x, mid_y, width, height))
+    ]
+    
+    for name, box in quadrants:
+        logger.info("Page %d: checking %s quadrant...", page_num, name)
+        quadrant_img = pil_image.crop(box)
         
-    return page_date
+        _, page_date = _ocr_single_image(quadrant_img)
+        
+        if page_date:
+            logger.info("Page %d: date_depot=%r found in %s quadrant", page_num, page_date, name)
+            return page_date
+            
+        time.sleep(1) # Brief pause to prevent Mistral API rate limiting between quadrant checks
+        
+    return ""
 
 
 @log_timing
