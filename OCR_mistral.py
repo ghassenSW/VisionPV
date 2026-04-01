@@ -136,32 +136,17 @@ def _ocr_full_pdf(pdf_path):
     )
     file_id = uploaded.id
     try:
-        logger.info(f"File uploaded (ID: {file_id}). Waiting for it to become ready...")
+        logger.info(f"File uploaded (ID: {file_id}). Requesting signed URL...")
         
-        # Wait until the file status is 'ready' before getting signed URL
+        # Get signed URL with a polling loop in case of 404s (not ready) or 500s
         import time
-        max_retries = 15
-        for _ in range(max_retries):
-            try:
-                file_info = client.files.retrieve(file_id=file_id)
-                if getattr(file_info, "status", None) == "ready" or getattr(file_info, "status", None) == "ok":
-                    break
-                elif getattr(file_info, "status", None) == "error":
-                    raise Exception("File upload failed with error status.")
-            except Exception as e:
-                logger.warning(f"Intermittent error checking file status: {e}. Retrying...")
-            time.sleep(2)
-        else:
-            logger.warning("Timeout waiting for file to become ready. Trying anyway...")
-
-        # Get signed URL with a small retry loop in case of 404s or 500s
         signed = None
-        for _ in range(3):
+        for _ in range(15):
             try:
                 signed = client.files.get_signed_url(file_id=file_id)
                 break
             except Exception as e:
-                logger.warning(f"Error getting signed URL: {e}. Retrying...")
+                logger.warning(f"File not ready for URL yet ({e}). Retrying in 2s...")
                 time.sleep(2)
 
         if not signed:
