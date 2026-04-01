@@ -178,12 +178,15 @@ def _extract_date_depot_from_page(pil_image, page_num):
     width, height = pil_image.size
     mid_x, mid_y = width // 2, height // 2
     
-    # Define the 4 corners/quadrants
+    # Increase the overlap margin to ensure stamps precisely in the middle aren't sliced
+    ov_x, ov_y = width // 4, height // 4
+    
+    # Define the 4 corners/quadrants with generous overlapping bounds
     quadrants = [
-        ("upper_left", (0, 0, mid_x, mid_y)),
-        ("upper_right", (mid_x, 0, width, mid_y)),
-        ("bottom_left", (0, mid_y, mid_x, height)),
-        ("bottom_right", (mid_x, mid_y, width, height))
+        ("upper_left", (0, 0, mid_x + ov_x, mid_y + ov_y)),
+        ("upper_right", (mid_x - ov_x, 0, width, mid_y + ov_y)),
+        ("bottom_left", (0, mid_y - ov_y, mid_x + ov_x, height)),
+        ("bottom_right", (mid_x - ov_x, mid_y - ov_y, width, height))
     ]
     
     for name, box in quadrants:
