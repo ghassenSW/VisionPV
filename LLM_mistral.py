@@ -1,7 +1,6 @@
 import os
 import json
 import logging
-import csv
 from difflib import SequenceMatcher
 from datetime import datetime
 from dotenv import load_dotenv
@@ -20,42 +19,8 @@ if not api_key:
 
 client = Mistral(api_key=api_key)
 
-# Load regions and headquarters for fuzzy matching
-REGION_LIST = []
-POLICE_HQ_LIST = []
-NAV_GUARD_HQ_LIST = []
-GOUVERNORAT_LIST = []
-try:
-    _csv_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "FTUSA_fields", "region_table.csv")
-    with open(_csv_path, "r", encoding="utf-8") as f:
-        reader = csv.DictReader(f)
-        REGION_LIST = [row["name"].strip() for row in reader if "name" in row]
-except Exception as e:
-    logger.error(f"Error loading region_table.csv: {e}")
-
-try:
-    _csv_path_police = os.path.join(os.path.dirname(os.path.abspath(__file__)), "FTUSA_fields", "police_hq_table.csv")
-    with open(_csv_path_police, "r", encoding="utf-8") as f:
-        reader = csv.DictReader(f)
-        POLICE_HQ_LIST = [row["name"].strip() for row in reader if "name" in row]
-except Exception as e:
-    logger.error(f"Error loading police_hq_table.csv: {e}")
-
-try:
-    _csv_path_guard = os.path.join(os.path.dirname(os.path.abspath(__file__)), "FTUSA_fields", "national_guard_hq_table.csv")
-    with open(_csv_path_guard, "r", encoding="utf-8") as f:
-        reader = csv.DictReader(f)
-        NAV_GUARD_HQ_LIST = [row["name"].strip() for row in reader if "name" in row]
-except Exception as e:
-    logger.error(f"Error loading national_guard_hq_table.csv: {e}")
-
-try:
-    _csv_path_gov = os.path.join(os.path.dirname(os.path.abspath(__file__)), "FTUSA_fields", "governorate_table.csv")
-    with open(_csv_path_gov, "r", encoding="utf-8") as f:
-        reader = csv.DictReader(f)
-        GOUVERNORAT_LIST = [row["name"].strip() for row in reader if "name" in row]
-except Exception as e:
-    logger.error(f"Error loading governorate_table.csv: {e}")
+# Import hardcoded regions and headquarters for fuzzy matching
+from location_lists import REGION_LIST, POLICE_HQ_LIST, NAV_GUARD_HQ_LIST, GOUVERNORAT_LIST
 
 def get_best_fuzzy_match(extracted_str, valid_list, threshold=0.7, log_prefix="match"):
     if not extracted_str or not valid_list:
@@ -63,12 +28,15 @@ def get_best_fuzzy_match(extracted_str, valid_list, threshold=0.7, log_prefix="m
     
     best_match = extracted_str
     highest_ratio = 0.0
+    extracted_lower = str(extracted_str).lower()
     
     for item in valid_list:
-        ratio = SequenceMatcher(None, str(extracted_str).lower(), item.lower()).ratio()
+        ratio = SequenceMatcher(None, extracted_lower, item.lower()).ratio()
         if ratio > highest_ratio:
             highest_ratio = ratio
             best_match = item
+            if ratio == 1.0:  # Perfect match, no need to keep checking
+                break
             
     if highest_ratio >= threshold:
         logger.info(f"Fuzzy {log_prefix}: '{extracted_str}' -> '{best_match}' (score: {highest_ratio:.2f})")
@@ -82,25 +50,21 @@ def get_best_delegation_match(extracted_delegation, threshold=0.7):
 
 
 def calculate_age_from_dates(birth_date, date_du_pv):
-    try:
-        if isinstance(birth_date, str):
-            if '/' in birth_date:
-                birth = datetime.strptime(birth_date, '%d/%m/%Y')
-            elif '-' in birth_date:
-                birth = datetime.strptime(birth_date, '%Y-%m-%d')
-            else:
-                return None
-        else:
-            return None
+    if not isinstance(birth_date, str) or not isinstance(date_du_pv, str):
+        return None
 
-        if isinstance(date_du_pv, str):
-            if '/' in date_du_pv:
-                accident = datetime.strptime(date_du_pv, '%d/%m/%Y')
-            elif '-' in date_du_pv:
-                accident = datetime.strptime(date_du_pv, '%Y-%m-%d')
-            else:
-                return None
-        else:
+    def parse_date(date_str):
+        if '/' in date_str:
+            return datetime.strptime(date_str, '%d/%m/%Y')
+        if '-' in date_str:
+            return datetime.strptime(date_str, '%Y-%m-%d')
+        return None
+
+    try:
+        birth = parse_date(birth_date)
+        accident = parse_date(date_du_pv)
+
+        if not birth or not accident:
             return None
 
         age = accident.year - birth.year
