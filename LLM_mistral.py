@@ -24,6 +24,7 @@ client = Mistral(api_key=api_key)
 REGION_LIST = []
 POLICE_HQ_LIST = []
 NAV_GUARD_HQ_LIST = []
+GOUVERNORAT_LIST = []
 try:
     _csv_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "FTUSA_fields", "region_table.csv")
     with open(_csv_path, "r", encoding="utf-8") as f:
@@ -47,6 +48,14 @@ try:
         NAV_GUARD_HQ_LIST = [row["name"].strip() for row in reader if "name" in row]
 except Exception as e:
     logger.error(f"Error loading national_guard_hq_table.csv: {e}")
+
+try:
+    _csv_path_gov = os.path.join(os.path.dirname(os.path.abspath(__file__)), "FTUSA_fields", "governorate_table.csv")
+    with open(_csv_path_gov, "r", encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        GOUVERNORAT_LIST = [row["name"].strip() for row in reader if "name" in row]
+except Exception as e:
+    logger.error(f"Error loading governorate_table.csv: {e}")
 
 def get_best_fuzzy_match(extracted_str, valid_list, threshold=0.7, log_prefix="match"):
     if not extracted_str or not valid_list:
@@ -185,6 +194,12 @@ def process_pv(ocr_text, ref_ftusa="", date_depot=""):
         else:
             # If the type is empty or incorrect, fallback to delegation logic or leave it as is
             pass
+
+    # Apply fuzzy matching to Gouvernorat
+    extracted_gov = data_final["pv_info"].get("Gouvernorat", "")
+    if extracted_gov:
+        best_gov = get_best_fuzzy_match(extracted_gov, GOUVERNORAT_LIST, threshold=0.7, log_prefix="gouvernorat")
+        data_final["pv_info"]["Gouvernorat"] = best_gov
 
     # 3. Calculate ages from birth dates for nested victims list
     date_du_pv = data_final["pv_info"].get("Date du PV", "").strip()

@@ -25,7 +25,11 @@ Exemples cibles :
     "عدد : 214" → "214"
 4. **Date du PV** : Cherchez la date située sur la première page, souvent à côté de "بتاريخ" près du numéro de PV.
 5. **Date d'Accident** : Cherchez dans le récit des faits commençant par "جد الحادث jour...". Format JJ/MM/AAAA.
-6. **Lieu d'Accident** : Après avoir compris le contexte, cherchez le lieu exact de l'accident (ex: nom de la rue, route nationale, point kilométrique, etc.) souvent mentionné juste après la date de l'accident au début du récit des faits ou dans la rubrique "مكان الحادث".
+6. **Lieu d'Accident / Délégation / Gouvernorat** : 
+    - Lisez le contexte de la zone géographique de l'accident (rue, route nationale, point kilométrique, ou la rubrique "مكان الحادث").
+    - Extrayez la formulation complète et exacte dans le champ "Lieu d'Accident".
+    - À partir de ce lieu, déduisez LOGIQUEMENT la **Délégation** correspondante à cette zone géographique (en français, ex: "Sousse Médina", "La Marsa"...).
+    - À partir de ce lieu ou de cette délégation, déduisez également LOGIQUEMENT le **Gouvernorat** dans lequel se trouve l'accident (en français, ex: "Sousse", "Tunis"...).
 7. **Causes de sinistre** (CLASSIFICATION UNIQUE ET STRICTE) :
     - VOTRE MISSION : Vous devez agir comme un classifieur de données. Vous ne devez pas inventer de texte. Votre but est de faire correspondre le récit de l'accident à UNE SEULE ET UNIQUE VALEUR de la liste officielle ci-dessous.
 - LOGIQUE DE DÉCISION (À SUIVRE DANS L'ORDRE) :
@@ -43,11 +47,11 @@ Exemples cibles :
 - LISTE OFFICIELLE OBLIGATOIRE :
     Marcher sur la chaussé, Stationnement innaproprié, Dépassement interdit, Excès de vitesse, Non respect de la priorité, Téléphone portable au volant, Ne pas prendre les précautions nécessaires, Non respect des signalisations de l'agent de Police de la circulation, Non respect de la distance de sécurité, Non respect des signalisations, Non respect du panneau "céder le passage", Sortie (soudaine) de la route/chaussée /pavé, Non mentionné / Non déterminé, Panneau "Attention Travaux" non affiché, Ne pas signaler "véhicule en panne", Nouveau en conduite, Panne technique, Ne pas prendre les précautions nécessaires lors du dépassement au rond point "céder le passage", Véhicule non destiné pour le transport des marchandises, Non respect des feux de signalisations, Interdiction de circuler des poids lourds, Conduite sans assurance + sans permis de conduire, Acte de violence, Chute du / des piéton(s), Panne mécanique / technique, Arrêt innaproprié, Défaut d'attention, accidents en chaine, Changer de direction, Collision par l'arrière, Chutes sur la route, Passage à niveau, Rouler dans un sens interdit, Vitesse réduite, Circulation sur trottoir, Circulation sur passage piétons, Infraction routière, Conduire en état d'ébriété, Conduire en état de fatigue, Rouler sans lumière la nuit, Fraude, Explosion d'une roue, Route glissante.
 
-8. **Nom du poste / Délégation** : Identifiez le nom géographique principal (la ville ou région) en analysant les en-têtes administratifs situés en haut à droite de chaque page. Ce nom se trouve généralement à la fin d'une ligne hiérarchique, souvent précédé de la particule "ب" (en/à).
+8. **Nom du poste** : Identifiez le nom géographique principal (la ville ou région) en analysant les en-têtes administratifs situés en haut à droite de chaque page. Ce nom se trouve généralement à la fin d'une ligne hiérarchique, souvent précédé de la particule "ب" (en/à).
 Exemples de structures à repérer :
-"... لحوادث المرور بمنوبة" → extraire "Manouba".
-"منطقة الحرس الوطني بقابس" → extraire "Gabès".
-Comme ces en-têtes se répètent sur toutes les pages, utilisez la page la plus nette pour confirmer. Inscrivez ce nom unique dans les deux champs "Nom du poste" et "Délégation".
+"... لحوادث المرور بمنوبة" → extraire "Manouba" comme Nom du poste.
+"منطقة الحرس الوطني بقابس" → extraire "Gabès" comme Nom du poste.
+Comme ces en-têtes se répètent sur toutes les pages, utilisez la page la plus nette pour confirmer. Inscrivez uniquement ce nom dans le champ "Nom du poste".
 9. **Identification de l'Assurance** : Identifiez la compagnie d'assurance et transcrivez-la en utilisant uniquement les noms de la liste officielle ci-dessous.
 RÈGLE CRUCIALE : La compagnie AMI (Assurances Mutuelles Ittihad / أمي) doit impérativement être écrite "BNA Assurances".
 LISTE AUTORISÉE : Vous devez choisir l'un de ces noms exacts :
@@ -128,10 +132,11 @@ Exemple : "محمد بن شادلي منصوري" doit devenir Prénom: Mohamed,
         "Date du dépôt du PV": "JJ/MM/AAAA ou ''",
         "Date d'Accident": "JJ/MM/AAAA",
         "Lieu d'Accident": "Lieu exact (rue, route, etc.)",
+        "Délégation": "Délégation géographique correspondant au lieu de l'accident en français",
+        "Gouvernorat": "Gouvernorat correspondant au lieu de l'accident en français",
         "Date du PV": "JJ/MM/AAAA",
         "Poste de Police / Garde Nationale": "CHOIX : Poste de Police ou Garde Nationale",
-        "Nom du poste": "Nom de la délégation en français",
-        "Délégation": "Même valeur que Nom du poste",
+        "Nom du poste": "Nom extrait depuis l'en-tête (ex: Manouba)",
         "Causes de sinistre": "Résumé ultra-concis (ex: Explosion d'une roue)",
         "Total décédés": 0,
         "Total blessés": 0
