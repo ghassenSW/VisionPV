@@ -1,6 +1,8 @@
 import os
 import json
 import logging
+import csv
+from difflib import SequenceMatcher
 from datetime import datetime
 from dotenv import load_dotenv
 from mistralai import Mistral
@@ -17,6 +19,57 @@ if not api_key:
     raise ValueError("MISTRAL_API_KEY is missing from environment variables")
 
 client = Mistral(api_key=api_key)
+
+# Load regions and headquarters for fuzzy matching
+REGION_LIST = []
+POLICE_HQ_LIST = []
+NAV_GUARD_HQ_LIST = []
+try:
+    _csv_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "FTUSA_fields", "region_table.csv")
+    with open(_csv_path, "r", encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        REGION_LIST = [row["name"].strip() for row in reader if "name" in row]
+except Exception as e:
+    logger.error(f"Error loading region_table.csv: {e}")
+
+try:
+    _csv_path_police = os.path.join(os.path.dirname(os.path.abspath(__file__)), "FTUSA_fields", "police_hq_table.csv")
+    with open(_csv_path_police, "r", encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        POLICE_HQ_LIST = [row["name"].strip() for row in reader if "name" in row]
+except Exception as e:
+    logger.error(f"Error loading police_hq_table.csv: {e}")
+
+try:
+    _csv_path_guard = os.path.join(os.path.dirname(os.path.abspath(__file__)), "FTUSA_fields", "national_guard_hq_table.csv")
+    with open(_csv_path_guard, "r", encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        NAV_GUARD_HQ_LIST = [row["name"].strip() for row in reader if "name" in row]
+except Exception as e:
+    logger.error(f"Error loading national_guard_hq_table.csv: {e}")
+
+def get_best_fuzzy_match(extracted_str, valid_list, threshold=0.7, log_prefix="match"):
+    if not extracted_str or not valid_list:
+        return extracted_str
+    
+    best_match = extracted_str
+    highest_ratio = 0.0
+    
+    for item in valid_list:
+        ratio = SequenceMatcher(None, str(extracted_str).lower(), item.lower()).ratio()
+        if ratio > highest_ratio:
+            highest_ratio = ratio
+            best_match = item
+            
+    if highest_ratio >= threshold:
+        logger.info(f"Fuzzy {log_prefix}: '{extracted_str}' -> '{best_match}' (score: {highest_ratio:.2f})")
+        return best_match
+        
+    logger.info(f"No {log_prefix} fuzzy match found for '{extracted_str}' (best score: {highest_ratio:.2f})")
+    return extracted_str
+
+def get_best_delegation_match(extracted_delegation, threshold=0.7):
+    return get_best_fuzzy_match(extracted_delegation, REGION_LIST, threshold, "delegation")
 
 
 def calculate_age_from_dates(birth_date, date_du_pv):
@@ -112,6 +165,26 @@ def process_pv(ocr_text, ref_ftusa="", date_depot=""):
         logger.warning("Référence FTUSA est vide")
     if not extracted_date:
         logger.warning("Date du dépôt du PV est vide")
+
+    # Apply fuzzy matching to Délégation / Nom du poste
+    extracted_delegation = data_final["pv_info"].get("Délégation", "")
+    if extracted_delegation:
+        best_delegation = get_best_delegation_match(extracted_delegation, threshold=0.7)
+        data_final["pv_info"]["Délégation"] = best_delegation
+
+    extracted_poste_type = data_final["pv_info"].get("Poste de Police / Garde Nationale", "")
+    extracted_nom_poste = data_final["pv_info"].get("Nom du poste", "")
+    
+    if extracted_nom_poste:
+        if extracted_poste_type.lower().strip() == "poste de police":
+            best_nom_poste = get_best_fuzzy_match(extracted_nom_poste, POLICE_HQ_LIST, threshold=0.7, log_prefix="nom_poste_police")
+            data_final["pv_info"]["Nom du poste"] = best_nom_poste
+        elif extracted_poste_type.lower().strip() == "garde nationale":
+            best_nom_poste = get_best_fuzzy_match(extracted_nom_poste, NAV_GUARD_HQ_LIST, threshold=0.7, log_prefix="nom_poste_garde")
+            data_final["pv_info"]["Nom du poste"] = best_nom_poste
+        else:
+            # If the type is empty or incorrect, fallback to delegation logic or leave it as is
+            pass
 
     # 3. Calculate ages from birth dates for nested victims list
     date_du_pv = data_final["pv_info"].get("Date du PV", "").strip()

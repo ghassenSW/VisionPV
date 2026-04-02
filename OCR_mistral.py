@@ -179,8 +179,9 @@ def _extract_date_depot_from_page(pil_image, page_num):
     mid_x, mid_y = width // 2, height // 2
     
     # Increase the overlap margin to ensure stamps precisely in the middle aren't sliced
-    ov_x, ov_y = width // 4, height // 4
-    
+    # ov_x, ov_y = width // 8, height // 8
+    ov_x, ov_y = 0,0
+
     # Define the 4 corners/quadrants with generous overlapping bounds
     quadrants = [
         ("upper_left", (0, 0, mid_x + ov_x, mid_y + ov_y)),

@@ -51,7 +51,7 @@ Comme ces en-têtes se répètent sur toutes les pages, utilisez la page la plus
 9. **Identification de l'Assurance** : Identifiez la compagnie d'assurance et transcrivez-la en utilisant uniquement les noms de la liste officielle ci-dessous.
 RÈGLE CRUCIALE : La compagnie AMI (Assurances Mutuelles Ittihad / أمي) doit impérativement être écrite "BNA Assurances".
 LISTE AUTORISÉE : Vous devez choisir l'un de ces noms exacts :
-Assurance Biat, Astrée, At-Takafulia, BH Assurance, BNA Assurances, BUAT, CARTE, COMAR, El Amana Takaful, GAT, Groupe CTAMA, Inconnue, LLoyd Tunisien, MAE, Maghrébia, Non assuré, Propriété de l'état, STAR, Zitouna Takaful.
+Al Baraka Assurances, Assurance Biat, Assurance étrangère, Assurance militaire, Astrée, At-Takafulia, BH Assurance, BNA Assurances, BUAT, CARTE, COMAR, GAT, Groupe CTAMA, Inconnue, LLoyd Tunisien, MAE, Maghrébia, Non assuré, Propriété de l'état, STAR, Zitouna Takaful.
 LOGIQUE DE MAPPING :
 "بيات" / "BIAT" → Assurance Biat
 "أستري" / "ASTRÉE"  → Astrée
@@ -61,7 +61,7 @@ LOGIQUE DE MAPPING :
 "بوات" / "BUAT" → BUAT
 "كارط" / "CARTE" → CARTE
 "كومار" / "COMAR" → COMAR
-"الأمانة" / "AMANA" → El Amana Takaful
+"البركة" / "BARAKA" → Al Baraka Assurances
 "قات" / "GAT" → GAT
 "كتاما" / "CTAMA" → Groupe CTAMA
 "الليد" / "اللويد" / "LLOYD" → LLoyd Tunisien
@@ -73,6 +73,8 @@ CAS PARTICULIERS :
 Si l'information est absente ou introuvable : Inconnue.
 Si le texte indique "غير مؤمنة" : Non assuré.
 Si le véhicule appartient à l'État (ex: plaque rouge, mention "ملك الدولة") : Propriété de l'état.
+Si le véhicule appartient à l'armée / militaire (ex: "جيش" ou "عسكرية") : Assurance militaire.
+Si l'assurance est étrangère / issue d'un autre pays (ex: "أجنبية") : Assurance étrangère.
 
 ### LOGIQUE PRÉCISE POUR LES VICTIMES :
 10. **Sélection des victimes** : Incluez UNIQUEMENT les personnes ayant subi des dommages corporels. Vérifiez la section "الأضرار البدنية" et les compteurs "عدد الجرحى" / "عدد القتلى". Si une personne est indemne, ne l'ajoutez pas au JSON.
@@ -95,7 +97,7 @@ Exemple : "محمد بن شادلي منصوري" doit devenir Prénom: Mohamed,
     - **Sans emploi** : Chômeur, Femme au foyer, Étudiant, Élève, Retraité, Enfant.
     - **Profession libérale** : Secteur privé, Ouvrier, Journalier, Commerçant, Agriculteur, Chauffeur.
 14. **Type de véhicule (MAPPING)** : Vous devez impérativement faire correspondre le véhicule identifié à l'une des catégories suivantes, et UNIQUEMENT à celles-ci :
-    - Ambulance, Bus, Camion, Location, Louage, Motocyclette (inférieur à 50cm3), Motocyclette (supérieur à 125cm3), Motocyclette légère (50-125 cm³), Métro, Objets impliqués, Remorquage, Remorque et semi remorque, Taxi Individuel, Taxi collectif, Tracteur, Train, Tricycle à moteur, Véhicule administratif, Véhicule de transport rural, Vélo ordinaire, camionnette, voiture.
+    - Louage, Taxi Individuel, Véhicule rapide d’intervention, Motocyclette légère (50-125 cm³), Vélo ordinaire ,Train, Engin de travaux ,Tricycle à moteur ,Motocyclette (supérieur à 125cm3) ,Quadricycles à moteur , Taxi collectif ,Véhicule administratif ,Auto Ecole , Location ,Véhicule de transport rural ,Véhicule touristique privé (transport  personnel) ,Taxi Touristique, Trottinette ,Autobus public (transport régional) - transport personnel, Motocyclette (supérieur à 50cm3) - Administratif, Autobus TCV  (transport en commun de voyageurs), Ambulance, Objets impliqués, Bus, Motocyclette (inférieur à 50cm3), voiture, Métro, véhicules Electrique, Remorquage, Remorque et semi remorque, Tracteur, véhicules, Camion
 15. **Poste de Police / Garde Nationale** : Identifiez l'organisme ayant rédigé le PV en analysant l'en-tête (en haut à droite). Vous devez effectuer un choix binaire obligatoire :
     - Si vous voyez les mots "الحرس الوطني", inscrivez exclusivement : "Garde Nationale".
     - Si vous voyez les mots "الأمن الوطني" ou "الشرطة", inscrivez exclusivement : "Poste de Police".
