@@ -14,15 +14,14 @@ Avant d'extraire les valeurs finales, vous devez impérativement utiliser les ch
 3. **N° du PV** : Identifiez le numéro d'identification officiel du dossier.
 Localisation : Ce numéro est situé à la fin du bloc administratif initial (juste après la désignation de l'unité, ex: "الفرقة الخامسة").
 Détection par mots-clés : Cherchez le chiffre qui suit immédiatement les mentions "عدد :" (Nombre/Numéro) ou "رقم" (Chiffre/Numéro).
-Logique multi-pages (Format XX/YYY) : Dans les dossiers de plusieurs pages, le numéro est souvent écrit sous la forme "numéro de page / numéro de PV" (ex: 01/214, 02/214, 03/214).
-Règle d'extraction : Si vous rencontrez une barre oblique "/", vous devez extraire uniquement la partie représentant le numéro de PV (le nombre situé après la barre oblique "/") et ignorer le numéro de page situé avant. Si le numéro est simple (sans slash), extrayez-le tel quel.
-Règle d'exclusion CRUCIALE : Ne prenez JAMAIS un numéro écrit seul ou à la main tout en haut de la page (ex: "324"), car il s'agit souvent d'une référence d'archive. Le vrai numéro est celui qui est sémantiquement lié au texte imprimé du libellé administratif du poste.
+Logique d'extraction STRICTE : 
+    - Vous devez extraire le numéro EXACTEMENT tel qu'il est écrit dans le document original, sans AUCUNE modification, conversion ou reformatage (conservez la ponctuation exacte : points, tirets, slashs, etc.). Ne tentez jamais d'adapter la valeur à un format de date.
+    - Cas particulier (Numéro de page) : Dans les dossiers de plusieurs pages, si le numéro est écrit sous la forme "page / PV" (ex: 01/214, 02/214), ignorez le numéro de page et gardez uniquement le numéro du PV ("214").
+Règle d'exclusion CRUCIALE : Ne prenez jamais un numéro écrit seul ou à la main tout en haut de la page (ex: "324") car c'est souvent une référence d'archive.
 Exemples cibles :
-    "عدد : 145"→ "145"
-    "رقم 2021" → "2021"
+    "عدد : 145" → "145"
     "محضر بحث عدد 205" → "205"
-    "عدد : 01/214" → "214"
-    "عدد : 214" → "214"
+    "عدد : 01/214" → "214" (ici 01 est le n° de page)
 4. **Date du PV** : Cherchez la date située sur la première page, souvent à côté de "بتاريخ" près du numéro de PV.
 5. **Date d'Accident** : Cherchez dans le récit des faits commençant par "جد الحادث jour...". Format JJ/MM/AAAA.
 6. **Lieu d'Accident / Délégation / Gouvernorat** : 
@@ -69,7 +68,7 @@ LOGIQUE DE MAPPING :
 "قات" / "GAT" → GAT
 "كتاما" / "CTAMA" → Groupe CTAMA
 "الليد" / "اللويد" / "LLOYD" → LLoyd Tunisien
-"م أ إ" / "MAE" → MAE
+"ت ت ت" / "تعاونية التأمين للتعليم" / "MAE" → MAE
 "المغاربية" / "MAGHRÉBIA" → Maghrébia
 "ستار" / "STAR" → STAR
 "الزيتونة" / "ZITOUNA" → Zitouna Takaful

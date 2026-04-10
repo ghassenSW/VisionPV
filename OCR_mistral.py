@@ -179,7 +179,7 @@ def _extract_date_depot_from_page(pil_image, page_num):
     mid_x, mid_y = width // 2, height // 2
     
     # Increase the overlap margin to ensure stamps precisely in the middle aren't sliced
-    # ov_x, ov_y = width // 8, height // 8
+    # ov_x, ov_y = width // 10, height // 10
     ov_x, ov_y = 0,0
 
     # Define the 4 corners/quadrants with generous overlapping bounds
@@ -200,7 +200,7 @@ def _extract_date_depot_from_page(pil_image, page_num):
             logger.info("Page %d: date_depot=%r found in %s quadrant", page_num, page_date, name)
             return page_date
             
-        time.sleep(1) # Brief pause to prevent Mistral API rate limiting between quadrant checks
+        # Removed sleep as you are now on a paid tier
         
     return ""
 
@@ -225,14 +225,14 @@ def process_entire_pdf(pdf_path):
                 break
         except SDKError as e:
             if e.status_code == 429:
-                logger.warning("Rate limit on page %d, waiting 65s...", page_num)
-                time.sleep(65)
+                logger.warning("Rate limit on page %d, waiting 2s...", page_num)
+                time.sleep(2)
                 date_depot = _extract_date_depot_from_page(page, page_num)
             else:
                 logger.error("Error on page %d: %s", page_num, e)
         except Exception as ex:
             logger.error("Error on page %d: %s", page_num, ex)
-        time.sleep(1.5)
+        # Removed delay between pages
 
     if date_depot:
         logger.info("Extracted date_depot from stamp: %r", date_depot)

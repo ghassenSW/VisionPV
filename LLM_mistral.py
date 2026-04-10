@@ -20,7 +20,7 @@ if not api_key:
 client = Mistral(api_key=api_key)
 
 # Import hardcoded regions and headquarters for fuzzy matching
-from location_lists import REGION_LIST, POLICE_HQ_LIST, NAV_GUARD_HQ_LIST, GOUVERNORAT_LIST
+from FTUSA_names import REGION_LIST, POLICE_HQ_LIST, NAV_GUARD_HQ_LIST, GOUVERNORAT_LIST
 
 def get_best_fuzzy_match(extracted_str, valid_list, threshold=0.7, log_prefix="match"):
     if not extracted_str or not valid_list:
