@@ -26,7 +26,7 @@ Exemples cibles :
 5. **Date d'Accident** : Cherchez dans le récit des faits commençant par "جد الحادث jour...". Format JJ/MM/AAAA.
 6. **Lieu d'Accident / Délégation / Gouvernorat** : 
     - Lisez le contexte de la zone géographique de l'accident (rue, route nationale, point kilométrique, ou la rubrique "مكان الحادث").
-    - Extrayez la formulation complète et exacte dans le champ "Lieu d'Accident".
+    - Extrayez la formulation complète dans le champ "Lieu d'Accident" et traduisez-la TOUJOURS en français (ex: "Route Nationale 1", "Rue Habib Bourguiba"). L'arabe est strictement interdit.
     - À partir de ce lieu, déduisez LOGIQUEMENT la **Délégation** correspondante à cette zone géographique (en français, ex: "Sousse Médina", "La Marsa"...).
     - À partir de ce lieu ou de cette délégation, déduisez également LOGIQUEMENT le **Gouvernorat** dans lequel se trouve l'accident (en français, ex: "Sousse", "Tunis"...).
 7. **Causes de sinistre** (CLASSIFICATION UNIQUE ET STRICTE) :
@@ -35,6 +35,7 @@ Exemples cibles :
     Analyse des faits : Identifiez le "fait générateur" (l'élément qui a déclenché l'accident) dans le récit.
     Recherche de correspondance exacte : Parcourez la liste ci-dessous. Si une valeur correspond précisément à l'infraction citée (ex: l'alcool est mentionné -> "Conduire en état d'ébriété"), sélectionnez-la immédiatement.
     Gestion des causes multiples : Si plusieurs infractions sont citées, choisissez uniquement la cause principale (celle qui a provoqué l'impact).
+    Priorité sur "عدم اخذ الاحتياطات" : Si le texte arabe cite "عدم اخذ الاحتياطات اللازمة إثناء السياقة" combiné à une autre action spécifique (ex: "و المداهمة من الخلف"), IGNOREZ "Ne pas prendre les précautions nécessaires" et extrayez TOUJOURS la cause la plus précise (dans cet exemple : "Collision par l'arrière").
     # Application des SOLUTIONS DE SECOURS (FALLBACKS) :
     # Si vous identifiez une erreur humaine mais qu'aucun terme de la liste n'est assez précis, utilisez obligatoirement : "Ne pas prendre les précautions nécessaires".
     # Si vous identifiez un problème sur le véhicule (freins, moteur, direction) sans plus de précision, utilisez obligatoirement : "Panne mécanique / technique".
@@ -91,10 +92,14 @@ Si l'assurance est étrangère / issue d'un autre pays (ex: "أجنبية") : As
     - **PRIORITÉ 2 (SEULEMENT SI DATE DE NAISSANCE NON TROUVÉE)** : Si la date de naissance n'est PAS disponible, mais que l'âge est écrit EXPLICITEMENT dans le PV (ex: "34 ans", "عمره 34 سنة"), extrayez-le et mettez-le dans le champ "Age victime X".
     - **IMPORTANT** : Cherchez TOUJOURS la date de naissance en premier. N'extrayez l'âge que si vous ne trouvez absolument pas la date de naissance.
     - Ne tentez PAS de calculer l'âge vous-même. Extrayez uniquement les informations présentes dans le document.
-12. **Séparation des Noms et Prénoms** : Procédez à l'extraction sélective des noms et prénoms selon une logique binaire. Extrayez exclusivement le premier segment de l'identité complète pour le champ 'Prénom' et le dernier segment pour le champ 'Nom'.
-Règle d'exclusion : Ignorez systématiquement les patronymes intermédiaires, le nom du père, ainsi que la particule de filiation 'ben' (بن) ou 'bin'.
+12. **Séparation des Noms et Prénoms** : Procédez à l'extraction sélective des noms et prénoms. Vous devez extraire le prénom complet dans le champ 'Prénom' et le nom de famille dans le champ 'Nom'.
+RÈGLE CRUCIALE POUR LES PRÉNOMS COMPOSÉS : En arabe, de nombreux prénoms sont composés (ex: "محمد علي", "محمد أمين", "فاطمة الزهراء", "سيف الدين"). **Ne séparez jamais un prénom composé !** Le deuxième mot (ex: "علي" ou "أمين") appartient au prénom et ne doit SURTOUT PAS être extrait comme nom de famille. 
+Règle d'exclusion : Ignorez systématiquement les noms intermédiaires (le nom du père) et la particule de filiation "بن" ou "bin".
 Format de sortie : Effectuez une transcription phonétique impérativement en français (alphabet latin). L'usage de caractères arabes dans le JSON final est strictement interdit.
-Exemple : "محمد بن شادلي منصوري" doit devenir Prénom: Mohamed, Nom: Mansouri.
+Exemples : 
+- "محمد بن شادلي منصوري" → Prénom: Mohamed, Nom: Mansouri.
+- "محمد علي الطرابلسي" → Prénom: Mohamed Ali, Nom: Trabelsi.
+- "سيف الدين بن محمود" → Prénom: Seifeddine, Nom: Mahmoud.
 13. **Catégorisation de l'État Social (MAPPING)** : 
     - **Fonctionnaire Public** : État/Secteur public (Enseignant, Policier, Militaire).
     - **Sans emploi** : Chômeur, Femme au foyer, Étudiant, Élève, Retraité, Enfant.
@@ -112,7 +117,7 @@ Exemple : "محمد بن شادلي منصوري" doit devenir Prénom: Mohamed,
 - Langue : FRANÇAIS exclusivement.
 - Causes de sinistre : Très bref (5-7 mots). Uniquement le fait générateur.
 - Compagnie : Nom commercial en MAJUSCULES. **Si le texte mentionne "AMI" ou "أمي", écrivez "BNA Assurance"**. Si "غير مؤمنة" -> "Non assuré".
-- N° Imm : MAJUSCULES. Supprimez impérativement TOUS les espaces. Si immatriculation arabe (ex: "رقم 6327 تونس 18"), convertissez en "NumTUSerie" (ex: "6327TU18"). Pour les numéros de châssis, donnez la chaîne brute sans espaces ni étoiles. Si absent -> "".
+- N° Imm : MAJUSCULES. Supprimez impérativement TOUS les espaces. TRÈS IMPORTANT : N'insérez les lettres "TU" au milieu du numéro QUE SI le mot "تونس" ou les lettres "TU" sont explicitement écrits entre les chiffres dans le texte source (ex: "رقم 6327 تونس 18" -> "6327TU18"). Si la plaque est formatée sans mention explicite du pays (ex: "11-152274" ou "152274-11"), conservez sa ponctuation d'origine sans inventer ni forcer l'ajout du "TU" (ex: "11-152274" doit rester "11-152274"). Cas particulier "Régime Suspensif" : Si vous trouvez "ن ت" avec un numéro, convertissez-le en "RS" suivi du numéro sans espace (ex: "123456 ن ت" -> "RS123456"). Pour les numéros de châssis, donnez la chaîne brute sans espaces ni étoiles. Si absent -> "".
 - Type de véhicule : **CHOIX STRICT** dans la liste définie au point n°14. Ne créez aucune autre catégorie.
 - Etat social : CHOIX STRICT : "Fonctionnaire Public", "Sans emploi" ou "Profession libérale".
 - Victimes : Sexe ("Homme"/"Femme"), Type ("Blessé"/"Décédé"), Catégorie ("Conducteur"/"Piéton"/"Passager").
