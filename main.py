@@ -1,8 +1,8 @@
 import os
-import shutil
 import uuid
 import logging
 import time
+import asyncio
 import uvicorn
 from fastapi import APIRouter, FastAPI, UploadFile, File, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
@@ -41,8 +41,10 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 
 def validate_pdf_upload(file: UploadFile = File(...)) -> UploadFile:
-    """Validate uploaded file is PDF and within size limits."""
-    if not file.filename or not file.filename.lower().endswith(".pdf"):
+    """Validate uploaded file is PDF (extension). Size enforced while streaming."""
+    name = (file.filename or "").strip()
+    base = os.path.basename(name).lower()
+    if not base.endswith(".pdf"):
         raise HTTPException(
             status_code=400,
             detail="Seuls les fichiers PDF sont acceptés."
@@ -55,33 +57,43 @@ async def pv_extraction_endpoint(
     file: UploadFile = Depends(validate_pdf_upload)
 ):
     request_id = str(uuid.uuid4())
-    temp_pdf_path = os.path.join(UPLOAD_DIR, f"{request_id}_{file.filename}")
+    safe_name = os.path.basename((file.filename or "upload").strip()) or "upload.pdf"
+    if not safe_name.lower().endswith(".pdf"):
+        safe_name = f"{safe_name}.pdf"
+    temp_pdf_path = os.path.join(UPLOAD_DIR, f"{request_id}_{safe_name}")
 
     try:
         start_total = time.time()
 
-        logger.info(f"[{request_id}] Saving file: {file.filename}")
+        logger.info(f"[{request_id}] Saving file: {safe_name}")
         t0 = time.time()
+        file_size = 0
+        chunk_size = 1024 * 1024
         with open(temp_pdf_path, "wb") as buffer:
-            shutil.copyfileobj(file.file, buffer)
+            while True:
+                chunk = await file.read(chunk_size)
+                if not chunk:
+                    break
+                file_size += len(chunk)
+                if file_size > MAX_UPLOAD_SIZE:
+                    raise HTTPException(
+                        status_code=413,
+                        detail=f"Fichier trop volumineux. Limite: {MAX_UPLOAD_SIZE // (1024*1024)} MB.",
+                    )
+                buffer.write(chunk)
 
-        file_size = os.path.getsize(temp_pdf_path)
-        if file_size > MAX_UPLOAD_SIZE:
-            raise HTTPException(
-                status_code=413,
-                detail=f"Fichier trop volumineux ({file_size // (1024*1024)} MB). Limite: {MAX_UPLOAD_SIZE // (1024*1024)} MB."
-            )
         logger.info(f"[{request_id}] File saved ({file_size // 1024} KB) in {time.time() - t0:.2f}s")
 
-        t1 = time.time()
-        logger.info(f"[{request_id}] Starting OCR processing...")
-        full_ocr_text, ref_ftusa, date_depot = process_entire_pdf(temp_pdf_path)
-        logger.info(f"[{request_id}] OCR processing took {time.time() - t1:.2f}s")
+        def _run_extraction():
+            full_ocr_text, ref_ftusa, date_depot = process_entire_pdf(temp_pdf_path)
+            return process_pv(
+                full_ocr_text, ref_ftusa=ref_ftusa, date_depot=date_depot
+            )
 
-        t2 = time.time()
-        logger.info(f"[{request_id}] Starting LLM extraction...")
-        final_json = process_pv(full_ocr_text, ref_ftusa=ref_ftusa, date_depot=date_depot)
-        logger.info(f"[{request_id}] LLM extraction took {time.time() - t2:.2f}s")
+        t1 = time.time()
+        logger.info(f"[{request_id}] Starting OCR + LLM processing...")
+        final_json = await asyncio.to_thread(_run_extraction)
+        logger.info(f"[{request_id}] OCR + LLM took {time.time() - t1:.2f}s")
 
         logger.info(f"[{request_id}] Extraction successful. Total: {time.time() - start_total:.2f}s")
         return PVExtractionResponse.from_extraction_dict(final_json)

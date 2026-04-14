@@ -22,6 +22,46 @@ client = Mistral(api_key=api_key)
 # Import hardcoded regions and headquarters for fuzzy matching
 from FTUSA_names import REGION_LIST, POLICE_HQ_LIST, NAV_GUARD_HQ_LIST, GOUVERNORAT_LIST
 
+# Limit LLM input size (chars). Override with PV_MAX_OCR_CHARS.
+_DEFAULT_MAX_OCR_CHARS = 100_000
+# Cap generation length for structured JSON (sufficient for long PVs).
+_LLM_MAX_TOKENS = 12_288
+# Extraction model default: Mistral Small (faster than Large). Override with PV_LLM_MODEL.
+# Docs use versioned ids too, e.g. mistral-small-2506 (Small 3.2), Mistral Small 4 (v26.03).
+# Rolling alias (same pattern as mistral-large-latest): https://docs.mistral.ai/getting-started/models
+_DEFAULT_LLM_MODEL = "mistral-small-latest"
+
+
+def _llm_model_name() -> str:
+    return (os.getenv("PV_LLM_MODEL") or _DEFAULT_LLM_MODEL).strip() or _DEFAULT_LLM_MODEL
+
+
+def _max_ocr_chars():
+    raw = os.getenv("PV_MAX_OCR_CHARS", str(_DEFAULT_MAX_OCR_CHARS))
+    try:
+        return max(10_000, int(raw))
+    except ValueError:
+        return _DEFAULT_MAX_OCR_CHARS
+
+
+def _truncate_ocr_for_llm(text: str) -> str:
+    """Reduce prompt size: keep the beginning (admin + facts) and a tail slice for long OCR."""
+    max_chars = _max_ocr_chars()
+    if not text or len(text) <= max_chars:
+        return text
+    tail_keep = min(15_000, max_chars // 5)
+    head_keep = max_chars - tail_keep - 120
+    if head_keep < 5000:
+        logger.warning("OCR truncated to %d characters (single block)", max_chars)
+        return text[:max_chars]
+    sep = "\n\n[... OCR intermédiaire omis (limite de contexte) ...]\n\n"
+    logger.warning(
+        "OCR truncated from %d to ~%d characters (tête + fin)",
+        len(text),
+        head_keep + tail_keep + len(sep),
+    )
+    return text[:head_keep] + sep + text[-tail_keep:]
+
 def get_best_fuzzy_match(extracted_str, valid_list, threshold=0.7, log_prefix="match"):
     if not extracted_str or not valid_list:
         return extracted_str
@@ -91,19 +131,22 @@ def _date_depot_instruction(date_depot):
 
 @log_timing
 def run_text_step(truncated_text, ref_ftusa="", date_depot=""):
-    """Text extraction using Mistral Large: OCR text -> structured JSON."""
+    """Structured JSON extraction from OCR text (Mistral chat; model from PV_LLM_MODEL)."""
+    truncated_text = _truncate_ocr_for_llm(truncated_text)
+    model = _llm_model_name()
     prompt = PROMPT_TEMPLATE.format(
         ref_ftusa_instruction=_ref_instruction(ref_ftusa),
         date_depot_instruction=_date_depot_instruction(date_depot),
         truncated_text=truncated_text
     )
 
-    logger.info("Appel Mistral Large (Analyse du texte narratif)...")
+    logger.info("Appel Mistral LLM model=%s (extraction structurée)...", model)
     response = client.chat.complete(
-        model="mistral-large-latest",
+        model=model,
         messages=[{"role": "user", "content": prompt}],
         response_format={"type": "json_object"},
-        temperature=0
+        temperature=0,
+        max_tokens=_LLM_MAX_TOKENS,
     )
 
     raw_content = response.choices[0].message.content

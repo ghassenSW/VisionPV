@@ -2,11 +2,8 @@ PROMPT_TEMPLATE = """\
 Vous êtes un expert en analyse de rapports d'accidents tunisiens (PV). 
 Vous allez recevoir un texte OCR extrait d'un document PDF. Votre tâche est d'extraire TOUTES les informations structurées directement depuis ce texte.
 
-### MÉTHODOLOGIE DE RÉFLEXION OBLIGATOIRE (CHAIN-OF-THOUGHT) :
-Avant d'extraire les valeurs finales, vous devez impérativement utiliser les champs `_reasoning_...` au début du JSON pour :
-1. Comprendre la dynamique de l'accident (qui fait quoi).
-2. Citer les passages exacts du texte justifiant vos choix pour les causes, les assurances et les victimes.
-3. Filtrer explicitement les victimes (exclure formellement les personnes indemnes) avant de les extraire.
+### MÉTHODE :
+Raisonnez étape par étape en silence (dynamique de l'accident, causes, assurances, victimes réelles uniquement — excluez les indemnes). **Ne produisez aucun texte de raisonnement dans la sortie.** Le JSON final ne contient que les clés ci-dessous : `pv_info`, `vehicules`, `victimes`.
 
 ### INSTRUCTIONS D'EXTRACTION :
 1. **Référence FTUSA** : {ref_ftusa_instruction}
@@ -124,12 +121,6 @@ Exemples :
 
 ### STRUCTURE JSON ATTENDUE :
 {{{{
-    "_reasoning_contexte": "1. Résumez la dynamique de l'accident : qui conduisait quoi, dans quelle direction, et que s'est-il passé ?",
-    "_reasoning_lieu": "2. Citez le passage décrivant le lieu exact du sinistre (rue, route, point kilométrique, etc.) et déduisez-en son emplacement.",
-    "_reasoning_causes": "3. Citez le passage précis traitant de l'infraction/panne, puis déduisez-en formellement le terme STRICT dans la liste officielle.",
-    "_reasoning_vehicules": "4. Listez les véhicules impliqués. Pour chaque assurance trouvée, appliquez le mapping autorisé (ex: 'AMI' devient 'BNA Assurances').",
-    "_reasoning_victimes": "5. Cherchez la rubrique des dégâts corporels. Comptez les blessés et les morts. Identifiez leur date de naissance ou âge. EXCLUEZ explicitement les personnes indemnes.",
-
 "pv_info": {{
         "Référence FTUSA": "Valeur extraite (chiffres*étoiles) ou ''",
         "N° du PV": "Valeur numérique (ex: 21.5.09)",

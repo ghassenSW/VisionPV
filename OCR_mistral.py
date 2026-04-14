@@ -4,6 +4,7 @@ import base64
 import time
 import io
 import logging
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pdf2image import convert_from_path
 from mistralai import Mistral
 from mistralai.models import SDKError
@@ -96,8 +97,10 @@ def _extract_from_document_annotation(response):
 
 def _ocr_single_image(pil_image):
     """Run OCR + annotations on a single image. Returns (markdown, date_depot)."""
+    # JPEG expects RGB; PDF pages are often CMYK or P mode — avoids encoder failures.
+    img = pil_image if pil_image.mode == "RGB" else pil_image.convert("RGB")
     img_byte_arr = io.BytesIO()
-    pil_image.save(img_byte_arr, format='JPEG', quality=85)
+    img.save(img_byte_arr, format="JPEG", quality=85)
     encoded_string = base64.b64encode(img_byte_arr.getvalue()).decode('utf-8')
     data_url = f"data:image/jpeg;base64,{encoded_string}"
 
@@ -170,50 +173,76 @@ def _ocr_full_pdf(pdf_path):
         except Exception as e:
             logger.warning(f"Could not delete temp file {file_id}: {e}")
 
-# see the accuracty_barchart_V2.png for this version of code
 def _extract_date_depot_from_page(pil_image, page_num):
-    """Run stamp extraction by cropping the page into 4 equal quadrants."""
-    logger.info("Page %d: analyzing 4 quadrants for stamp...", page_num)
-    
+    """Run stamp extraction by cropping the page into 4 equal quadrants (OCR in parallel)."""
+    logger.info("Page %d: analyzing 4 quadrants for stamp (parallel)...", page_num)
+
     width, height = pil_image.size
     mid_x, mid_y = width // 2, height // 2
-    
-    # Increase the overlap margin to ensure stamps precisely in the middle aren't sliced
-    # ov_x, ov_y = width // 10, height // 10
-    ov_x, ov_y = 0,0
+    ov_x, ov_y = 0, 0
 
-    # Define the 4 corners/quadrants with generous overlapping bounds
     quadrants = [
         ("upper_left", (0, 0, mid_x + ov_x, mid_y + ov_y)),
         ("upper_right", (mid_x - ov_x, 0, width, mid_y + ov_y)),
         ("bottom_left", (0, mid_y - ov_y, mid_x + ov_x, height)),
-        ("bottom_right", (mid_x - ov_x, mid_y - ov_y, width, height))
+        ("bottom_right", (mid_x - ov_x, mid_y - ov_y, width, height)),
     ]
-    
-    for name, box in quadrants:
-        logger.info("Page %d: checking %s quadrant...", page_num, name)
-        quadrant_img = pil_image.crop(box)
-        
-        _, page_date = _ocr_single_image(quadrant_img)
-        
+
+    # Crop on the main thread only: concurrent crop() on one Image is not thread-safe
+    # and caused corrupt JPEG / "image file is truncated" under ThreadPoolExecutor.
+    quadrant_images = [(name, pil_image.crop(box).copy()) for name, box in quadrants]
+
+    def ocr_one_quadrant(name_img):
+        name, quadrant_img = name_img
+        for attempt in range(2):
+            try:
+                _, page_date = _ocr_single_image(quadrant_img)
+                return name, (page_date or "").strip()
+            except SDKError as e:
+                if e.status_code == 429 and attempt == 0:
+                    logger.warning(
+                        "Rate limit quadrant %s page %d; retry in 2s", name, page_num
+                    )
+                    time.sleep(2)
+                    continue
+                logger.error("SDKError quadrant %s page %d: %s", name, page_num, e)
+                return name, ""
+            except Exception as ex:
+                logger.error("Error quadrant %s page %d: %s", name, page_num, ex)
+                return name, ""
+        return name, ""
+
+    results = {}
+    with ThreadPoolExecutor(max_workers=4) as pool:
+        futures = [pool.submit(ocr_one_quadrant, qi) for qi in quadrant_images]
+        for fut in as_completed(futures):
+            name, page_date = fut.result()
+            results[name] = page_date
+
+    for name, _ in quadrants:
+        depot = results.get(name, "")
+        logger.info(
+            "Page %d quadrant %s: stamp date_depot extrait = %r",
+            page_num,
+            name,
+            depot if depot else "",
+        )
+
+    for name, _ in quadrants:
+        page_date = results.get(name, "")
         if page_date:
-            logger.info("Page %d: date_depot=%r found in %s quadrant", page_num, page_date, name)
+            logger.info(
+                "Page %d: date_depot retenu = %r (premier quadrant avec valeur : %s)",
+                page_num,
+                page_date,
+                name,
+            )
             return page_date
-            
-        # Removed sleep as you are now on a paid tier
-        
     return ""
 
 
-@log_timing
-def process_entire_pdf(pdf_path):
-    """
-    Hybrid: full PDF OCR for text + stamp extraction on full pages 1-2 for date_depot.
-    """
-    # 1. Full PDF → all OCR text (1 call)
-    full_document_text = _ocr_full_pdf(pdf_path)
-
-    # 2. Pages 1-2: stamp extraction for date_depot only
+def _stamp_date_depot_from_pdf(pdf_path):
+    """Pages 1–2: stamp extraction for date_depot only."""
     logger.info("Loading pages 1-2 for stamp extraction...")
     pages = convert_from_path(pdf_path, 200, first_page=1, last_page=2)
     date_depot = ""
@@ -232,7 +261,20 @@ def process_entire_pdf(pdf_path):
                 logger.error("Error on page %d: %s", page_num, e)
         except Exception as ex:
             logger.error("Error on page %d: %s", page_num, ex)
-        # Removed delay between pages
+    return date_depot
+
+
+@log_timing
+def process_entire_pdf(pdf_path):
+    """
+    Hybrid: full PDF OCR for text + stamp extraction on pages 1–2 for date_depot.
+    Full-document OCR and stamp pipeline run in parallel to reduce wall-clock time.
+    """
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        fut_full = pool.submit(_ocr_full_pdf, pdf_path)
+        fut_stamp = pool.submit(_stamp_date_depot_from_pdf, pdf_path)
+        full_document_text = fut_full.result()
+        date_depot = fut_stamp.result()
 
     if date_depot:
         logger.info("Extracted date_depot from stamp: %r", date_depot)
