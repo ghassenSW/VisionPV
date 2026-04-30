@@ -4,6 +4,7 @@ import base64
 import time
 import io
 import logging
+import concurrent.futures
 from pdf2image import convert_from_path
 from mistralai import Mistral
 from mistralai.models import SDKError
@@ -19,101 +20,6 @@ api_key = os.getenv("MISTRAL_API_KEY")
 if not api_key:
     raise ValueError("MISTRAL_API_KEY is missing from environment variables")
 client = Mistral(api_key=api_key)
-
-# Schema for bbox annotation: each extracted image → date_depot (stamp)
-STAMP_BBOX_SCHEMA = {
-    "type": "json_schema",
-    "json_schema": {
-        "schema": {
-            "properties": {
-                "date_depot": {
-                    "type": "string",
-                    "description": "Date du dépôt JJ/MM/AAAA si ce tampon contient F.T.U.S.A./ARRIVEE. Vide sinon."
-                }
-            },
-            "required": ["date_depot"],
-            "title": "StampAnnotation",
-            "type": "object",
-            "additionalProperties": False
-        },
-        "name": "StampAnnotation",
-        "strict": True
-    }
-}
-
-# Schema for document annotation: date from F.T.U.S.A./ARRIVEE stamp only
-DOCUMENT_ANNOTATION_SCHEMA = {
-    "type": "json_schema",
-    "json_schema": {
-        "schema": {
-            "properties": {
-                "date_depot": {
-                    "type": "string",
-                    "description": "Date du dépôt JJ/MM/AAAA from the rectangular F.T.U.S.A./ARRIVEE stamp ONLY. Empty if no such stamp. Ignore dates from 'رقم' or 'تاريخ' in headers. Format: DD/MM/YYYY."
-                }
-            },
-            "required": ["date_depot"],
-            "title": "StampDateAnnotation",
-            "type": "object",
-            "additionalProperties": False
-        },
-        "name": "StampDateAnnotation",
-        "strict": True
-    }
-}
-
-def _extract_from_bbox(response):
-    """Parse image_annotation from each bbox."""
-    date_depot = ""
-    for page in response.pages:
-        for img in getattr(page, "images", []) or []:
-            ann = getattr(img, "image_annotation", None)
-            if not ann:
-                continue
-            try:
-                data = json.loads(ann) if isinstance(ann, str) else ann
-                d = (data.get("date_depot") or "").strip()
-                if d:
-                    return d
-            except (json.JSONDecodeError, TypeError):
-                continue
-    return date_depot
-
-
-def _extract_from_document_annotation(response):
-    """Parse document_annotation: date from F.T.U.S.A./ARRIVEE stamp only."""
-    date_depot = ""
-    ann = getattr(response, "document_annotation", None)
-    if not ann:
-        return date_depot
-    try:
-        data = json.loads(ann) if isinstance(ann, str) else ann
-        date_depot = (data.get("date_depot") or "").strip()
-    except (json.JSONDecodeError, TypeError):
-        pass
-    return date_depot
-
-
-def _ocr_single_image(pil_image):
-    """Run OCR + annotations on a single image. Returns (markdown, date_depot)."""
-    img_byte_arr = io.BytesIO()
-    pil_image.save(img_byte_arr, format='JPEG', quality=85)
-    encoded_string = base64.b64encode(img_byte_arr.getvalue()).decode('utf-8')
-    data_url = f"data:image/jpeg;base64,{encoded_string}"
-
-    response = client.ocr.process(
-        model="mistral-ocr-latest",
-        document={"type": "image_url", "image_url": data_url},
-        bbox_annotation_format=STAMP_BBOX_SCHEMA,
-        document_annotation_format=DOCUMENT_ANNOTATION_SCHEMA,
-        include_image_base64=False
-    )
-    page = response.pages[0]
-    date_depot = _extract_from_document_annotation(response)
-    if not date_depot:
-        date_depot = _extract_from_bbox(response)
-    return page.markdown, date_depot
-
 
 def _merge_pages_markdown(response):
     """Combine markdown from all pages of OCR response."""
@@ -170,70 +76,78 @@ def _ocr_full_pdf(pdf_path):
         except Exception as e:
             logger.warning(f"Could not delete temp file {file_id}: {e}")
 
-# see the accuracty_barchart_V2.png for this version of code
-def _extract_date_depot_from_page(pil_image, page_num):
-    """Run stamp extraction by cropping the page into 4 equal quadrants."""
-    logger.info("Page %d: analyzing 4 quadrants for stamp...", page_num)
+def _extract_date_depot_gemini(pil_image):
+    """Run stamp extraction by sending the first page to Gemini Vision."""
+    logger.info("Sending Page 1 to Gemini for date de depot extraction...")
     
-    width, height = pil_image.size
-    mid_x, mid_y = width // 2, height // 2
-    
-    # Increase the overlap margin to ensure stamps precisely in the middle aren't sliced
-    # ov_x, ov_y = width // 10, height // 10
-    ov_x, ov_y = 0,0
+    project = os.getenv("GOOGLE_CLOUD_PROJECT")
+    location = os.getenv("GOOGLE_CLOUD_LOCATION")
+    if not project or not location:
+        logger.error("GOOGLE_CLOUD_PROJECT or GOOGLE_CLOUD_LOCATION not found. Skipping Gemini extraction.")
+        return ""
 
-    # Define the 4 corners/quadrants with generous overlapping bounds
-    quadrants = [
-        ("upper_left", (0, 0, mid_x + ov_x, mid_y + ov_y)),
-        ("upper_right", (mid_x - ov_x, 0, width, mid_y + ov_y)),
-        ("bottom_left", (0, mid_y - ov_y, mid_x + ov_x, height)),
-        ("bottom_right", (mid_x - ov_x, mid_y - ov_y, width, height))
-    ]
-    
-    for name, box in quadrants:
-        logger.info("Page %d: checking %s quadrant...", page_num, name)
-        quadrant_img = pil_image.crop(box)
-        
-        _, page_date = _ocr_single_image(quadrant_img)
-        
-        if page_date:
-            logger.info("Page %d: date_depot=%r found in %s quadrant", page_num, page_date, name)
-            return page_date
-            
-        # Removed sleep as you are now on a paid tier
-        
-    return ""
+    try:
+        from google import genai
+        gemini_client = genai.Client(vertexai=True, project=project, location=location)
+    except ImportError:
+        logger.error("google-genai package not found.")
+        return ""
 
+    prompt_str = (
+        "Vous êtes un expert en lecture de tampons sur des rapports d'accidents (PV) tunisiens."
+        "Votre SEUL ET UNIQUE but est de trouver la date d'arrivée estampillée (le tampon d'arrivée)."
+        "Regardez cette première page de PV. Cherchez formellement le tampon (souvent rectangulaire) avec des mentions comme 'F. T. U. S. A', 'ARRIVEE', 'وصلت الإحالة' ou 'تاريخ الاستلام'."
+        "Si vous trouvez ce tampon, extrayez UNIQUEMENT la date qui se trouve EXACTEMENT À L'INTÉRIEUR de ce tampon sous le format JJ/MM/AAAA (ex: 01/06/2021 pour 01 JUIN 2021)."
+        "ATTENTION: Il y a d'autres dates sur la page (date de l'accident, date de rédaction manuscrite en haut à gauche/droite, etc.). Vous devez ABSOLUMENT les ignorer."
+        "Seule la date incrustée explicitement dans le bloc du tampon nous intéresse."
+        "S'il n'y a pas de tampon bien distinct, retournez une chaîne vide."
+    )
+
+    try:
+        response = gemini_client.models.generate_content(
+            model='gemini-3.1-flash-image-preview',
+            contents=[prompt_str, pil_image]
+        )
+        date_depot = response.text.strip()
+        logger.info(f"Gemini returned: {date_depot}")
+        return date_depot
+    except Exception as e:
+        logger.error(f"Error calling Gemini: {e}")
+        return ""
+
+def _process_gemini_page1(pdf_path):
+    logger.info("Loading page 1 for Gemini stamp extraction...")
+    try:
+        pages = convert_from_path(pdf_path, dpi=300, first_page=1, last_page=1)
+        if pages:
+            pil_image = pages[0]
+            # Try up to 3 times (1 initial + 2 retries)
+            for attempt in range(3):
+                if attempt > 0:
+                    logger.info(f"Retrying Gemini stamp extraction (Attempt {attempt + 1}/3)...")
+                
+                date_depot = _extract_date_depot_gemini(pil_image)
+                if date_depot:
+                    return date_depot
+                    
+            logger.info("All 3 attempts failed to extract date_depot. Returning None.")
+    except Exception as e:
+        logger.error(f"Error converting pdf or calling Gemini for page 1: {e}")
+    
+    return None
 
 @log_timing
 def process_entire_pdf(pdf_path):
     """
-    Hybrid: full PDF OCR for text + stamp extraction on full pages 1-2 for date_depot.
+    Hybrid: full PDF OCR for text using Mistral + stamp extraction on page 1 using Gemini VLM.
+    Executes Mistral OCR and Gemini Vision concurrently to save time.
     """
-    # 1. Full PDF → all OCR text (1 call)
-    full_document_text = _ocr_full_pdf(pdf_path)
+    logger.info("Executing Mistral OCR and Gemini Vision concurrently...")
+    with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
+        future_ocr = executor.submit(_ocr_full_pdf, pdf_path)
+        future_gemini = executor.submit(_process_gemini_page1, pdf_path)
+        
+        full_document_text = future_ocr.result()
+        date_depot = future_gemini.result()
 
-    # 2. Pages 1-2: stamp extraction for date_depot only
-    logger.info("Loading pages 1-2 for stamp extraction...")
-    pages = convert_from_path(pdf_path, 200, first_page=1, last_page=2)
-    date_depot = ""
-    for i, page in enumerate(pages):
-        page_num = i + 1
-        try:
-            date_depot = _extract_date_depot_from_page(page, page_num)
-            if date_depot:
-                break
-        except SDKError as e:
-            if e.status_code == 429:
-                logger.warning("Rate limit on page %d, waiting 2s...", page_num)
-                time.sleep(2)
-                date_depot = _extract_date_depot_from_page(page, page_num)
-            else:
-                logger.error("Error on page %d: %s", page_num, e)
-        except Exception as ex:
-            logger.error("Error on page %d: %s", page_num, ex)
-        # Removed delay between pages
-
-    if date_depot:
-        logger.info("Extracted date_depot from stamp: %r", date_depot)
-    return full_document_text, "", date_depot
+    return full_document_text, date_depot

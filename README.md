@@ -43,18 +43,21 @@ docker compose build && docker compose up
 
 | Method | Path | Description |
 |--------|------|-------------|
-| POST | `/api/v1/pv/pv-extraction` | Upload PDF → structured JSON |
-| GET | `/api/v1/pv/` | Health check (+ `uris` in JSON) |
-| GET | `/api/v1/pv/health` | Health check |
+| GET | `/api/version` | API version |
+| POST | `/api/report/extract` | Upload file + `requestId` → structured JSON |
+| GET | `/api/` | Health check (+ `uris` in JSON) |
+| GET | `/api/health` | Health check |
 
 ### Example request
 
 ```bash
-curl -X POST "http://localhost:8080/api/v1/pv/pv-extraction" \
-  -F "file=@your_pv.pdf"
+curl -X POST "http://localhost:8080/api/report/extract" \
+   -F "requestId=9f69c45a-6215-4470-9d0d-c9b26ccad7d0" \
+   -F "reportFile=@your_pv.pdf"
 ```
 
-- **Input**: PDF file (multipart/form-data), max 50 MB
+- **Input**: `requestId` text field + file field (`reportFile`) in `multipart/form-data`, max 50 MB
+- **Internal processing**: the `date_depot` value is extracted automatically from the first page by the VLM and is not sent by the caller.
 - **Output**: JSON with `N° du PV`, `Date du dépôt du PV`, `Date d'Accident`, victims, vehicles, causes, insurance, etc. (`Référence FTUSA` is excluded from the response)
 
 ## Pipeline
@@ -67,9 +70,9 @@ curl -X POST "http://localhost:8080/api/v1/pv/pv-extraction" \
 ## Project structure
 
 ```
-├── main.py          # FastAPI app, /api/v1/pv/ routes
+├── main.py          # FastAPI app, /api/report/extract route
 ├── OCR_mistral.py   # PDF → OCR text + date_depot
-├── LLM_mistral.py   # Text → structured JSON
+├── LLM_gemini.py    # Text → structured JSON
 ├── prompt.py        # Extraction prompt template
 ├── schemas.py       # Pydantic request/response models
 ├── utils.py         # Logging utilities

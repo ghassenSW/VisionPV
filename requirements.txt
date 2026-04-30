@@ -5,3 +5,5 @@ Pillow
 fastapi
 uvicorn
 python-multipart
+google-genai
+pandas

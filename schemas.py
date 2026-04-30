@@ -1,35 +1,34 @@
 """Pydantic schemas for API request/response validation."""
 
-from typing import Any
-from pydantic import BaseModel, Field, RootModel
+from typing import Any, Optional
+from pydantic import BaseModel, Field
 
 
 # --- Response ---
 
-class PVExtractionResponse(RootModel[dict[str, Any]]):
+class PVExtractionResponse(BaseModel):
     """
-    PV extraction response. Excludes Référence FTUSA if required.
-    Validates and serializes the full extraction dict in its new nested format.
+    PV extraction response format wrapper.
+    Includes Success flag, Data dict, and error handling structure.
     """
+    Success: bool
+    Data: Optional[dict[str, Any]] = None
+    Error: Optional[str] = None
 
     @classmethod
     def from_extraction_dict(cls, data: dict[str, Any]) -> "PVExtractionResponse":
-        """Build response from process_pv output."""
-        cleaned = data.copy()
-        # If you still want to remove it from the new nested structure:
-        if "pv_info" in cleaned and "Référence FTUSA" in cleaned["pv_info"]:
-            del cleaned["pv_info"]["Référence FTUSA"]
-            
-        return cls(root=cleaned)
+        """Build response from correct process_pv output."""
+        return cls(Success=True, Data=data)
 
 
 # --- Health ---
 
 def _default_api_uris() -> dict[str, str]:
     return {
-        "root": "/api/v1/pv/",
-        "pv_extraction": "/api/v1/pv/pv-extraction",
-        "health": "/api/v1/pv/health",
+        "root": "/api/",
+        "pv_extraction": "/api/report/extract",
+        "version": "/api/version",
+        "health": "/api/health",
     }
 
 

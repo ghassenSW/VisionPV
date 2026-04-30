@@ -4,17 +4,30 @@ import uuid
 import logging
 import time
 import uvicorn
-from fastapi import APIRouter, FastAPI, UploadFile, File, HTTPException, Depends
+from fastapi import APIRouter, FastAPI, UploadFile, File, HTTPException, Depends, Form, Request
+from fastapi.responses import JSONResponse
+from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
+from dotenv import load_dotenv
+
+load_dotenv()
 
 logging.basicConfig(
     level=logging.INFO,
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    force=True
 )
 logger = logging.getLogger(__name__)
 
+# Ensure root logger also logs to console
+root_logger = logging.getLogger()
+if not root_logger.handlers:
+    handler = logging.StreamHandler()
+    handler.setFormatter(logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s"))
+    root_logger.addHandler(handler)
+
 from OCR_mistral import process_entire_pdf
-from LLM_mistral import process_pv
+from LLM_gemini import process_pv
 from schemas import PVExtractionResponse, HealthResponse
 
 MAX_UPLOAD_SIZE = 50 * 1024 * 1024  # 50 MB
@@ -23,6 +36,52 @@ app = FastAPI(
     title="Tunisian PV Extraction API",
     description="API for converting PDF accident reports into structured JSON using Mistral AI"
 )
+
+# Add startup event to confirm API is running
+@app.on_event("startup")
+async def startup_event():
+    logger.info("=" * 80)
+    logger.info("🚀 VISIONPV API STARTING UP")
+    logger.info(f"Server listening on http://0.0.0.0:8080")
+    logger.info("Endpoints available:")
+    logger.info("  - POST /api/report/extract (main extraction endpoint)")
+    logger.info("  - GET  /api/version (version info)")
+    logger.info("  - GET  /api/health (health check)")
+    logger.info("=" * 80)
+
+# Add request/response logging middleware
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    logger.info(f"📨 Incoming {request.method} request to {request.url.path}")
+    try:
+        response = await call_next(request)
+        logger.info(f"✅ Response: {response.status_code} for {request.method} {request.url.path}")
+        return response
+    except Exception as e:
+        logger.error(f"❌ Error processing {request.method} {request.url.path}: {e}")
+        raise
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    return JSONResponse(
+        status_code=422,
+        content={
+            "success": False,
+            "error": "INVALID_REQUEST",
+            "details": "The request is missing required fields or contains invalid values."
+        }
+    )
+
+@app.exception_handler(HTTPException)
+async def http_exception_handler(request: Request, exc: HTTPException):
+    content = exc.detail
+    if not isinstance(content, dict):
+        content = {
+            "success": False,
+            "error": "HTTP_ERROR",
+            "details": "An unexpected HTTP error occurred. Please check your request and try again."
+        }
+    return JSONResponse(status_code=exc.status_code, content=content)
 
 # Enable CORS (Crucial if you build a web frontend later)
 app.add_middleware(
@@ -33,65 +92,107 @@ app.add_middleware(
 )
 
 # API v1 router
-api_v1 = APIRouter(prefix="/api/v1/pv", tags=["v1"])
+api_v1 = APIRouter(prefix="/api", tags=["v1"])
 
 # Temporary directory for processing
 UPLOAD_DIR = "temp_uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
+@api_v1.get("/version")
+def api_version():
+    return {"version": "1.0"}
 
-def validate_pdf_upload(file: UploadFile = File(...)) -> UploadFile:
+
+def validate_pdf_upload(reportFile: UploadFile = File(...)) -> UploadFile:
     """Validate uploaded file is PDF and within size limits."""
-    if not file.filename or not file.filename.lower().endswith(".pdf"):
+    if not reportFile.filename or not reportFile.filename.lower().endswith((".pdf", ".jpeg", ".jpg", ".png")):
         raise HTTPException(
             status_code=400,
-            detail="Seuls les fichiers PDF sont acceptés."
+            detail={
+                "success": False,
+                "error": "INVALID_REQUEST",
+                "details": "Only PDF, JPEG, and PNG files are accepted. Please upload a valid report file."
+            }
         )
-    return file
+    return reportFile
 
 
-@api_v1.post("/pv-extraction", response_model=PVExtractionResponse)
+@api_v1.post("/report/extract", response_model_exclude_none=True)
 async def pv_extraction_endpoint(
-    file: UploadFile = Depends(validate_pdf_upload)
+    requestId: str = Form(...),
+    reportFile: UploadFile = Depends(validate_pdf_upload)
 ):
-    request_id = str(uuid.uuid4())
-    temp_pdf_path = os.path.join(UPLOAD_DIR, f"{request_id}_{file.filename}")
+        
+    request_id = requestId or str(uuid.uuid4())
+    temp_pdf_path = os.path.join(UPLOAD_DIR, f"{request_id}_{reportFile.filename}")
 
     try:
         start_total = time.time()
 
-        logger.info(f"[{request_id}] Saving file: {file.filename}")
+        logger.info(f"[{request_id}] Saving file: {reportFile.filename}")
         t0 = time.time()
         with open(temp_pdf_path, "wb") as buffer:
-            shutil.copyfileobj(file.file, buffer)
+            shutil.copyfileobj(reportFile.file, buffer)
 
         file_size = os.path.getsize(temp_pdf_path)
         if file_size > MAX_UPLOAD_SIZE:
-            raise HTTPException(
-                status_code=413,
-                detail=f"Fichier trop volumineux ({file_size // (1024*1024)} MB). Limite: {MAX_UPLOAD_SIZE // (1024*1024)} MB."
-            )
+            logger.error(f"[{request_id}] Fichier trop volumineux: {file_size}")
+            
+            return JSONResponse(status_code=400, content={"success": False, "error": "INVALID_REQUEST", "details": "The uploaded file is too large. Maximum allowed size is 50 MB."})
         logger.info(f"[{request_id}] File saved ({file_size // 1024} KB) in {time.time() - t0:.2f}s")
 
         t1 = time.time()
         logger.info(f"[{request_id}] Starting OCR processing...")
-        full_ocr_text, ref_ftusa, date_depot = process_entire_pdf(temp_pdf_path)
+        
+        try:
+            ocr_result = process_entire_pdf(temp_pdf_path)
+            # Safely unpack in case process_entire_pdf returns unexpectedly
+            if isinstance(ocr_result, tuple) and len(ocr_result) == 2:
+                full_ocr_text, date_depot = ocr_result
+            else:
+                logger.error(f"[{request_id}] process_entire_pdf returned unexpected type/length: {ocr_result}")
+                
+                return JSONResponse(status_code=422, content={"success": False, "error": "EXTRACTION_FAILED", "details": "The document could not be read. Please make sure it is a clear, valid accident report."})
+        except Exception as e:
+            logger.error(f"[{request_id}] Exception during OCR/Gemini processing: {e}")
+            
+            return JSONResponse(status_code=502, content={"success": False, "error": "EXTERNAL_API_ERROR", "details": "We could not connect to the OCR service. Please try again in a moment."})
+            
         logger.info(f"[{request_id}] OCR processing took {time.time() - t1:.2f}s")
-
+        
+        # Let Gemini evaluate if the document is irrelevant based on empty date_depot or missing info
         t2 = time.time()
         logger.info(f"[{request_id}] Starting LLM extraction...")
-        final_json = process_pv(full_ocr_text, ref_ftusa=ref_ftusa, date_depot=date_depot)
+        
+        try:
+            final_response = process_pv(full_ocr_text, date_depot=date_depot, requestId=requestId)
+        except Exception as e:
+            logger.error(f"[{request_id}] Gemini extraction failed: {e}", exc_info=True)
+            
+            return JSONResponse(status_code=422, content={"success": False, "error": "EXTRACTION_FAILED", "details": "We were unable to extract the report data. The document may be incomplete or in an unexpected format."})
+            
         logger.info(f"[{request_id}] LLM extraction took {time.time() - t2:.2f}s")
+        
+        # Check if Gemini itself returned an Error block
+        if "Success" in final_response and not final_response.get("Success"):
+            logger.warning(f"[{request_id}] Gemini rejected the document: {final_response.get('Error')}")
+            
+            return JSONResponse(status_code=422, content={"success": False, "error": "EXTRACTION_FAILED", "details": "This document does not appear to be a valid accident report. Please upload the correct file."})
+
+        # If Gemini succeeded, it should have a 'Data' key. Extract the data or use it directly.
+        data_payload = final_response.get("Data", final_response)
 
         logger.info(f"[{request_id}] Extraction successful. Total: {time.time() - start_total:.2f}s")
-        return PVExtractionResponse.from_extraction_dict(final_json)
+        
+        return JSONResponse(status_code=200, content=data_payload)
 
     except HTTPException:
         raise
 
     except Exception as e:
         logger.error(f"[{request_id}] Error: {str(e)}", exc_info=True)
-        raise HTTPException(status_code=500, detail=f"Erreur lors du traitement: {str(e)}")
+        
+        return JSONResponse(status_code=500, content={"success": False, "error": "INTERNAL_ERROR", "details": "An internal server error occurred."})
 
     finally:
         if os.path.exists(temp_pdf_path):
@@ -116,9 +217,15 @@ app.include_router(api_v1)
 def root_redirect():
     return {
         "status": "running",
-        "message": "PV Extraction API is active. Use /api/v1/pv/ for endpoints.",
+        "message": "PV Extraction API is active.",
     }
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8080)
+    logger.info("Starting Uvicorn server...")
+    uvicorn.run(
+        app, 
+        host="0.0.0.0", 
+        port=8080,
+        log_level="info"  # Ensure uvicorn logs to console
+    )
