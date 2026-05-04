@@ -12,6 +12,7 @@ env.bak/
 __pycache__/
 *.py[cod]
 *.class
+**/__init__.py
 
 # Temporary uploads
 temp_uploads/
