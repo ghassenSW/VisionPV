@@ -1,4 +1,5 @@
 # Environments
+gemini/test_gemini.py
 gemini/
 .env
 .venv
