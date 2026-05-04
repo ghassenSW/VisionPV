@@ -24,5 +24,5 @@ COPY . .
 # Expose a default port (Render will override this with its own PORT variable but it's good practice)
 EXPOSE 8080
 
-# Command to run the API (Uses Render's $PORT if available, else defaults to 8000)
-CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT:-8080} --log-level info"]
+# Command to run the API (Uses Render's $PORT if available, else defaults to 8080)
+CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8080} --log-level info"]
