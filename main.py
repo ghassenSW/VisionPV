@@ -28,7 +28,6 @@ if not root_logger.handlers:
 
 from OCR_mistral import process_entire_pdf
 from LLM_gemini import process_pv
-from schemas import PVExtractionResponse, HealthResponse
 
 MAX_UPLOAD_SIZE = 50 * 1024 * 1024  # 50 MB
 
@@ -152,11 +151,11 @@ async def pv_extraction_endpoint(
             else:
                 logger.error(f"[{request_id}] process_entire_pdf returned unexpected type/length: {ocr_result}")
                 
-                return JSONResponse(status_code=422, content={"success": False, "error": "EXTRACTION_FAILED", "details": "The document could not be read. Please make sure it is a clear, valid accident report."})
+                return JSONResponse(status_code=422, content={"success": False, "error": "OCR_RESULT_INVALID", "details": "The document could not be read properly by the OCR service."})
         except Exception as e:
             logger.error(f"[{request_id}] Exception during OCR/Gemini processing: {e}")
             
-            return JSONResponse(status_code=502, content={"success": False, "error": "EXTERNAL_API_ERROR", "details": "We could not connect to the OCR service. Please try again in a moment."})
+            return JSONResponse(status_code=502, content={"success": False, "error": "OCR_PROCESSING_FAILED", "details": f"OCR extraction failed: {str(e)}"})
             
         logger.info(f"[{request_id}] OCR processing took {time.time() - t1:.2f}s")
         
@@ -169,7 +168,8 @@ async def pv_extraction_endpoint(
         except Exception as e:
             logger.error(f"[{request_id}] Gemini extraction failed: {e}", exc_info=True)
             
-            return JSONResponse(status_code=422, content={"success": False, "error": "EXTRACTION_FAILED", "details": "We were unable to extract the report data. The document may be incomplete or in an unexpected format."})
+            error_type = "LLM_JSON_PARSE_ERROR" if "JSON" in str(e) else "LLM_EXTRACTION_FAILED"
+            return JSONResponse(status_code=422, content={"success": False, "error": error_type, "details": f"Failed to extract structured data: {str(e)}"})
             
         logger.info(f"[{request_id}] LLM extraction took {time.time() - t2:.2f}s")
         
@@ -177,7 +177,7 @@ async def pv_extraction_endpoint(
         if "Success" in final_response and not final_response.get("Success"):
             logger.warning(f"[{request_id}] Gemini rejected the document: {final_response.get('Error')}")
             
-            return JSONResponse(status_code=422, content={"success": False, "error": "EXTRACTION_FAILED", "details": "This document does not appear to be a valid accident report. Please upload the correct file."})
+            return JSONResponse(status_code=422, content={"success": False, "error": "DOCUMENT_NOT_RECOGNIZED", "details": final_response.get('Error', "Document does not appear to be a valid accident report.")})
 
         # If Gemini succeeded, it should have a 'Data' key. Extract the data or use it directly.
         data_payload = final_response.get("Data", final_response)

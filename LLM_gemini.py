@@ -8,29 +8,30 @@ from dotenv import load_dotenv
 from google import genai
 from utils import log_timing
 from prompt import PROMPT_TEMPLATE
-import pandas as pd
 
 logger = logging.getLogger(__name__)
 
 # Déterminer le dossier où se trouve le fichier Python actuel
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# 1. Charger et préparer les Régions par Gouvernorat
-region_path = os.path.join(BASE_DIR, 'region_table.csv')
-if os.path.exists(region_path):
-    df_regions = pd.read_csv(region_path)
-    REGIONS_BY_GOV = df_regions.groupby('governorate_name')['region_name'].apply(list).to_dict()
+# 1. Charger les Régions par Gouvernorat (depuis JSON hiérarchique)
+region_json_path = os.path.join(BASE_DIR, 'regions_by_governorate.json')
+if os.path.exists(region_json_path):
+    with open(region_json_path, 'r', encoding='utf-8') as f:
+        REGIONS_BY_GOV = json.load(f)
+    logger.info(f"✅ Régions chargées: {len(REGIONS_BY_GOV)} gouvernorats")
 else:
-    logger.error(f"Fichier manquant : {region_path}")
+    logger.error(f"Fichier manquant : {region_json_path}")
     REGIONS_BY_GOV = {}
 
-# 2. Charger et préparer les Modèles par Marque
-vehicle_path = os.path.join(BASE_DIR, 'vehicle_model_table.csv')
-if os.path.exists(vehicle_path):
-    df_vehicles = pd.read_csv(vehicle_path)
-    MODELS_BY_MAKER = df_vehicles.groupby('vehicle_manufacturer_name')['model_name'].apply(list).to_dict()
+# 2. Charger les Modèles par Marque (depuis JSON hiérarchique)
+vehicle_json_path = os.path.join(BASE_DIR, 'models_by_manufacturer.json')
+if os.path.exists(vehicle_json_path):
+    with open(vehicle_json_path, 'r', encoding='utf-8') as f:
+        MODELS_BY_MAKER = json.load(f)
+    logger.info(f"✅ Modèles chargés: {len(MODELS_BY_MAKER)} fabricants")
 else:
-    logger.error(f"Fichier manquant : {vehicle_path}")
+    logger.error(f"Fichier manquant : {vehicle_json_path}")
     MODELS_BY_MAKER = {}
 
 
@@ -88,9 +89,11 @@ def get_best_fuzzy_match(extracted_str, valid_list, threshold=0.7, log_prefix="m
                 break
     
     # Decide what to return
+    NULL_THRESHOLD = 0.4
+
     if best_match is None:
         logger.warning(f"No {log_prefix} candidates found in valid list for '{extracted_str}'")
-        return extracted_str
+        return None if force_valid_list else extracted_str
     
     if highest_ratio >= threshold:
         logger.info(f"Fuzzy {log_prefix}: '{extracted_str}' -> '{best_match}' (score: {highest_ratio:.2f}) [ACCEPTED]")
@@ -98,8 +101,12 @@ def get_best_fuzzy_match(extracted_str, valid_list, threshold=0.7, log_prefix="m
     
     # Below threshold
     if force_valid_list:
-        logger.info(f"Fuzzy {log_prefix}: '{extracted_str}' -> '{best_match}' (score: {highest_ratio:.2f}) [FORCED_FROM_LIST]")
-        return best_match
+        if highest_ratio >= NULL_THRESHOLD:
+            logger.info(f"Fuzzy {log_prefix}: '{extracted_str}' -> '{best_match}' (score: {highest_ratio:.2f}) [FORCED_FROM_LIST]")
+            return best_match
+        else:
+            logger.info(f"Fuzzy {log_prefix}: '{extracted_str}' -> None (best score: {highest_ratio:.2f} < {NULL_THRESHOLD}) [FORCED_NULL]")
+            return None
     else:
         logger.info(f"No {log_prefix} fuzzy match found for '{extracted_str}' (best score: {highest_ratio:.2f}, threshold: {threshold}) [REJECTED]")
         return extracted_str
@@ -227,14 +234,14 @@ def process_pv(ocr_text, date_depot='', requestId=""):
 
     # Apply fuzzy matching to relevant fields
     if payload.get("governorate"):
-        payload["governorate"] = get_best_fuzzy_match(payload["governorate"], GOUVERNORAT_LIST, 0.80, "governorate")
+        payload["governorate"] = get_best_fuzzy_match(payload["governorate"], GOUVERNORAT_LIST, 0.80, "governorate", force_valid_list=True)
     if payload.get("region"):
         payload["region"] = get_smart_fuzzy_match(
-        query=payload["region"],
-        default_list=REGION_LIST,
-        mapping_dict=REGIONS_BY_GOV,
-        parent_value=payload.get("governorate") # Utilise le résultat du dessus
-    )
+            query=payload["region"],
+            default_list=REGION_LIST,
+            mapping_dict=REGIONS_BY_GOV,
+            parent_value=payload.get("governorate") # Utilise le résultat du dessus
+        )
 
     accident_time = payload.get("accidentTime")
     if isinstance(accident_time, str) and accident_time.strip():
@@ -252,9 +259,9 @@ def process_pv(ocr_text, date_depot='', requestId=""):
 
     # Apply fuzzy matching to HQ names
     if national_guard_hq:
-        national_guard_hq = get_best_fuzzy_match(national_guard_hq, NAV_GUARD_HQ_LIST, 0.8, "nationalGuardHQ")
+        national_guard_hq = get_best_fuzzy_match(national_guard_hq, NAV_GUARD_HQ_LIST, 0.8, "nationalGuardHQ", force_valid_list=True)
     if police_hq:
-        police_hq = get_best_fuzzy_match(police_hq, POLICE_HQ_LIST, 0.8, "policeHQ")
+        police_hq = get_best_fuzzy_match(police_hq, POLICE_HQ_LIST, 0.8, "policeHQ", force_valid_list=True)
 
     if reasoning_poste_type == "Garde Nationale":
         if not national_guard_hq and police_hq:
@@ -282,7 +289,7 @@ def process_pv(ocr_text, date_depot='', requestId=""):
                 # Fuzzy match manufacturer (normalize to UPPERCASE first)
                 if vehicle.get("manufacturer"):
                     mfg = vehicle["manufacturer"].upper().strip()
-                    vehicle["manufacturer"] = get_best_fuzzy_match(mfg, VEHICLE_MANUFACTURER_LIST, 0.75, "vehicle_manufacturer", force_valid_list=False)
+                    vehicle["manufacturer"] = get_best_fuzzy_match(mfg, VEHICLE_MANUFACTURER_LIST, 0.75, "vehicle_manufacturer", force_valid_list=True)
                 
                 # Fuzzy match model against manufacturer-specific sublist (FORCED to be from VEHICLE_MODEL_LIST)
                 if vehicle.get("model"):
@@ -312,11 +319,11 @@ def process_pv(ocr_text, date_depot='', requestId=""):
                 
                 # Fuzzy match deathGovernorate
                 if victim.get("deathGovernorate"):
-                    victim["deathGovernorate"] = get_best_fuzzy_match(victim["deathGovernorate"], GOUVERNORAT_LIST, 0.85, "deathGovernorate")
+                    victim["deathGovernorate"] = get_best_fuzzy_match(victim["deathGovernorate"], GOUVERNORAT_LIST, 0.85, "deathGovernorate", force_valid_list=True)
                 
                 # Fuzzy match healthInstitution
                 if victim.get("healthInstitution"):
-                    victim["healthInstitution"] = get_best_fuzzy_match(victim["healthInstitution"], HEALTH_INSTITUTION_LIST, 0.60, "healthInstitution")
+                    victim["healthInstitution"] = get_best_fuzzy_match(victim["healthInstitution"], HEALTH_INSTITUTION_LIST, 0.60, "healthInstitution", force_valid_list=True)
 
     # Remove all reasoning fields before returning
     for field in ('_reasoning_contexte', '_reasoning_causes', '_reasoning_lieu', '_reasoning_vehicules', '_reasoning_victimes', '_reasoning_Poste_Type', '_reasoning_Total_decedes', '_reasoning_Total_blesses'):

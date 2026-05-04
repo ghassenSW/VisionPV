@@ -1,8 +1,5 @@
-import json
 import os
-import base64
 import time
-import io
 import logging
 import concurrent.futures
 from pdf2image import convert_from_path

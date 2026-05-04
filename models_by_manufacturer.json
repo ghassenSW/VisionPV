@@ -1,0 +1,1621 @@
+{
+  "AUDI": [
+    "Q4 e-tron",
+    "RS e-tron GT",
+    "Q4 e-tron Sportback",
+    "S3",
+    "RS3",
+    "A3",
+    "A3 Quattro",
+    "e-tron GT",
+    "A4 allroad",
+    "A4 Quattro",
+    "A5 Quattro",
+    "A5 Sportback",
+    "A6 allroad",
+    "A6 Quattro",
+    "A7 Sportback",
+    "A8 Quattro",
+    "e-tron Quattro",
+    "e-tron S",
+    "e-tron S Sportback",
+    "e-tron Sportback",
+    "Q3",
+    "Q5",
+    "Q5 Sportback",
+    "Q7",
+    "Q8",
+    "R8",
+    "RS Q8",
+    "RS5",
+    "RS5 Sportback",
+    "RS7 Sportback",
+    "S4",
+    "S5",
+    "S6",
+    "S7 Sportback",
+    "S8",
+    "SQ5 Sportback",
+    "SQ7",
+    "SQ8",
+    "TT Quattro",
+    "TT RS Quattro",
+    "TTS Quattro",
+    "A4",
+    "A418T",
+    "A418FSI",
+    "A3 35 TFSI",
+    "A5",
+    "A6",
+    "Q2 35 TFSI",
+    "A3TDI",
+    "A3 TFSI",
+    "A5 35 TFSI S LINE",
+    "A2",
+    "A6 55 TFSI QUATTR",
+    "A4 TFSI"
+  ],
+  "BMW": [
+    "iX",
+    "i4",
+    "230i",
+    "M340i",
+    "M440i",
+    "330e xDrive",
+    "430i xDrive Gran Coupe",
+    "M2",
+    "X7",
+    "i7",
+    "Z4",
+    "X1",
+    "230i xDrive",
+    "M340i xDrive",
+    "330i xDrive",
+    "330e",
+    "740i",
+    "430i Gran Coupe",
+    "330i",
+    "M440i xDrive",
+    "M4",
+    "M440i xDrive Gran Coupe",
+    "M440i Gran Coupe",
+    "760i xDrive",
+    "118i",
+    "128ti",
+    "220i",
+    "220i Gran Coupe",
+    "430i",
+    "440i Gran Coupe",
+    "530e",
+    "530i",
+    "840i",
+    "840i Gran Coupe",
+    "840i xDrive",
+    "840i xDrive Gran Coupe",
+    "Alpina B8 Gran Coupe",
+    "Alpina XB7",
+    "iX xDrive40",
+    "iX xDrive50",
+    "M135i",
+    "M235i xDrive Gran Coupe",
+    "M240i",
+    "M240i xDrive",
+    "M3",
+    "M5",
+    "M550i xDrive",
+    "M760i xDrive",
+    "M8",
+    "M8 Gran Coupe",
+    "M850i xDrive",
+    "M850i xDrive Gran Coupe",
+    "X2",
+    "X3",
+    "X4",
+    "X5",
+    "X6",
+    "Aucun",
+    "520i",
+    "316l",
+    "BREAK",
+    "1181",
+    "MOTO",
+    "116I",
+    "S1000XR",
+    "116",
+    "320D",
+    "520D",
+    "318l",
+    "418i",
+    "E46",
+    "218i",
+    "320i",
+    "COOPERS",
+    "116 série 1",
+    "114D",
+    "MINIONE",
+    "X2 SDRIVE 18i",
+    "X1SDRIVE18I",
+    "MINI COOPER"
+  ],
+  "BUICK": [
+    "Enclave",
+    "Encore GX",
+    "Envision"
+  ],
+  "CADILLAC": [
+    "LYRIQ",
+    "CT4",
+    "CT5",
+    "Escalade",
+    "Escalade ESV",
+    "XT4",
+    "XT5",
+    "XT6"
+  ],
+  "CHEVROLET": [
+    "Silverado 1500",
+    "Traverse",
+    "Equinox",
+    "Bolt EV",
+    "Bolt EUV",
+    "Trax",
+    "Corvette",
+    "Blazer",
+    "Camaro",
+    "Captiva",
+    "Colorado",
+    "Express 2500",
+    "Express 3500",
+    "Grove",
+    "LCF 3500",
+    "LCF 4500",
+    "LCF 4500XD",
+    "LCF 5500XD",
+    "Malibu",
+    "Onix",
+    "S10 Max",
+    "Silverado 2500 HD",
+    "Silverado 3500 HD",
+    "Suburban",
+    "Tahoe",
+    "Tornado Van",
+    "Tracker",
+    "Trailblazer",
+    "CRUZE",
+    "CAPTIVA PREMIER",
+    "SONIC LT",
+    "SPARK",
+    "Aveo",
+    "SONIC LS",
+    "KALOS",
+    "SONIC",
+    "GROOVE PREMIER"
+  ],
+  "FLEETWOOD": [
+    "Southwind",
+    "Flair"
+  ],
+  "FORD": [
+    "Expedition",
+    "F-150 Lightning",
+    "Maverick",
+    "E-Transit",
+    "E-350 Super Duty",
+    "Bronco",
+    "Bronco Sport",
+    "E-450 Super Duty",
+    "Edge",
+    "Escape",
+    "Explorer",
+    "F-150",
+    "F-250 Super Duty",
+    "F-350 Super Duty",
+    "F650",
+    "F750",
+    "Mustang Mach-E",
+    "Police Interceptor Utility",
+    "Ranger",
+    "Transit Connect",
+    "Transit-250",
+    "FIESTA",
+    "FOCUS",
+    "Mustange",
+    "Raptor",
+    "TRANSIT",
+    "Ranger XLT",
+    "KUGA",
+    "Mustang",
+    "TRANSIT 410L",
+    "FIGO TREND",
+    "ECOSPORT ECOBOOST",
+    "MONDEO",
+    "TITANIUM",
+    "FIESTA ECOBOOST",
+    "FIGO",
+    "FIESTA FLAIR",
+    "KA",
+    "TRANSIT CUSTOM"
+  ],
+  "GENESIS": [
+    "GV70",
+    "GV60",
+    "G70",
+    "G80",
+    "GV80"
+  ],
+  "GMC": [
+    "Sierra 2500 HD",
+    "Sierra 3500 HD",
+    "Hummer EV Pickup",
+    "Hummer EV SUV",
+    "Terrain",
+    "Acadia",
+    "Canyon",
+    "Hummer EV",
+    "Savana 2500",
+    "Savana 3500",
+    "Sierra 1500",
+    "Yukon",
+    "Yukon XL"
+  ],
+  "HINO": [
+    "300.0",
+    "198.0",
+    "258.0",
+    "268.0",
+    "338.0",
+    "358.0"
+  ],
+  "HOLIDAY RAMBLER": [
+    "Nautica"
+  ],
+  "HONDA": [
+    "Civic",
+    "HR-V",
+    "Pilot",
+    "CR-V",
+    "Odyssey",
+    "Passport",
+    "Ridgeline",
+    "80",
+    "HONDA CITY",
+    "ACCORD",
+    "BALY",
+    "AMAZE I VTEC",
+    "I VTEC",
+    "SKY",
+    "CB1000R",
+    "SC6021"
+  ],
+  "HYUNDAI": [
+    "Tucson",
+    "Palisade",
+    "Kona Electric",
+    "Ioniq 5",
+    "Santa Cruz",
+    "Santa Fe",
+    "Elantra N",
+    "Elantra",
+    "Grand i10",
+    "Kona",
+    "Kona N",
+    "Nexo",
+    "Sonata",
+    "Venue",
+    "i20",
+    "i30",
+    "BAYON",
+    "IX35",
+    "H1 BUS",
+    "ACCENT",
+    "GRAND i10 1.2",
+    "i10",
+    "H1",
+    "Veloster",
+    "KONA HYBRID",
+    "CRETA",
+    "GRAND I10 X CENT",
+    "Tucson Htrac 1.6",
+    "STARIA 2.2D",
+    "TUSCONIX35",
+    "Trajet",
+    "HD 35",
+    "i30 1.0T"
+  ],
+  "INFINITI": [
+    "QX55",
+    "Q50",
+    "QX50",
+    "QX60",
+    "QX80"
+  ],
+  "JAGUAR": [
+    "F-Type",
+    "E-Pace",
+    "F-Pace",
+    "I-Pace",
+    "XF"
+  ],
+  "JEEP": [
+    "Grand Wagoneer",
+    "Grand Cherokee",
+    "Wagoneer L",
+    "Wagoneer",
+    "Grand Wagoneer L",
+    "Cherokee",
+    "Compass",
+    "Gladiator",
+    "Grand Cherokee L",
+    "Renegade",
+    "Wrangler",
+    "RENEGADE LIMIT",
+    "Chrysler",
+    "LAREDO"
+  ],
+  "KIA": [
+    "Niro",
+    "Telluride",
+    "Sportage",
+    "Soul",
+    "Niro EV",
+    "EV6",
+    "Carnival",
+    "Forte",
+    "Forte5",
+    "K5",
+    "Seltos",
+    "Sorento",
+    "Stinger",
+    "PICANTO",
+    "RIO",
+    "PICANTO GT LINE",
+    "CERATO EX",
+    "OPTIMA",
+    "SELTOS 1.4",
+    "Rio CRDI",
+    "Carens",
+    "CERATO",
+    "STONIC",
+    "SORENTO AWD",
+    "XCeed - Berline",
+    "K2500",
+    "SPORTAGE CRDI AWD",
+    "XCeed",
+    "STONIC GTLINE",
+    "SPORTAGE GT LINE",
+    "K2700",
+    "SELTOS 1.4 TURBO"
+  ],
+  "LAND ROVER": [
+    "Range Rover Sport",
+    "Range Rover",
+    "Defender 130",
+    "Defender 110",
+    "Defender 90",
+    "Discovery",
+    "Discovery Sport",
+    "Range Rover Evoque",
+    "Range Rover Velar"
+  ],
+  "LEXUS": [
+    "NX250",
+    "NX450h+",
+    "NX350h",
+    "NX350",
+    "IS500",
+    "ES250",
+    "GX460",
+    "IS300",
+    "IS350",
+    "LX600",
+    "RZ450e",
+    "UXh"
+  ],
+  "LINCOLN": [
+    "Navigator",
+    "Aviator",
+    "Nautilus"
+  ],
+  "LOTUS": [
+    "Emira"
+  ],
+  "LUCID": [
+    "Air"
+  ],
+  "MAZDA": [
+    "CX-5",
+    "MX-30 EV",
+    "CX-50",
+    "2.0",
+    "CX-30",
+    "MAZDA 3",
+    "BT504X4",
+    "MAZDA 2",
+    "BT 50",
+    "BT50 4X4",
+    "CX3",
+    "B2900",
+    "B2500D",
+    "MAZDA 6",
+    "MAZDA BT50"
+  ],
+  "MERCEDES-BENZ": [
+    "EQB 250",
+    "SL63 AMG",
+    "Maybach S680",
+    "C300",
+    "S580e",
+    "EQB 300",
+    "EQB 350",
+    "SL55 AMG",
+    "EQS 450+",
+    "EQS AMG",
+    "EQS 580",
+    "AMG GT 63",
+    "AMG GT 63 S",
+    "C43 AMG",
+    "C63 AMG",
+    "CLS450",
+    "CLS53 AMG",
+    "EQS 53 AMG",
+    "GLA250",
+    "GLA35 AMG",
+    "GLA45 AMG",
+    "GLB250",
+    "GLB35 AMG",
+    "GLE53 AMG",
+    "GLE63 AMG S",
+    "Maybach S580",
+    "Metris",
+    "S500",
+    "S580",
+    "Sprinter 1500",
+    "Sprinter 2500",
+    "Sprinter 3500",
+    "Sprinter 3500XD",
+    "E450",
+    "C180",
+    "GLC 350e",
+    "B180CDI",
+    "DAIMLER",
+    "c 220 cdi",
+    "E220CDIM6",
+    "203CL",
+    "G CLASS",
+    "B180",
+    "CLS250",
+    "X250",
+    "Daimler Chrysler",
+    "C180K",
+    "SPRINTER",
+    "E200",
+    "CLA 250",
+    "GLK 200",
+    "A180",
+    "C200CDI",
+    "GLE 53",
+    "GLA 200 D",
+    "C200",
+    "CITAN",
+    "E220CDI",
+    "C250",
+    "ACTROS 2042 S",
+    "CLA 180",
+    "CLA 200",
+    "S350",
+    "GLC 200D4 MATIC",
+    "E350CDI",
+    "C220",
+    "C180 KOMPRESSOR",
+    "GLC 220 D",
+    "Neoplan",
+    "GLC300",
+    "A160",
+    "E180",
+    "ML350",
+    "GLE 43 AMG",
+    "E220",
+    "E200CGI",
+    "GLE 500",
+    "ML 320 CDI",
+    "VITO",
+    "ML 250 CDI",
+    "CLASSE CLA",
+    "CLASSE C",
+    "C200K"
+  ],
+  "MITSUBISHI": [
+    "Outlander",
+    "Mirage",
+    "Eclipse Cross",
+    "Mirage G4",
+    "L200",
+    "Xpander",
+    "PAJERO",
+    "L2004WD",
+    "Attrage",
+    "L300",
+    "MIRAGE GLX",
+    "MIRAGE GLS"
+  ],
+  "NISSAN": [
+    "Murano",
+    "Pathfinder",
+    "Altima",
+    "Frontier",
+    "GT-R",
+    "Ariya",
+    "Armada",
+    "Kicks",
+    "LEAF",
+    "Maxima",
+    "Rogue",
+    "Sentra",
+    "Titan",
+    "Titan XD",
+    "Versa",
+    "VCUD40",
+    "NAVARA",
+    "MICRA",
+    "QASHQAI",
+    "JUKE",
+    "XTRAIL",
+    "Qashqai Pure",
+    "NOTE",
+    "NAVARE LE"
+  ],
+  "POLESTAR": [
+    "Polestar 2"
+  ],
+  "RIVIAN": [
+    "R1S",
+    "R1T",
+    "RCV-500",
+    "RCV-700"
+  ],
+  "SUBARU": [
+    "Forester",
+    "Outback",
+    "Legacy",
+    "Solterra",
+    "BRZ",
+    "Ascent",
+    "Crosstrek",
+    "Impreza",
+    "WRX"
+  ],
+  "TOYOTA": [
+    "Sequoia",
+    "Tundra",
+    "bZ4X",
+    "Corolla Cross",
+    "GR86",
+    "GR Corolla",
+    "4Runner",
+    "Camry",
+    "Corolla",
+    "GR Supra",
+    "Highlander",
+    "Mirai",
+    "RAV4",
+    "RAV4 Prime",
+    "Sienna",
+    "Tacoma",
+    "Venza",
+    "HILUX",
+    "AGYA",
+    "YARIS",
+    "HIACE",
+    "LAND CRUISER",
+    "PRADO",
+    "COASTER",
+    "AVANZA",
+    "YARIS SEDAN",
+    "C-HR",
+    "RUSH",
+    "AGYA 1.2 G",
+    "YARIS E",
+    "Corolla Sedan",
+    "HILUX SRS",
+    "AURIS",
+    "RAV4 HYBRID",
+    "YARIS HYBRID",
+    "Fortuner",
+    "AVENSIS"
+  ],
+  "VOLKSWAGEN": [
+    "Taos",
+    "Jetta",
+    "GTI",
+    "Tiguan",
+    "Golf R",
+    "Arteon",
+    "Atlas",
+    "Atlas Cross Sport",
+    "ID.4",
+    "GOLF",
+    "POLO",
+    "PASSAT",
+    "TRANSPORTER",
+    "TOURAN",
+    "GOLF 3",
+    "CADDY TDI",
+    "CADDY",
+    "AMAROK",
+    "JETTA TDI",
+    "POLO 12L TDI",
+    "GOLF TDI",
+    "CRAFTEUR",
+    "GOLF 6",
+    "GOLF 5",
+    "POLO 1.4",
+    "POLO 12L",
+    "POLO 12",
+    "POLO SEDAN",
+    "POLO 12 TREND",
+    "POLO 6",
+    "POLO 14",
+    "TOUAREG",
+    "JETTA 16 TREND",
+    "GOLF 5 BK",
+    "POLO 7",
+    "CADDY COMBI",
+    "AMAROK TDI",
+    "SCIROCC014LSPOR",
+    "CADDY MAXI FOURGO",
+    "Transporter TD",
+    "POLO 3",
+    "SEDAN",
+    "VIRTUS TSI",
+    "POLO 5",
+    "FOX",
+    "GOLF 7",
+    "BORA",
+    "Tiguan 20L",
+    "JETTA 19 TDI",
+    "Sharan",
+    "PASSAT 16 CONFORT",
+    "AMAROK TDI4 MOTO",
+    "T CXOSS",
+    "T-Roc",
+    "GOLF 16 TREND",
+    "GOLF 12 TREND",
+    "CARAVELLE",
+    "GOLF PLUS",
+    "GOLF 8",
+    "T-CROSS",
+    "Multivan"
+  ],
+  "VOLVO": [
+    "C40 Recharge",
+    "XC40",
+    "S60",
+    "S90",
+    "V60",
+    "V60 Cross Country",
+    "VHD",
+    "VNL",
+    "VNR",
+    "XC40 Recharge",
+    "XC60",
+    "XC90",
+    "VOLVO 240",
+    "VOLVO B 11 R",
+    "B7R",
+    "B12MA",
+    "FH440"
+  ],
+  "ACURA": [
+    "Integra",
+    "MDX",
+    "RDX",
+    "TLX"
+  ],
+  "ALFA ROMEO": [
+    "Giulia",
+    "Stelvio",
+    "Tonale",
+    "ALFA MITO",
+    "Giulietta"
+  ],
+  "ASTON MARTIN": [
+    "DB11",
+    "DBS",
+    "DBX",
+    "DBX707",
+    "Vantage"
+  ],
+  "BENTLEY": [
+    "Bentayga EWB",
+    "Continental",
+    "Flying Spur"
+  ],
+  "BLUE BIRD": [
+    "All American FE",
+    "All American RE",
+    "SHL All American",
+    "Vision School Bus"
+  ],
+  "CHANGAN": [
+    "Alsvin",
+    "CS35",
+    "CS55 Plus"
+  ],
+  "CHIREY": [
+    "Tiggo 7PRO",
+    "Tiggo 8PRO"
+  ],
+  "CHRYSLER": [
+    "Pacifica",
+    "CHEROKEE",
+    "GRAND CHEROKEE"
+  ],
+  "DODGE": [
+    "Durango"
+  ],
+  "FERRARI": [
+    "296 GTB",
+    "296 GTS",
+    "812 GTS",
+    "Portofino M",
+    "Roma",
+    "SF90 Spider",
+    "SF90 Stradale"
+  ],
+  "FIAT": [
+    "Pulse",
+    "SCUDO",
+    "GRANDE PUNTO",
+    "PUNTO",
+    "FIORINO MULTIJET",
+    "FIAT 500",
+    "PANDA",
+    "TIPO BERLINE",
+    "DOBLO COMBI",
+    "DOBLO",
+    "FIORINO",
+    "DUCATO",
+    "QUBO",
+    "PUNTO CLASSIC",
+    "FIAT ULYSSE",
+    "DUCATO 130MULTIJ",
+    "TIPO",
+    "PALIO",
+    "PUNTO II",
+    "PUNTO EVO",
+    "DOBLO 90 MULTIJE",
+    "PUNTO 55",
+    "SIENA",
+    "110-90DT",
+    "DOBLO MAXI 90 MUL",
+    "BRAVO",
+    "LINEA",
+    "STILO",
+    "PANDA CROSS",
+    "CROMA",
+    "FIAT 500 DOLCEVITA",
+    "DOBLO PROFESSIONAL",
+    "DOBLO 90 MULTIJET",
+    "PUNTO 55 S",
+    "FIAT 500 CULT-CLUB",
+    "DOBLO  PANORAMA"
+  ],
+  "FREIGHTLINER": [
+    "108SD",
+    "114SD",
+    "122SD",
+    "B2",
+    "Cascadia",
+    "M2 106",
+    "M2 112"
+  ],
+  "ISUZU": [
+    "NPR-HD",
+    "NQR",
+    "NRR",
+    "D-MAX",
+    "NKR",
+    "REWARD-NP",
+    "CTTE",
+    "Eco Classic",
+    "REWARD-NQ",
+    "FORWARD-FV"
+  ],
+  "JAC": [
+    "E Sunray",
+    "E10X",
+    "EJ7",
+    "Frison",
+    "J7",
+    "SEI 2",
+    "SEI 3",
+    "SEI 4",
+    "SEI 7",
+    "Sunray"
+  ],
+  "KARMA": [
+    "GS-6",
+    "GSe-6"
+  ],
+  "KENWORTH": [
+    "K270",
+    "K370",
+    "T270",
+    "T280",
+    "T370",
+    "T380",
+    "T400",
+    "T480",
+    "T680",
+    "T800",
+    "T880",
+    "W900",
+    "W990"
+  ],
+  "LAMBORGHINI": [
+    "Huracan",
+    "Urus",
+    "CROSS 40S"
+  ],
+  "MACK": [
+    "Anthem",
+    "Granite",
+    "LR",
+    "MD7",
+    "Pinnacle",
+    "TerraPro"
+  ],
+  "MASERATI": [
+    "Ghibli",
+    "Grecale",
+    "Levante",
+    "MC20",
+    "Quattroporte"
+  ],
+  "MCLAREN": [
+    "Artura"
+  ],
+  "MINI": [
+    "Cooper",
+    "Cooper Clubman",
+    "Cooper Countryman",
+    "MINI ONE COUNTRYMAN"
+  ],
+  "PETERBILT": [
+    "220.0",
+    "337.0",
+    "348.0",
+    "365.0",
+    "367.0",
+    "389.0",
+    "520.0",
+    "536.0",
+    "537.0",
+    "548.0",
+    "567.0",
+    "579.0"
+  ],
+  "PEUGEOT": [
+    "Expert",
+    "Landtrek",
+    "Manager",
+    "Partner",
+    "Rifter",
+    "207",
+    "2008",
+    "208",
+    "107",
+    "BIPPER",
+    "BOXER",
+    "408",
+    "206",
+    "206+",
+    "PICK UP",
+    "PARTNER TEPEE",
+    "407 SEDAN",
+    "307",
+    "308 CC",
+    "106",
+    "301",
+    "3008",
+    "5008",
+    "205",
+    "308",
+    "407",
+    "406",
+    "405",
+    "404 UXD",
+    "Peugeot 404 pick-up - bâché",
+    "305",
+    "404",
+    "PARTNER XP",
+    "508",
+    "308 HDI",
+    "306",
+    "306XN",
+    "PICK UP 4*4",
+    "2008 PURETECH",
+    "PEUGEOT 4*4",
+    "504",
+    "206SD",
+    "3008 GT LINE",
+    "B9",
+    "309",
+    "308 BK",
+    "207BK",
+    "108",
+    "505",
+    "PARTNER XR",
+    "BERLINE 306",
+    "308 SW",
+    "607",
+    "Ludix"
+  ],
+  "PORSCHE": [
+    "718 Boxster",
+    "718 Cayman",
+    "718 Spyder",
+    "911.0",
+    "Cayenne",
+    "Macan",
+    "Panamera",
+    "Taycan",
+    "HYBRID CAYENNE"
+  ],
+  "PREVOST": [
+    "High Decker",
+    "X3 Coach"
+  ],
+  "RAM": [
+    "1500 Classic",
+    "ProMaster 1500",
+    "ProMaster 2500",
+    "ProMaster 3500",
+    "2500.0",
+    "3500.0"
+  ],
+  "RENAULT": [
+    "Kangoo",
+    "KWID",
+    "Oroch",
+    "CLIO",
+    "MEGANE",
+    "CAPTUR",
+    "DUSTER",
+    "MEGANE SEDAN",
+    "R5",
+    "R19",
+    "CLIO SYMBOL",
+    "SYMBOL",
+    "CLIO CAMPUS",
+    "FLUENCE",
+    "RENAULT SYMBOL",
+    "R19 EUROPA",
+    "CLIO CLASSIC",
+    "EXPRESS",
+    "EXPRESS VAN",
+    "CLIO 4",
+    "CLIO Tce",
+    "MASTER",
+    "MODUS",
+    "SCENIC",
+    "MEGANE COUPEE",
+    "KOLEOS 2.0 D",
+    "MEGANE CL",
+    "CLIO 3",
+    "R11",
+    "KADJAR",
+    "Twingo",
+    "KOLEOS",
+    "Trafic",
+    "R9",
+    "Express",
+    "Espace 2.0 t",
+    "Espace",
+    "KERAX37032",
+    "MEGANE TCE",
+    "Latitude",
+    "R21",
+    "LAGUNA",
+    "CLASSIC",
+    "AGORA",
+    "R18"
+  ],
+  "ROLLS-ROYCE": [
+    "Cullinan",
+    "Ghost",
+    "Phantom"
+  ],
+  "SPARTAN MOTORS": [
+    "K3"
+  ],
+  "SUZUKI": [
+    "Swift",
+    "DZIRE",
+    "CELERIO",
+    "AERIO",
+    "BALENO",
+    "SPRESSO",
+    "Ciaz",
+    "Suzuki Spresso",
+    "SWIFT 3",
+    "Vitara",
+    "ERTIGA",
+    "VTT SUZUKI ERTIGA",
+    "JIMNY",
+    "S-CROSS",
+    "ALTO",
+    "Fronx"
+  ],
+  "TESLA": [
+    "3.0",
+    "S",
+    "X",
+    "Y"
+  ],
+  "THOMAS": [
+    "Saf-T-Liner",
+    "Transit Liner"
+  ],
+  "WESTERN STAR": [
+    "4700SB",
+    "4700SF",
+    "4900EX",
+    "4900FA",
+    "4900SA"
+  ],
+  "IVECO": [
+    "aucun",
+    "IVECO 6*6",
+    "35-150 DAILY",
+    "35C15DAILY",
+    "STRALIS 430",
+    "DAILY 50-150",
+    "35E12",
+    "35-15 DAILY",
+    "65SC15",
+    "35C13",
+    "DAILY 70150",
+    "380T38 TRAKKER",
+    "STRALIS 400",
+    "DAILY",
+    "70C15"
+  ],
+  "KING LONG": [
+    "XMQ6552",
+    "KING LONG BUS",
+    "KINGO",
+    "XIAMEN"
+  ],
+  "DACIA": [
+    "Dokker",
+    "DOKKER VAN LUX",
+    "LOGAN",
+    "DACIA SANDERO",
+    "DUSTER 4WD",
+    "DOKKER VAN 2PL LU",
+    "LOGAN MCV",
+    "DUSTER DCI",
+    "Duster",
+    "Stepway",
+    "SANDERO STEPWAY"
+  ],
+  "MOTOCYCLE": [
+    "DIAMOND",
+    "MAX 3",
+    "FIRST MOTO",
+    "SGM MAX"
+  ],
+  "DIAMOND": [
+    "MBK",
+    "PW"
+  ],
+  "SSANGYONG": [
+    "TIVOLI",
+    "ACTYON",
+    "Rexton",
+    "ACTYON SPORT"
+  ],
+  "CITROËN": [
+    "C-Elysée",
+    "C1",
+    "C3",
+    "C4",
+    "C5",
+    "C4 PICASSO",
+    "C4 CACTUS",
+    "C3 AIRCROSS",
+    "JUMPY",
+    "NEMO",
+    "JUMPER",
+    "BERLINGO",
+    "BERLINGO VAN",
+    "DS3",
+    "DS4",
+    "SAXO",
+    "BERLINGO B9",
+    "C15",
+    "XSARA",
+    "DS5",
+    "DS",
+    "PICASSO",
+    "BERLINGO V",
+    "BERLINGO MULTISPACE"
+  ],
+  "SEAT": [
+    "IBIZA",
+    "ARONA",
+    "LEON",
+    "ATECA",
+    "TARRACO",
+    "LEON TSI",
+    "ARONA FR",
+    "IBIZA FR",
+    "IBIZA 12",
+    "TARRACO FR",
+    "IBIZA 1 6",
+    "Ateca Xperience",
+    "IBIZA XCELLENCE",
+    "IBIZA STYLE",
+    "TOLEDO",
+    "ALTEA",
+    "CORDOBA",
+    "LEON XCELLENCE"
+  ],
+  "SKODA": [
+    "FABIA",
+    "OCTAVIA",
+    "FABIA HATCH",
+    "SKODA SCALA",
+    "KAROQ",
+    "SKODA KAMIQ",
+    "OCTAVIA STYLE",
+    "SKODA KUSHAQ"
+  ],
+  "OPEL": [
+    "CORSA",
+    "MOKKA",
+    "ASTRA",
+    "COMBO CARGO",
+    "ZAFIRA",
+    "ASTRA G",
+    "CORSA B",
+    "ANTARA",
+    "VIVARO",
+    "CORSA SWING",
+    "SWING",
+    "ASTRA BK",
+    "COMBO",
+    "ADAM AG",
+    "ADAM"
+  ],
+  "PIAGGIO": [
+    "ZIP",
+    "PIAGGIO 1",
+    "LIBERTY",
+    "MEDLEY",
+    "BEVERLY",
+    "PIAGGIO MP3",
+    "CIAO",
+    "FREE",
+    "50",
+    "ET 2",
+    "LX"
+  ],
+  "GREATWALL": [
+    "H6",
+    "Haval",
+    "HAVAL GWM H6",
+    "HAVAL H6",
+    "HAVAL JOLION",
+    "POER",
+    "H2 1.5T",
+    "HE HEV",
+    "WINGLE",
+    "GREATWALL M4"
+  ],
+  "FORZA MOTO": [
+    "UNISCOOT",
+    "FORZA FTM",
+    "FORZA KTM",
+    "FORZA FIRST",
+    "FORZA MAX",
+    "FORZA GSM",
+    "MOTO STAR",
+    "FORZA GOLD",
+    "FORZA D-MAX",
+    "SUPER FORZA",
+    "FORZA GMC",
+    "FORZA XTF",
+    "PHANTOM",
+    "FORZA SUPER MAX"
+  ],
+  "ZIMOTA": [
+    "ZIMOTA VESPA",
+    "ZIMOTA KEE",
+    "PARTNER",
+    "ZIMOTA JOY 110",
+    "ZIMOTA EAGLE",
+    "SINUS",
+    "ZIMOTA JOY"
+  ],
+  "MBK YAMAHA MOTOR": [
+    "MBK YAMAHA MOTOR ESPANA 5AD"
+  ],
+  "TATA": [
+    "XENON",
+    "DOUBLE CABINE",
+    "XENON DLE",
+    "TATA SUPER A C E",
+    "XENON X2"
+  ],
+  "HAZMI": [
+    "SRA2R4T"
+  ],
+  "TAFE": [
+    "TAFE 5900 DI 4WD"
+  ],
+  "CHERY": [
+    "CHERY TIGGO 2",
+    "CHERY TIGGO 3",
+    "ARRIZO 3",
+    "ARRIZZO 5",
+    "QQ",
+    "CHERY TIGGO 3X",
+    "TIGGO 7 PRO",
+    "TIGGO 8 PRO",
+    "TIGGO 7",
+    "E3",
+    "CHERY TIGGO 4",
+    "CHERY TIGGO 1X"
+  ],
+  "DONGFENG - DFM": [
+    "DF700",
+    "DFM JOYCAR S50",
+    "DFM AX4",
+    "DFM SX3",
+    "DONGFENGE21",
+    "Forthing T5 EVO"
+  ],
+  "HAMMER": [
+    "HA110-CFC",
+    "FORZA"
+  ],
+  "SCOOTER": [
+    "ECOGYRO GScooter S9 XBOOST",
+    "SCOOTER FTM",
+    "SCOOTER FTM GOGO",
+    "SCOOTER SMART",
+    "XSTRA UNISCOOT",
+    "Vostro"
+  ],
+  "MAHINDRA": [
+    "KUV100NXTK8",
+    "PICK UP S6",
+    "XUV 300 W6",
+    "KUV 100 NXT K6+",
+    "XUV300 W8"
+  ],
+  "DAYUN MOTO": [
+    "VESPA",
+    "DREAM DY1245T-23"
+  ],
+  "Mobylette": [
+    "Vespa",
+    "YEDEA LR4",
+    "SUPER MAX",
+    "Mobylette FTM"
+  ],
+  "UNISCOOT": [
+    "TOKTOK"
+  ],
+  "CHL": [
+    "CHL 30"
+  ],
+  "KAWASAKI": [
+    "Z750",
+    "ZR800",
+    "ZR806",
+    "ERMAX",
+    "Z1000AB5"
+  ],
+  "MG Motors": [
+    "MG ZS",
+    "MG GT BVA",
+    "MG 3",
+    "MG5 NET BLUE",
+    "MG 5",
+    "ZS",
+    "MG 6",
+    "HS 20T",
+    "MG6 20T",
+    "MG EHS PHEV"
+  ],
+  "BOOSTER": [
+    "BOOSTER SPIRIT MOTO",
+    "Booster Rocket",
+    "STANT"
+  ],
+  "FOTON": [
+    "FOTON AUMARC TX351",
+    "AUMARK C8215",
+    "EURO PARD 820",
+    "FOTON TUNLANDE"
+  ],
+  "KORAK MOTO": [
+    "KORAK FTM"
+  ],
+  "HUMMER MOTO": [
+    "HUMMER MOTO 2"
+  ],
+  "LIBERTY MOTO": [
+    "PIAGGIO"
+  ],
+  "TEZELLER": [
+    "TEZLION BUS"
+  ],
+  "SMART": [
+    "SCOOTER"
+  ],
+  "GEELY": [
+    "GEELY GX",
+    "GEELY GX3",
+    "GEELY GC6",
+    "GEELY GX3 PRO"
+  ],
+  "NITRO MOTO": [
+    "YAMAHA"
+  ],
+  "MISTRAL MOTO": [
+    "MS150Z2",
+    "SUPER FLY"
+  ],
+  "SHACMAN": [
+    "SHACMAN X3000-430"
+  ],
+  "ZXMCO": [
+    "ZXMCO ZX125T-12"
+  ],
+  "JAGUAR - LAND ROVER": [
+    "EVOQUE",
+    "FREELANDER2"
+  ],
+  "YAMAHA MOTO": [
+    "VMAX 1700",
+    "VMAX",
+    "BW 550",
+    "MAJESTY YP150",
+    "AEROX",
+    "XT660X",
+    "YAMAHA FLAME",
+    "MT07"
+  ],
+  "DFSK": [
+    "K02S",
+    "MINITRUCK",
+    "GLORY 580 1.5T CVT",
+    "MINI TRUCK K01H 1 1",
+    "MINI TRUCK K01H 1.3",
+    "DFSK ESC C32",
+    "GLORY 500 FENGON"
+  ],
+  "OTOKAR": [
+    "N 145 S/E27"
+  ],
+  "FIRST MOTOS": [
+    "MAX II",
+    "MAX 125"
+  ],
+  "CATERPILLAR": [
+    "Bulldozer"
+  ],
+  "Zimota Keeway Moto": [
+    "RKS CLASSIC 125",
+    "KEE110"
+  ],
+  "LOVOL": [
+    "LOVOLFL956F"
+  ],
+  "BRAVIA MOTO": [
+    "BRAVIA PLUS"
+  ],
+  "HIDROMEK": [
+    "HMK102B"
+  ],
+  "APRILIA": [
+    "PFGO",
+    "Aprilia Scarabeo Moto"
+  ],
+  "MALAGUTI": [
+    "F12"
+  ],
+  "KUBOTA": [
+    "L3540D",
+    "M7040D"
+  ],
+  "HIGER": [
+    "HIGER BUS"
+  ],
+  "LANDINI": [
+    "7865",
+    "R8860S",
+    "LANDINI SUPER 100 B"
+  ],
+  "DAIMLER AG": [
+    "E200 CDI"
+  ],
+  "RENAULT TRUCKS": [
+    "K440",
+    "K4",
+    "C440 DXI 11"
+  ],
+  "MOTO SENKE": [
+    "SK110-A"
+  ],
+  "SAME": [
+    "SAME EXPLORER 85"
+  ],
+  "KYMCO": [
+    "HEROISM"
+  ],
+  "CHANA": [
+    "NEW STAR TRUCK"
+  ],
+  "Himalayan Moto": [
+    "FTM",
+    "FTM110",
+    "BBM 110"
+  ],
+  "MORRIS": [
+    "MG3 VTI",
+    "MG GT"
+  ],
+  "SCANIA": [
+    "G410"
+  ],
+  "BAIC YINXIANG": [
+    "KENBO DVVT S3",
+    "KENBO S2 DVVT"
+  ],
+  "KWANG YANG": [
+    "MAXXER250"
+  ],
+  "SUZUKI MOTO": [
+    "BURGMAN STREET",
+    "GSXR 1000"
+  ],
+  "BEIQI FOTON": [
+    "FOTON TUNLAND"
+  ],
+  "CYCLOMOTEUR FTM": [
+    "Cheerful"
+  ],
+  "MOTO COBRA": [
+    "COBRA FTM"
+  ],
+  "BYD": [
+    "F3 VVL"
+  ],
+  "SYM MOTO": [
+    "TIGER3A",
+    "SYMPHONY ST",
+    "ORBIT",
+    "ORBIT 2"
+  ],
+  "MERLO": [
+    "MERLO P40.17EE"
+  ],
+  "SCOOTER UNISCOOT": [
+    "FX1"
+  ],
+  "CAN AM MOTO": [
+    "MAVERICK X3"
+  ],
+  "CHONGQING FEAS": [
+    "FEASTER FS125-4"
+  ],
+  "HTA MOTO": [
+    "PISTA HR",
+    "PISTA VCX"
+  ],
+  "LANCIA": [
+    "YPSILON"
+  ],
+  "FAW": [
+    "FAW BESTURN X40"
+  ],
+  "Linhai Moto": [
+    "Cuxi"
+  ],
+  "MBK": [
+    "YP125"
+  ],
+  "GOLDEN DRAGON": [
+    "GOLDEN DRAGON XI"
+  ],
+  "JIALING": [
+    "BANGO"
+  ],
+  "Lifan Breez": [
+    "520 (sedan)",
+    "520"
+  ],
+  "Hongben Moto": [
+    "POWER"
+  ],
+  "IMM": [
+    "SUPER DEER"
+  ],
+  "HENSIM": [
+    "GSM 110"
+  ],
+  "IVECO - FIAT": [
+    "DAILY - BUS"
+  ],
+  "GUSITE": [
+    "AZUR",
+    "CAPPUCCINO"
+  ],
+  "LEOPARD MOTO": [
+    "LEOPARD 200"
+  ],
+  "ZNEN": [
+    "VERACRUZ"
+  ],
+  "CUPRA": [
+    "CUPRA"
+  ],
+  "HEBEIZHONGXING": [
+    "GRAND TIGER"
+  ],
+  "MAN": [
+    "RR2"
+  ],
+  "Keeway Moto": [
+    "PARTNER 110"
+  ],
+  "WALLYSCAR": [
+    "719"
+  ],
+  "Renault Samsung": [
+    "SM5",
+    "SM 520"
+  ],
+  "SANYA MOTO": [
+    "SY 125"
+  ],
+  "RONGLI": [
+    "SLC125"
+  ],
+  "ALPHA": [
+    "FTM HAMMER III"
+  ],
+  "Bewheels": [
+    "GR-FORCE",
+    "S MAX"
+  ],
+  "BMW MOTO": [
+    "R1250",
+    "F700GS"
+  ],
+  "SPARK MOTO": [
+    "ITUCY"
+  ],
+  "Hongli": [
+    "SLC 125",
+    "EMAX",
+    "HL 125"
+  ],
+  "LONGJIA": [
+    "PHANTOM RC"
+  ],
+  "GAC MOTOR": [
+    "GS3 200T"
+  ],
+  "SOTIME": [
+    "SRB272"
+  ],
+  "HELI": [
+    "HECHA"
+  ]
+}

@@ -1,0 +1,5086 @@
+[
+  {
+    "model_name": "Q4 e-tron",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "RS e-tron GT",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "Q4 e-tron Sportback",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "S3",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "RS3",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "A3",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "A3 Quattro",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "e-tron GT",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "iX",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "i4",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "230i",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "M340i",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "M440i",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "330e xDrive",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "430i xDrive Gran Coupe",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "M2",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "X7",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "i7",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "Z4",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "X1",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "230i xDrive",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "M340i xDrive",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "330i xDrive",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "330e",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "740i",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "430i Gran Coupe",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "330i",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "M440i xDrive",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "M4",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "M440i xDrive Gran Coupe",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "M440i Gran Coupe",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "760i xDrive",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "Enclave",
+    "vehicle_manufacturer_name": "BUICK"
+  },
+  {
+    "model_name": "LYRIQ",
+    "vehicle_manufacturer_name": "CADILLAC"
+  },
+  {
+    "model_name": "Silverado 1500",
+    "vehicle_manufacturer_name": "CHEVROLET"
+  },
+  {
+    "model_name": "Traverse",
+    "vehicle_manufacturer_name": "CHEVROLET"
+  },
+  {
+    "model_name": "Equinox",
+    "vehicle_manufacturer_name": "CHEVROLET"
+  },
+  {
+    "model_name": "Bolt EV",
+    "vehicle_manufacturer_name": "CHEVROLET"
+  },
+  {
+    "model_name": "Bolt EUV",
+    "vehicle_manufacturer_name": "CHEVROLET"
+  },
+  {
+    "model_name": "Trax",
+    "vehicle_manufacturer_name": "CHEVROLET"
+  },
+  {
+    "model_name": "Corvette",
+    "vehicle_manufacturer_name": "CHEVROLET"
+  },
+  {
+    "model_name": "Southwind",
+    "vehicle_manufacturer_name": "FLEETWOOD"
+  },
+  {
+    "model_name": "Flair",
+    "vehicle_manufacturer_name": "FLEETWOOD"
+  },
+  {
+    "model_name": "Expedition",
+    "vehicle_manufacturer_name": "FORD"
+  },
+  {
+    "model_name": "F-150 Lightning",
+    "vehicle_manufacturer_name": "FORD"
+  },
+  {
+    "model_name": "Maverick",
+    "vehicle_manufacturer_name": "FORD"
+  },
+  {
+    "model_name": "E-Transit",
+    "vehicle_manufacturer_name": "FORD"
+  },
+  {
+    "model_name": "E-350 Super Duty",
+    "vehicle_manufacturer_name": "FORD"
+  },
+  {
+    "model_name": "GV70",
+    "vehicle_manufacturer_name": "GENESIS"
+  },
+  {
+    "model_name": "GV60",
+    "vehicle_manufacturer_name": "GENESIS"
+  },
+  {
+    "model_name": "Sierra 2500 HD",
+    "vehicle_manufacturer_name": "GMC"
+  },
+  {
+    "model_name": "Sierra 3500 HD",
+    "vehicle_manufacturer_name": "GMC"
+  },
+  {
+    "model_name": "Hummer EV Pickup",
+    "vehicle_manufacturer_name": "GMC"
+  },
+  {
+    "model_name": "Hummer EV SUV",
+    "vehicle_manufacturer_name": "GMC"
+  },
+  {
+    "model_name": "Terrain",
+    "vehicle_manufacturer_name": "GMC"
+  },
+  {
+    "model_name": "300.0",
+    "vehicle_manufacturer_name": "HINO"
+  },
+  {
+    "model_name": "Nautica",
+    "vehicle_manufacturer_name": "HOLIDAY RAMBLER"
+  },
+  {
+    "model_name": "Civic",
+    "vehicle_manufacturer_name": "HONDA"
+  },
+  {
+    "model_name": "HR-V",
+    "vehicle_manufacturer_name": "HONDA"
+  },
+  {
+    "model_name": "Pilot",
+    "vehicle_manufacturer_name": "HONDA"
+  },
+  {
+    "model_name": "CR-V",
+    "vehicle_manufacturer_name": "HONDA"
+  },
+  {
+    "model_name": "Tucson",
+    "vehicle_manufacturer_name": "HYUNDAI"
+  },
+  {
+    "model_name": "Palisade",
+    "vehicle_manufacturer_name": "HYUNDAI"
+  },
+  {
+    "model_name": "Kona Electric",
+    "vehicle_manufacturer_name": "HYUNDAI"
+  },
+  {
+    "model_name": "Ioniq 5",
+    "vehicle_manufacturer_name": "HYUNDAI"
+  },
+  {
+    "model_name": "Santa Cruz",
+    "vehicle_manufacturer_name": "HYUNDAI"
+  },
+  {
+    "model_name": "Santa Fe",
+    "vehicle_manufacturer_name": "HYUNDAI"
+  },
+  {
+    "model_name": "Elantra N",
+    "vehicle_manufacturer_name": "HYUNDAI"
+  },
+  {
+    "model_name": "QX55",
+    "vehicle_manufacturer_name": "INFINITI"
+  },
+  {
+    "model_name": "F-Type",
+    "vehicle_manufacturer_name": "JAGUAR"
+  },
+  {
+    "model_name": "Grand Wagoneer",
+    "vehicle_manufacturer_name": "JEEP"
+  },
+  {
+    "model_name": "Grand Cherokee",
+    "vehicle_manufacturer_name": "JEEP"
+  },
+  {
+    "model_name": "Wagoneer L",
+    "vehicle_manufacturer_name": "JEEP"
+  },
+  {
+    "model_name": "Wagoneer",
+    "vehicle_manufacturer_name": "JEEP"
+  },
+  {
+    "model_name": "Grand Wagoneer L",
+    "vehicle_manufacturer_name": "JEEP"
+  },
+  {
+    "model_name": "Niro",
+    "vehicle_manufacturer_name": "KIA"
+  },
+  {
+    "model_name": "Telluride",
+    "vehicle_manufacturer_name": "KIA"
+  },
+  {
+    "model_name": "Sportage",
+    "vehicle_manufacturer_name": "KIA"
+  },
+  {
+    "model_name": "Soul",
+    "vehicle_manufacturer_name": "KIA"
+  },
+  {
+    "model_name": "Niro EV",
+    "vehicle_manufacturer_name": "KIA"
+  },
+  {
+    "model_name": "EV6",
+    "vehicle_manufacturer_name": "KIA"
+  },
+  {
+    "model_name": "Range Rover Sport",
+    "vehicle_manufacturer_name": "LAND ROVER"
+  },
+  {
+    "model_name": "Range Rover",
+    "vehicle_manufacturer_name": "LAND ROVER"
+  },
+  {
+    "model_name": "Defender 130",
+    "vehicle_manufacturer_name": "LAND ROVER"
+  },
+  {
+    "model_name": "NX250",
+    "vehicle_manufacturer_name": "LEXUS"
+  },
+  {
+    "model_name": "NX450h+",
+    "vehicle_manufacturer_name": "LEXUS"
+  },
+  {
+    "model_name": "NX350h",
+    "vehicle_manufacturer_name": "LEXUS"
+  },
+  {
+    "model_name": "NX350",
+    "vehicle_manufacturer_name": "LEXUS"
+  },
+  {
+    "model_name": "IS500",
+    "vehicle_manufacturer_name": "LEXUS"
+  },
+  {
+    "model_name": "Navigator",
+    "vehicle_manufacturer_name": "LINCOLN"
+  },
+  {
+    "model_name": "Emira",
+    "vehicle_manufacturer_name": "LOTUS"
+  },
+  {
+    "model_name": "Air",
+    "vehicle_manufacturer_name": "LUCID"
+  },
+  {
+    "model_name": "CX-5",
+    "vehicle_manufacturer_name": "MAZDA"
+  },
+  {
+    "model_name": "MX-30 EV",
+    "vehicle_manufacturer_name": "MAZDA"
+  },
+  {
+    "model_name": "CX-50",
+    "vehicle_manufacturer_name": "MAZDA"
+  },
+  {
+    "model_name": "EQB 250",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "SL63 AMG",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "Maybach S680",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "C300",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "S580e",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "EQB 300",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "EQB 350",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "SL55 AMG",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "EQS 450+",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "EQS AMG",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "EQS 580",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "Outlander",
+    "vehicle_manufacturer_name": "MITSUBISHI"
+  },
+  {
+    "model_name": "Mirage",
+    "vehicle_manufacturer_name": "MITSUBISHI"
+  },
+  {
+    "model_name": "Eclipse Cross",
+    "vehicle_manufacturer_name": "MITSUBISHI"
+  },
+  {
+    "model_name": "Mirage G4",
+    "vehicle_manufacturer_name": "MITSUBISHI"
+  },
+  {
+    "model_name": "Murano",
+    "vehicle_manufacturer_name": "NISSAN"
+  },
+  {
+    "model_name": "Pathfinder",
+    "vehicle_manufacturer_name": "NISSAN"
+  },
+  {
+    "model_name": "Altima",
+    "vehicle_manufacturer_name": "NISSAN"
+  },
+  {
+    "model_name": "Frontier",
+    "vehicle_manufacturer_name": "NISSAN"
+  },
+  {
+    "model_name": "GT-R",
+    "vehicle_manufacturer_name": "NISSAN"
+  },
+  {
+    "model_name": "Polestar 2",
+    "vehicle_manufacturer_name": "POLESTAR"
+  },
+  {
+    "model_name": "R1S",
+    "vehicle_manufacturer_name": "RIVIAN"
+  },
+  {
+    "model_name": "R1T",
+    "vehicle_manufacturer_name": "RIVIAN"
+  },
+  {
+    "model_name": "Forester",
+    "vehicle_manufacturer_name": "SUBARU"
+  },
+  {
+    "model_name": "Outback",
+    "vehicle_manufacturer_name": "SUBARU"
+  },
+  {
+    "model_name": "Legacy",
+    "vehicle_manufacturer_name": "SUBARU"
+  },
+  {
+    "model_name": "Solterra",
+    "vehicle_manufacturer_name": "SUBARU"
+  },
+  {
+    "model_name": "BRZ",
+    "vehicle_manufacturer_name": "SUBARU"
+  },
+  {
+    "model_name": "Sequoia",
+    "vehicle_manufacturer_name": "TOYOTA"
+  },
+  {
+    "model_name": "Tundra",
+    "vehicle_manufacturer_name": "TOYOTA"
+  },
+  {
+    "model_name": "bZ4X",
+    "vehicle_manufacturer_name": "TOYOTA"
+  },
+  {
+    "model_name": "Corolla Cross",
+    "vehicle_manufacturer_name": "TOYOTA"
+  },
+  {
+    "model_name": "GR86",
+    "vehicle_manufacturer_name": "TOYOTA"
+  },
+  {
+    "model_name": "GR Corolla",
+    "vehicle_manufacturer_name": "TOYOTA"
+  },
+  {
+    "model_name": "Taos",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "Jetta",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "GTI",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "Tiguan",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "Golf R",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "C40 Recharge",
+    "vehicle_manufacturer_name": "VOLVO"
+  },
+  {
+    "model_name": "XC40",
+    "vehicle_manufacturer_name": "VOLVO"
+  },
+  {
+    "model_name": "Integra",
+    "vehicle_manufacturer_name": "ACURA"
+  },
+  {
+    "model_name": "MDX",
+    "vehicle_manufacturer_name": "ACURA"
+  },
+  {
+    "model_name": "RDX",
+    "vehicle_manufacturer_name": "ACURA"
+  },
+  {
+    "model_name": "TLX",
+    "vehicle_manufacturer_name": "ACURA"
+  },
+  {
+    "model_name": "Giulia",
+    "vehicle_manufacturer_name": "ALFA ROMEO"
+  },
+  {
+    "model_name": "Stelvio",
+    "vehicle_manufacturer_name": "ALFA ROMEO"
+  },
+  {
+    "model_name": "Tonale",
+    "vehicle_manufacturer_name": "ALFA ROMEO"
+  },
+  {
+    "model_name": "DB11",
+    "vehicle_manufacturer_name": "ASTON MARTIN"
+  },
+  {
+    "model_name": "DBS",
+    "vehicle_manufacturer_name": "ASTON MARTIN"
+  },
+  {
+    "model_name": "DBX",
+    "vehicle_manufacturer_name": "ASTON MARTIN"
+  },
+  {
+    "model_name": "DBX707",
+    "vehicle_manufacturer_name": "ASTON MARTIN"
+  },
+  {
+    "model_name": "Vantage",
+    "vehicle_manufacturer_name": "ASTON MARTIN"
+  },
+  {
+    "model_name": "A4 allroad",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "A4 Quattro",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "A5 Quattro",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "A5 Sportback",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "A6 allroad",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "A6 Quattro",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "A7 Sportback",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "A8 Quattro",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "e-tron Quattro",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "e-tron S",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "e-tron S Sportback",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "e-tron Sportback",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "Q3",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "Q5",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "Q5 Sportback",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "Q7",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "Q8",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "R8",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "RS Q8",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "RS5",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "RS5 Sportback",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "RS7 Sportback",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "S4",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "S5",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "S6",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "S7 Sportback",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "S8",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "SQ5 Sportback",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "SQ7",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "SQ8",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "TT Quattro",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "TT RS Quattro",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "TTS Quattro",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "Bentayga EWB",
+    "vehicle_manufacturer_name": "BENTLEY"
+  },
+  {
+    "model_name": "Continental",
+    "vehicle_manufacturer_name": "BENTLEY"
+  },
+  {
+    "model_name": "Flying Spur",
+    "vehicle_manufacturer_name": "BENTLEY"
+  },
+  {
+    "model_name": "All American FE",
+    "vehicle_manufacturer_name": "BLUE BIRD"
+  },
+  {
+    "model_name": "All American RE",
+    "vehicle_manufacturer_name": "BLUE BIRD"
+  },
+  {
+    "model_name": "SHL All American",
+    "vehicle_manufacturer_name": "BLUE BIRD"
+  },
+  {
+    "model_name": "Vision School Bus",
+    "vehicle_manufacturer_name": "BLUE BIRD"
+  },
+  {
+    "model_name": "118i",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "128ti",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "220i",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "220i Gran Coupe",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "430i",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "440i Gran Coupe",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "530e",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "530i",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "840i",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "840i Gran Coupe",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "840i xDrive",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "840i xDrive Gran Coupe",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "Alpina B8 Gran Coupe",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "Alpina XB7",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "iX xDrive40",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "iX xDrive50",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "M135i",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "M235i xDrive Gran Coupe",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "M240i",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "M240i xDrive",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "M3",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "M5",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "M550i xDrive",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "M760i xDrive",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "M8",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "M8 Gran Coupe",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "M850i xDrive",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "M850i xDrive Gran Coupe",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "X2",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "X3",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "X4",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "X5",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "X6",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "Encore GX",
+    "vehicle_manufacturer_name": "BUICK"
+  },
+  {
+    "model_name": "Envision",
+    "vehicle_manufacturer_name": "BUICK"
+  },
+  {
+    "model_name": "CT4",
+    "vehicle_manufacturer_name": "CADILLAC"
+  },
+  {
+    "model_name": "CT5",
+    "vehicle_manufacturer_name": "CADILLAC"
+  },
+  {
+    "model_name": "Escalade",
+    "vehicle_manufacturer_name": "CADILLAC"
+  },
+  {
+    "model_name": "Escalade ESV",
+    "vehicle_manufacturer_name": "CADILLAC"
+  },
+  {
+    "model_name": "XT4",
+    "vehicle_manufacturer_name": "CADILLAC"
+  },
+  {
+    "model_name": "XT5",
+    "vehicle_manufacturer_name": "CADILLAC"
+  },
+  {
+    "model_name": "XT6",
+    "vehicle_manufacturer_name": "CADILLAC"
+  },
+  {
+    "model_name": "Alsvin",
+    "vehicle_manufacturer_name": "CHANGAN"
+  },
+  {
+    "model_name": "CS35",
+    "vehicle_manufacturer_name": "CHANGAN"
+  },
+  {
+    "model_name": "CS55 Plus",
+    "vehicle_manufacturer_name": "CHANGAN"
+  },
+  {
+    "model_name": "Blazer",
+    "vehicle_manufacturer_name": "CHEVROLET"
+  },
+  {
+    "model_name": "Camaro",
+    "vehicle_manufacturer_name": "CHEVROLET"
+  },
+  {
+    "model_name": "Captiva",
+    "vehicle_manufacturer_name": "CHEVROLET"
+  },
+  {
+    "model_name": "Colorado",
+    "vehicle_manufacturer_name": "CHEVROLET"
+  },
+  {
+    "model_name": "Express 2500",
+    "vehicle_manufacturer_name": "CHEVROLET"
+  },
+  {
+    "model_name": "Express 3500",
+    "vehicle_manufacturer_name": "CHEVROLET"
+  },
+  {
+    "model_name": "Grove",
+    "vehicle_manufacturer_name": "CHEVROLET"
+  },
+  {
+    "model_name": "LCF 3500",
+    "vehicle_manufacturer_name": "CHEVROLET"
+  },
+  {
+    "model_name": "LCF 4500",
+    "vehicle_manufacturer_name": "CHEVROLET"
+  },
+  {
+    "model_name": "LCF 4500XD",
+    "vehicle_manufacturer_name": "CHEVROLET"
+  },
+  {
+    "model_name": "LCF 5500XD",
+    "vehicle_manufacturer_name": "CHEVROLET"
+  },
+  {
+    "model_name": "Malibu",
+    "vehicle_manufacturer_name": "CHEVROLET"
+  },
+  {
+    "model_name": "Onix",
+    "vehicle_manufacturer_name": "CHEVROLET"
+  },
+  {
+    "model_name": "S10 Max",
+    "vehicle_manufacturer_name": "CHEVROLET"
+  },
+  {
+    "model_name": "Silverado 2500 HD",
+    "vehicle_manufacturer_name": "CHEVROLET"
+  },
+  {
+    "model_name": "Silverado 3500 HD",
+    "vehicle_manufacturer_name": "CHEVROLET"
+  },
+  {
+    "model_name": "Suburban",
+    "vehicle_manufacturer_name": "CHEVROLET"
+  },
+  {
+    "model_name": "Tahoe",
+    "vehicle_manufacturer_name": "CHEVROLET"
+  },
+  {
+    "model_name": "Tornado Van",
+    "vehicle_manufacturer_name": "CHEVROLET"
+  },
+  {
+    "model_name": "Tracker",
+    "vehicle_manufacturer_name": "CHEVROLET"
+  },
+  {
+    "model_name": "Trailblazer",
+    "vehicle_manufacturer_name": "CHEVROLET"
+  },
+  {
+    "model_name": "Tiggo 7PRO",
+    "vehicle_manufacturer_name": "CHIREY"
+  },
+  {
+    "model_name": "Tiggo 8PRO",
+    "vehicle_manufacturer_name": "CHIREY"
+  },
+  {
+    "model_name": "Pacifica",
+    "vehicle_manufacturer_name": "CHRYSLER"
+  },
+  {
+    "model_name": "Durango",
+    "vehicle_manufacturer_name": "DODGE"
+  },
+  {
+    "model_name": "296 GTB",
+    "vehicle_manufacturer_name": "FERRARI"
+  },
+  {
+    "model_name": "296 GTS",
+    "vehicle_manufacturer_name": "FERRARI"
+  },
+  {
+    "model_name": "812 GTS",
+    "vehicle_manufacturer_name": "FERRARI"
+  },
+  {
+    "model_name": "Portofino M",
+    "vehicle_manufacturer_name": "FERRARI"
+  },
+  {
+    "model_name": "Roma",
+    "vehicle_manufacturer_name": "FERRARI"
+  },
+  {
+    "model_name": "SF90 Spider",
+    "vehicle_manufacturer_name": "FERRARI"
+  },
+  {
+    "model_name": "SF90 Stradale",
+    "vehicle_manufacturer_name": "FERRARI"
+  },
+  {
+    "model_name": "Pulse",
+    "vehicle_manufacturer_name": "FIAT"
+  },
+  {
+    "model_name": "Bronco",
+    "vehicle_manufacturer_name": "FORD"
+  },
+  {
+    "model_name": "Bronco Sport",
+    "vehicle_manufacturer_name": "FORD"
+  },
+  {
+    "model_name": "E-450 Super Duty",
+    "vehicle_manufacturer_name": "FORD"
+  },
+  {
+    "model_name": "Edge",
+    "vehicle_manufacturer_name": "FORD"
+  },
+  {
+    "model_name": "Escape",
+    "vehicle_manufacturer_name": "FORD"
+  },
+  {
+    "model_name": "Explorer",
+    "vehicle_manufacturer_name": "FORD"
+  },
+  {
+    "model_name": "F-150",
+    "vehicle_manufacturer_name": "FORD"
+  },
+  {
+    "model_name": "F-250 Super Duty",
+    "vehicle_manufacturer_name": "FORD"
+  },
+  {
+    "model_name": "F-350 Super Duty",
+    "vehicle_manufacturer_name": "FORD"
+  },
+  {
+    "model_name": "F650",
+    "vehicle_manufacturer_name": "FORD"
+  },
+  {
+    "model_name": "F750",
+    "vehicle_manufacturer_name": "FORD"
+  },
+  {
+    "model_name": "Mustang Mach-E",
+    "vehicle_manufacturer_name": "FORD"
+  },
+  {
+    "model_name": "Police Interceptor Utility",
+    "vehicle_manufacturer_name": "FORD"
+  },
+  {
+    "model_name": "Ranger",
+    "vehicle_manufacturer_name": "FORD"
+  },
+  {
+    "model_name": "108SD",
+    "vehicle_manufacturer_name": "FREIGHTLINER"
+  },
+  {
+    "model_name": "114SD",
+    "vehicle_manufacturer_name": "FREIGHTLINER"
+  },
+  {
+    "model_name": "122SD",
+    "vehicle_manufacturer_name": "FREIGHTLINER"
+  },
+  {
+    "model_name": "B2",
+    "vehicle_manufacturer_name": "FREIGHTLINER"
+  },
+  {
+    "model_name": "Cascadia",
+    "vehicle_manufacturer_name": "FREIGHTLINER"
+  },
+  {
+    "model_name": "M2 106",
+    "vehicle_manufacturer_name": "FREIGHTLINER"
+  },
+  {
+    "model_name": "M2 112",
+    "vehicle_manufacturer_name": "FREIGHTLINER"
+  },
+  {
+    "model_name": "G70",
+    "vehicle_manufacturer_name": "GENESIS"
+  },
+  {
+    "model_name": "G80",
+    "vehicle_manufacturer_name": "GENESIS"
+  },
+  {
+    "model_name": "GV80",
+    "vehicle_manufacturer_name": "GENESIS"
+  },
+  {
+    "model_name": "Acadia",
+    "vehicle_manufacturer_name": "GMC"
+  },
+  {
+    "model_name": "Canyon",
+    "vehicle_manufacturer_name": "GMC"
+  },
+  {
+    "model_name": "Hummer EV",
+    "vehicle_manufacturer_name": "GMC"
+  },
+  {
+    "model_name": "Savana 2500",
+    "vehicle_manufacturer_name": "GMC"
+  },
+  {
+    "model_name": "Savana 3500",
+    "vehicle_manufacturer_name": "GMC"
+  },
+  {
+    "model_name": "Sierra 1500",
+    "vehicle_manufacturer_name": "GMC"
+  },
+  {
+    "model_name": "Yukon",
+    "vehicle_manufacturer_name": "GMC"
+  },
+  {
+    "model_name": "Yukon XL",
+    "vehicle_manufacturer_name": "GMC"
+  },
+  {
+    "model_name": "198.0",
+    "vehicle_manufacturer_name": "HINO"
+  },
+  {
+    "model_name": "258.0",
+    "vehicle_manufacturer_name": "HINO"
+  },
+  {
+    "model_name": "268.0",
+    "vehicle_manufacturer_name": "HINO"
+  },
+  {
+    "model_name": "338.0",
+    "vehicle_manufacturer_name": "HINO"
+  },
+  {
+    "model_name": "358.0",
+    "vehicle_manufacturer_name": "HINO"
+  },
+  {
+    "model_name": "Odyssey",
+    "vehicle_manufacturer_name": "HONDA"
+  },
+  {
+    "model_name": "Passport",
+    "vehicle_manufacturer_name": "HONDA"
+  },
+  {
+    "model_name": "Ridgeline",
+    "vehicle_manufacturer_name": "HONDA"
+  },
+  {
+    "model_name": "Elantra",
+    "vehicle_manufacturer_name": "HYUNDAI"
+  },
+  {
+    "model_name": "Grand i10",
+    "vehicle_manufacturer_name": "HYUNDAI"
+  },
+  {
+    "model_name": "Kona",
+    "vehicle_manufacturer_name": "HYUNDAI"
+  },
+  {
+    "model_name": "Kona N",
+    "vehicle_manufacturer_name": "HYUNDAI"
+  },
+  {
+    "model_name": "Nexo",
+    "vehicle_manufacturer_name": "HYUNDAI"
+  },
+  {
+    "model_name": "Sonata",
+    "vehicle_manufacturer_name": "HYUNDAI"
+  },
+  {
+    "model_name": "Venue",
+    "vehicle_manufacturer_name": "HYUNDAI"
+  },
+  {
+    "model_name": "Q50",
+    "vehicle_manufacturer_name": "INFINITI"
+  },
+  {
+    "model_name": "QX50",
+    "vehicle_manufacturer_name": "INFINITI"
+  },
+  {
+    "model_name": "QX60",
+    "vehicle_manufacturer_name": "INFINITI"
+  },
+  {
+    "model_name": "QX80",
+    "vehicle_manufacturer_name": "INFINITI"
+  },
+  {
+    "model_name": "NPR-HD",
+    "vehicle_manufacturer_name": "ISUZU"
+  },
+  {
+    "model_name": "NQR",
+    "vehicle_manufacturer_name": "ISUZU"
+  },
+  {
+    "model_name": "NRR",
+    "vehicle_manufacturer_name": "ISUZU"
+  },
+  {
+    "model_name": "E Sunray",
+    "vehicle_manufacturer_name": "JAC"
+  },
+  {
+    "model_name": "E10X",
+    "vehicle_manufacturer_name": "JAC"
+  },
+  {
+    "model_name": "EJ7",
+    "vehicle_manufacturer_name": "JAC"
+  },
+  {
+    "model_name": "Frison",
+    "vehicle_manufacturer_name": "JAC"
+  },
+  {
+    "model_name": "J7",
+    "vehicle_manufacturer_name": "JAC"
+  },
+  {
+    "model_name": "SEI 2",
+    "vehicle_manufacturer_name": "JAC"
+  },
+  {
+    "model_name": "SEI 3",
+    "vehicle_manufacturer_name": "JAC"
+  },
+  {
+    "model_name": "SEI 4",
+    "vehicle_manufacturer_name": "JAC"
+  },
+  {
+    "model_name": "SEI 7",
+    "vehicle_manufacturer_name": "JAC"
+  },
+  {
+    "model_name": "Sunray",
+    "vehicle_manufacturer_name": "JAC"
+  },
+  {
+    "model_name": "E-Pace",
+    "vehicle_manufacturer_name": "JAGUAR"
+  },
+  {
+    "model_name": "F-Pace",
+    "vehicle_manufacturer_name": "JAGUAR"
+  },
+  {
+    "model_name": "I-Pace",
+    "vehicle_manufacturer_name": "JAGUAR"
+  },
+  {
+    "model_name": "XF",
+    "vehicle_manufacturer_name": "JAGUAR"
+  },
+  {
+    "model_name": "Cherokee",
+    "vehicle_manufacturer_name": "JEEP"
+  },
+  {
+    "model_name": "Compass",
+    "vehicle_manufacturer_name": "JEEP"
+  },
+  {
+    "model_name": "Gladiator",
+    "vehicle_manufacturer_name": "JEEP"
+  },
+  {
+    "model_name": "Grand Cherokee L",
+    "vehicle_manufacturer_name": "JEEP"
+  },
+  {
+    "model_name": "Renegade",
+    "vehicle_manufacturer_name": "JEEP"
+  },
+  {
+    "model_name": "Wrangler",
+    "vehicle_manufacturer_name": "JEEP"
+  },
+  {
+    "model_name": "GS-6",
+    "vehicle_manufacturer_name": "KARMA"
+  },
+  {
+    "model_name": "GSe-6",
+    "vehicle_manufacturer_name": "KARMA"
+  },
+  {
+    "model_name": "K270",
+    "vehicle_manufacturer_name": "KENWORTH"
+  },
+  {
+    "model_name": "K370",
+    "vehicle_manufacturer_name": "KENWORTH"
+  },
+  {
+    "model_name": "T270",
+    "vehicle_manufacturer_name": "KENWORTH"
+  },
+  {
+    "model_name": "T280",
+    "vehicle_manufacturer_name": "KENWORTH"
+  },
+  {
+    "model_name": "T370",
+    "vehicle_manufacturer_name": "KENWORTH"
+  },
+  {
+    "model_name": "T380",
+    "vehicle_manufacturer_name": "KENWORTH"
+  },
+  {
+    "model_name": "T400",
+    "vehicle_manufacturer_name": "KENWORTH"
+  },
+  {
+    "model_name": "T480",
+    "vehicle_manufacturer_name": "KENWORTH"
+  },
+  {
+    "model_name": "T680",
+    "vehicle_manufacturer_name": "KENWORTH"
+  },
+  {
+    "model_name": "T800",
+    "vehicle_manufacturer_name": "KENWORTH"
+  },
+  {
+    "model_name": "T880",
+    "vehicle_manufacturer_name": "KENWORTH"
+  },
+  {
+    "model_name": "W900",
+    "vehicle_manufacturer_name": "KENWORTH"
+  },
+  {
+    "model_name": "W990",
+    "vehicle_manufacturer_name": "KENWORTH"
+  },
+  {
+    "model_name": "Carnival",
+    "vehicle_manufacturer_name": "KIA"
+  },
+  {
+    "model_name": "Forte",
+    "vehicle_manufacturer_name": "KIA"
+  },
+  {
+    "model_name": "Forte5",
+    "vehicle_manufacturer_name": "KIA"
+  },
+  {
+    "model_name": "K5",
+    "vehicle_manufacturer_name": "KIA"
+  },
+  {
+    "model_name": "Seltos",
+    "vehicle_manufacturer_name": "KIA"
+  },
+  {
+    "model_name": "Sorento",
+    "vehicle_manufacturer_name": "KIA"
+  },
+  {
+    "model_name": "Stinger",
+    "vehicle_manufacturer_name": "KIA"
+  },
+  {
+    "model_name": "Huracan",
+    "vehicle_manufacturer_name": "LAMBORGHINI"
+  },
+  {
+    "model_name": "Urus",
+    "vehicle_manufacturer_name": "LAMBORGHINI"
+  },
+  {
+    "model_name": "Defender 110",
+    "vehicle_manufacturer_name": "LAND ROVER"
+  },
+  {
+    "model_name": "Defender 90",
+    "vehicle_manufacturer_name": "LAND ROVER"
+  },
+  {
+    "model_name": "Discovery",
+    "vehicle_manufacturer_name": "LAND ROVER"
+  },
+  {
+    "model_name": "Discovery Sport",
+    "vehicle_manufacturer_name": "LAND ROVER"
+  },
+  {
+    "model_name": "Range Rover Evoque",
+    "vehicle_manufacturer_name": "LAND ROVER"
+  },
+  {
+    "model_name": "Range Rover Velar",
+    "vehicle_manufacturer_name": "LAND ROVER"
+  },
+  {
+    "model_name": "ES250",
+    "vehicle_manufacturer_name": "LEXUS"
+  },
+  {
+    "model_name": "GX460",
+    "vehicle_manufacturer_name": "LEXUS"
+  },
+  {
+    "model_name": "IS300",
+    "vehicle_manufacturer_name": "LEXUS"
+  },
+  {
+    "model_name": "IS350",
+    "vehicle_manufacturer_name": "LEXUS"
+  },
+  {
+    "model_name": "LX600",
+    "vehicle_manufacturer_name": "LEXUS"
+  },
+  {
+    "model_name": "RZ450e",
+    "vehicle_manufacturer_name": "LEXUS"
+  },
+  {
+    "model_name": "UXh",
+    "vehicle_manufacturer_name": "LEXUS"
+  },
+  {
+    "model_name": "Aviator",
+    "vehicle_manufacturer_name": "LINCOLN"
+  },
+  {
+    "model_name": "Nautilus",
+    "vehicle_manufacturer_name": "LINCOLN"
+  },
+  {
+    "model_name": "Anthem",
+    "vehicle_manufacturer_name": "MACK"
+  },
+  {
+    "model_name": "Granite",
+    "vehicle_manufacturer_name": "MACK"
+  },
+  {
+    "model_name": "LR",
+    "vehicle_manufacturer_name": "MACK"
+  },
+  {
+    "model_name": "MD7",
+    "vehicle_manufacturer_name": "MACK"
+  },
+  {
+    "model_name": "Pinnacle",
+    "vehicle_manufacturer_name": "MACK"
+  },
+  {
+    "model_name": "TerraPro",
+    "vehicle_manufacturer_name": "MACK"
+  },
+  {
+    "model_name": "Ghibli",
+    "vehicle_manufacturer_name": "MASERATI"
+  },
+  {
+    "model_name": "Grecale",
+    "vehicle_manufacturer_name": "MASERATI"
+  },
+  {
+    "model_name": "Levante",
+    "vehicle_manufacturer_name": "MASERATI"
+  },
+  {
+    "model_name": "MC20",
+    "vehicle_manufacturer_name": "MASERATI"
+  },
+  {
+    "model_name": "Quattroporte",
+    "vehicle_manufacturer_name": "MASERATI"
+  },
+  {
+    "model_name": "2.0",
+    "vehicle_manufacturer_name": "MAZDA"
+  },
+  {
+    "model_name": "CX-30",
+    "vehicle_manufacturer_name": "MAZDA"
+  },
+  {
+    "model_name": "Artura",
+    "vehicle_manufacturer_name": "MCLAREN"
+  },
+  {
+    "model_name": "AMG GT 63",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "AMG GT 63 S",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "C43 AMG",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "C63 AMG",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "CLS450",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "CLS53 AMG",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "EQS 53 AMG",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "GLA250",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "GLA35 AMG",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "GLA45 AMG",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "GLB250",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "GLB35 AMG",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "GLE53 AMG",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "GLE63 AMG S",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "Maybach S580",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "Metris",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "S500",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "S580",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "Sprinter 1500",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "Sprinter 2500",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "Sprinter 3500",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "Sprinter 3500XD",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "Cooper",
+    "vehicle_manufacturer_name": "MINI"
+  },
+  {
+    "model_name": "Cooper Clubman",
+    "vehicle_manufacturer_name": "MINI"
+  },
+  {
+    "model_name": "Cooper Countryman",
+    "vehicle_manufacturer_name": "MINI"
+  },
+  {
+    "model_name": "L200",
+    "vehicle_manufacturer_name": "MITSUBISHI"
+  },
+  {
+    "model_name": "Xpander",
+    "vehicle_manufacturer_name": "MITSUBISHI"
+  },
+  {
+    "model_name": "Ariya",
+    "vehicle_manufacturer_name": "NISSAN"
+  },
+  {
+    "model_name": "Armada",
+    "vehicle_manufacturer_name": "NISSAN"
+  },
+  {
+    "model_name": "Kicks",
+    "vehicle_manufacturer_name": "NISSAN"
+  },
+  {
+    "model_name": "LEAF",
+    "vehicle_manufacturer_name": "NISSAN"
+  },
+  {
+    "model_name": "Maxima",
+    "vehicle_manufacturer_name": "NISSAN"
+  },
+  {
+    "model_name": "Rogue",
+    "vehicle_manufacturer_name": "NISSAN"
+  },
+  {
+    "model_name": "Sentra",
+    "vehicle_manufacturer_name": "NISSAN"
+  },
+  {
+    "model_name": "Titan",
+    "vehicle_manufacturer_name": "NISSAN"
+  },
+  {
+    "model_name": "Titan XD",
+    "vehicle_manufacturer_name": "NISSAN"
+  },
+  {
+    "model_name": "Versa",
+    "vehicle_manufacturer_name": "NISSAN"
+  },
+  {
+    "model_name": "220.0",
+    "vehicle_manufacturer_name": "PETERBILT"
+  },
+  {
+    "model_name": "337.0",
+    "vehicle_manufacturer_name": "PETERBILT"
+  },
+  {
+    "model_name": "348.0",
+    "vehicle_manufacturer_name": "PETERBILT"
+  },
+  {
+    "model_name": "365.0",
+    "vehicle_manufacturer_name": "PETERBILT"
+  },
+  {
+    "model_name": "367.0",
+    "vehicle_manufacturer_name": "PETERBILT"
+  },
+  {
+    "model_name": "389.0",
+    "vehicle_manufacturer_name": "PETERBILT"
+  },
+  {
+    "model_name": "520.0",
+    "vehicle_manufacturer_name": "PETERBILT"
+  },
+  {
+    "model_name": "536.0",
+    "vehicle_manufacturer_name": "PETERBILT"
+  },
+  {
+    "model_name": "537.0",
+    "vehicle_manufacturer_name": "PETERBILT"
+  },
+  {
+    "model_name": "548.0",
+    "vehicle_manufacturer_name": "PETERBILT"
+  },
+  {
+    "model_name": "567.0",
+    "vehicle_manufacturer_name": "PETERBILT"
+  },
+  {
+    "model_name": "579.0",
+    "vehicle_manufacturer_name": "PETERBILT"
+  },
+  {
+    "model_name": "A4",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "Expert",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "Landtrek",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "Manager",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "Partner",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "Rifter",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "718 Boxster",
+    "vehicle_manufacturer_name": "PORSCHE"
+  },
+  {
+    "model_name": "718 Cayman",
+    "vehicle_manufacturer_name": "PORSCHE"
+  },
+  {
+    "model_name": "718 Spyder",
+    "vehicle_manufacturer_name": "PORSCHE"
+  },
+  {
+    "model_name": "911.0",
+    "vehicle_manufacturer_name": "PORSCHE"
+  },
+  {
+    "model_name": "Cayenne",
+    "vehicle_manufacturer_name": "PORSCHE"
+  },
+  {
+    "model_name": "Macan",
+    "vehicle_manufacturer_name": "PORSCHE"
+  },
+  {
+    "model_name": "Panamera",
+    "vehicle_manufacturer_name": "PORSCHE"
+  },
+  {
+    "model_name": "Taycan",
+    "vehicle_manufacturer_name": "PORSCHE"
+  },
+  {
+    "model_name": "High Decker",
+    "vehicle_manufacturer_name": "PREVOST"
+  },
+  {
+    "model_name": "X3 Coach",
+    "vehicle_manufacturer_name": "PREVOST"
+  },
+  {
+    "model_name": "1500 Classic",
+    "vehicle_manufacturer_name": "RAM"
+  },
+  {
+    "model_name": "ProMaster 1500",
+    "vehicle_manufacturer_name": "RAM"
+  },
+  {
+    "model_name": "ProMaster 2500",
+    "vehicle_manufacturer_name": "RAM"
+  },
+  {
+    "model_name": "ProMaster 3500",
+    "vehicle_manufacturer_name": "RAM"
+  },
+  {
+    "model_name": "Kangoo",
+    "vehicle_manufacturer_name": "RENAULT"
+  },
+  {
+    "model_name": "KWID",
+    "vehicle_manufacturer_name": "RENAULT"
+  },
+  {
+    "model_name": "Oroch",
+    "vehicle_manufacturer_name": "RENAULT"
+  },
+  {
+    "model_name": "RCV-500",
+    "vehicle_manufacturer_name": "RIVIAN"
+  },
+  {
+    "model_name": "RCV-700",
+    "vehicle_manufacturer_name": "RIVIAN"
+  },
+  {
+    "model_name": "Cullinan",
+    "vehicle_manufacturer_name": "ROLLS-ROYCE"
+  },
+  {
+    "model_name": "Ghost",
+    "vehicle_manufacturer_name": "ROLLS-ROYCE"
+  },
+  {
+    "model_name": "Phantom",
+    "vehicle_manufacturer_name": "ROLLS-ROYCE"
+  },
+  {
+    "model_name": "K3",
+    "vehicle_manufacturer_name": "SPARTAN MOTORS"
+  },
+  {
+    "model_name": "Ascent",
+    "vehicle_manufacturer_name": "SUBARU"
+  },
+  {
+    "model_name": "Crosstrek",
+    "vehicle_manufacturer_name": "SUBARU"
+  },
+  {
+    "model_name": "Impreza",
+    "vehicle_manufacturer_name": "SUBARU"
+  },
+  {
+    "model_name": "WRX",
+    "vehicle_manufacturer_name": "SUBARU"
+  },
+  {
+    "model_name": "Swift",
+    "vehicle_manufacturer_name": "SUZUKI"
+  },
+  {
+    "model_name": "3.0",
+    "vehicle_manufacturer_name": "TESLA"
+  },
+  {
+    "model_name": "S",
+    "vehicle_manufacturer_name": "TESLA"
+  },
+  {
+    "model_name": "X",
+    "vehicle_manufacturer_name": "TESLA"
+  },
+  {
+    "model_name": "Y",
+    "vehicle_manufacturer_name": "TESLA"
+  },
+  {
+    "model_name": "Saf-T-Liner",
+    "vehicle_manufacturer_name": "THOMAS"
+  },
+  {
+    "model_name": "Transit Liner",
+    "vehicle_manufacturer_name": "THOMAS"
+  },
+  {
+    "model_name": "4Runner",
+    "vehicle_manufacturer_name": "TOYOTA"
+  },
+  {
+    "model_name": "Camry",
+    "vehicle_manufacturer_name": "TOYOTA"
+  },
+  {
+    "model_name": "Corolla",
+    "vehicle_manufacturer_name": "TOYOTA"
+  },
+  {
+    "model_name": "GR Supra",
+    "vehicle_manufacturer_name": "TOYOTA"
+  },
+  {
+    "model_name": "Highlander",
+    "vehicle_manufacturer_name": "TOYOTA"
+  },
+  {
+    "model_name": "Mirai",
+    "vehicle_manufacturer_name": "TOYOTA"
+  },
+  {
+    "model_name": "RAV4",
+    "vehicle_manufacturer_name": "TOYOTA"
+  },
+  {
+    "model_name": "RAV4 Prime",
+    "vehicle_manufacturer_name": "TOYOTA"
+  },
+  {
+    "model_name": "Sienna",
+    "vehicle_manufacturer_name": "TOYOTA"
+  },
+  {
+    "model_name": "Tacoma",
+    "vehicle_manufacturer_name": "TOYOTA"
+  },
+  {
+    "model_name": "Venza",
+    "vehicle_manufacturer_name": "TOYOTA"
+  },
+  {
+    "model_name": "Arteon",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "Atlas",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "Atlas Cross Sport",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "ID.4",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "S60",
+    "vehicle_manufacturer_name": "VOLVO"
+  },
+  {
+    "model_name": "S90",
+    "vehicle_manufacturer_name": "VOLVO"
+  },
+  {
+    "model_name": "V60",
+    "vehicle_manufacturer_name": "VOLVO"
+  },
+  {
+    "model_name": "V60 Cross Country",
+    "vehicle_manufacturer_name": "VOLVO"
+  },
+  {
+    "model_name": "VHD",
+    "vehicle_manufacturer_name": "VOLVO"
+  },
+  {
+    "model_name": "VNL",
+    "vehicle_manufacturer_name": "VOLVO"
+  },
+  {
+    "model_name": "VNR",
+    "vehicle_manufacturer_name": "VOLVO"
+  },
+  {
+    "model_name": "XC40 Recharge",
+    "vehicle_manufacturer_name": "VOLVO"
+  },
+  {
+    "model_name": "XC60",
+    "vehicle_manufacturer_name": "VOLVO"
+  },
+  {
+    "model_name": "XC90",
+    "vehicle_manufacturer_name": "VOLVO"
+  },
+  {
+    "model_name": "4700SB",
+    "vehicle_manufacturer_name": "WESTERN STAR"
+  },
+  {
+    "model_name": "4700SF",
+    "vehicle_manufacturer_name": "WESTERN STAR"
+  },
+  {
+    "model_name": "4900EX",
+    "vehicle_manufacturer_name": "WESTERN STAR"
+  },
+  {
+    "model_name": "4900FA",
+    "vehicle_manufacturer_name": "WESTERN STAR"
+  },
+  {
+    "model_name": "4900SA",
+    "vehicle_manufacturer_name": "WESTERN STAR"
+  },
+  {
+    "model_name": "E450",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "Transit Connect",
+    "vehicle_manufacturer_name": "FORD"
+  },
+  {
+    "model_name": "Transit-250",
+    "vehicle_manufacturer_name": "FORD"
+  },
+  {
+    "model_name": "2500.0",
+    "vehicle_manufacturer_name": "RAM"
+  },
+  {
+    "model_name": "3500.0",
+    "vehicle_manufacturer_name": "RAM"
+  },
+  {
+    "model_name": "Aucun",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "CLIO",
+    "vehicle_manufacturer_name": "RENAULT"
+  },
+  {
+    "model_name": "aucun",
+    "vehicle_manufacturer_name": "IVECO"
+  },
+  {
+    "model_name": "IVECO 6*6",
+    "vehicle_manufacturer_name": "IVECO"
+  },
+  {
+    "model_name": "VCUD40",
+    "vehicle_manufacturer_name": "NISSAN"
+  },
+  {
+    "model_name": "GOLF",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "POLO",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "520i",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "PICANTO",
+    "vehicle_manufacturer_name": "KIA"
+  },
+  {
+    "model_name": "SCUDO",
+    "vehicle_manufacturer_name": "FIAT"
+  },
+  {
+    "model_name": "MEGANE",
+    "vehicle_manufacturer_name": "RENAULT"
+  },
+  {
+    "model_name": "207",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "HILUX",
+    "vehicle_manufacturer_name": "TOYOTA"
+  },
+  {
+    "model_name": "XMQ6552",
+    "vehicle_manufacturer_name": "KING LONG"
+  },
+  {
+    "model_name": "GRANDE PUNTO",
+    "vehicle_manufacturer_name": "FIAT"
+  },
+  {
+    "model_name": "PUNTO",
+    "vehicle_manufacturer_name": "FIAT"
+  },
+  {
+    "model_name": "2008",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "208",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "107",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "Dokker",
+    "vehicle_manufacturer_name": "DACIA"
+  },
+  {
+    "model_name": "DOKKER VAN LUX",
+    "vehicle_manufacturer_name": "DACIA"
+  },
+  {
+    "model_name": "PASSAT",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "DIAMOND",
+    "vehicle_manufacturer_name": "MOTOCYCLE"
+  },
+  {
+    "model_name": "MBK",
+    "vehicle_manufacturer_name": "DIAMOND"
+  },
+  {
+    "model_name": "FIORINO MULTIJET",
+    "vehicle_manufacturer_name": "FIAT"
+  },
+  {
+    "model_name": "TIVOLI",
+    "vehicle_manufacturer_name": "SSANGYONG"
+  },
+  {
+    "model_name": "PAJERO",
+    "vehicle_manufacturer_name": "MITSUBISHI"
+  },
+  {
+    "model_name": "MAZDA 3",
+    "vehicle_manufacturer_name": "MAZDA"
+  },
+  {
+    "model_name": "C-Elysée",
+    "vehicle_manufacturer_name": "CITROËN"
+  },
+  {
+    "model_name": "C1",
+    "vehicle_manufacturer_name": "CITROËN"
+  },
+  {
+    "model_name": "C3",
+    "vehicle_manufacturer_name": "CITROËN"
+  },
+  {
+    "model_name": "C4",
+    "vehicle_manufacturer_name": "CITROËN"
+  },
+  {
+    "model_name": "C5",
+    "vehicle_manufacturer_name": "CITROËN"
+  },
+  {
+    "model_name": "C4 PICASSO",
+    "vehicle_manufacturer_name": "CITROËN"
+  },
+  {
+    "model_name": "C4 CACTUS",
+    "vehicle_manufacturer_name": "CITROËN"
+  },
+  {
+    "model_name": "C3 AIRCROSS",
+    "vehicle_manufacturer_name": "CITROËN"
+  },
+  {
+    "model_name": "JUMPY",
+    "vehicle_manufacturer_name": "CITROËN"
+  },
+  {
+    "model_name": "NEMO",
+    "vehicle_manufacturer_name": "CITROËN"
+  },
+  {
+    "model_name": "JUMPER",
+    "vehicle_manufacturer_name": "CITROËN"
+  },
+  {
+    "model_name": "BERLINGO",
+    "vehicle_manufacturer_name": "CITROËN"
+  },
+  {
+    "model_name": "BERLINGO VAN",
+    "vehicle_manufacturer_name": "CITROËN"
+  },
+  {
+    "model_name": "DS3",
+    "vehicle_manufacturer_name": "CITROËN"
+  },
+  {
+    "model_name": "DS4",
+    "vehicle_manufacturer_name": "CITROËN"
+  },
+  {
+    "model_name": "BIPPER",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "BOXER",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "408",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "206",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "CAPTUR",
+    "vehicle_manufacturer_name": "RENAULT"
+  },
+  {
+    "model_name": "DUSTER",
+    "vehicle_manufacturer_name": "RENAULT"
+  },
+  {
+    "model_name": "MEGANE SEDAN",
+    "vehicle_manufacturer_name": "RENAULT"
+  },
+  {
+    "model_name": "IBIZA",
+    "vehicle_manufacturer_name": "SEAT"
+  },
+  {
+    "model_name": "ARONA",
+    "vehicle_manufacturer_name": "SEAT"
+  },
+  {
+    "model_name": "LEON",
+    "vehicle_manufacturer_name": "SEAT"
+  },
+  {
+    "model_name": "ATECA",
+    "vehicle_manufacturer_name": "SEAT"
+  },
+  {
+    "model_name": "TARRACO",
+    "vehicle_manufacturer_name": "SEAT"
+  },
+  {
+    "model_name": "AGYA",
+    "vehicle_manufacturer_name": "TOYOTA"
+  },
+  {
+    "model_name": "YARIS",
+    "vehicle_manufacturer_name": "TOYOTA"
+  },
+  {
+    "model_name": "HIACE",
+    "vehicle_manufacturer_name": "TOYOTA"
+  },
+  {
+    "model_name": "LAND CRUISER",
+    "vehicle_manufacturer_name": "TOYOTA"
+  },
+  {
+    "model_name": "PRADO",
+    "vehicle_manufacturer_name": "TOYOTA"
+  },
+  {
+    "model_name": "COASTER",
+    "vehicle_manufacturer_name": "TOYOTA"
+  },
+  {
+    "model_name": "FABIA",
+    "vehicle_manufacturer_name": "SKODA"
+  },
+  {
+    "model_name": "OCTAVIA",
+    "vehicle_manufacturer_name": "SKODA"
+  },
+  {
+    "model_name": "CORSA",
+    "vehicle_manufacturer_name": "OPEL"
+  },
+  {
+    "model_name": "MOKKA",
+    "vehicle_manufacturer_name": "OPEL"
+  },
+  {
+    "model_name": "ASTRA",
+    "vehicle_manufacturer_name": "OPEL"
+  },
+  {
+    "model_name": "COMBO CARGO",
+    "vehicle_manufacturer_name": "OPEL"
+  },
+  {
+    "model_name": "206+",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "PICK UP",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "PARTNER TEPEE",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "407 SEDAN",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "307",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "308 CC",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "106",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "301",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "3008",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "5008",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "205",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "308",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "407",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "406",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "R5",
+    "vehicle_manufacturer_name": "RENAULT"
+  },
+  {
+    "model_name": "R19",
+    "vehicle_manufacturer_name": "RENAULT"
+  },
+  {
+    "model_name": "CLIO SYMBOL",
+    "vehicle_manufacturer_name": "RENAULT"
+  },
+  {
+    "model_name": "SYMBOL",
+    "vehicle_manufacturer_name": "RENAULT"
+  },
+  {
+    "model_name": "CLIO CAMPUS",
+    "vehicle_manufacturer_name": "RENAULT"
+  },
+  {
+    "model_name": "FLUENCE",
+    "vehicle_manufacturer_name": "RENAULT"
+  },
+  {
+    "model_name": "FIAT 500",
+    "vehicle_manufacturer_name": "FIAT"
+  },
+  {
+    "model_name": "PANDA",
+    "vehicle_manufacturer_name": "FIAT"
+  },
+  {
+    "model_name": "TIPO BERLINE",
+    "vehicle_manufacturer_name": "FIAT"
+  },
+  {
+    "model_name": "DOBLO COMBI",
+    "vehicle_manufacturer_name": "FIAT"
+  },
+  {
+    "model_name": "DOBLO",
+    "vehicle_manufacturer_name": "FIAT"
+  },
+  {
+    "model_name": "FIORINO",
+    "vehicle_manufacturer_name": "FIAT"
+  },
+  {
+    "model_name": "DUCATO",
+    "vehicle_manufacturer_name": "FIAT"
+  },
+  {
+    "model_name": "i20",
+    "vehicle_manufacturer_name": "HYUNDAI"
+  },
+  {
+    "model_name": "i30",
+    "vehicle_manufacturer_name": "HYUNDAI"
+  },
+  {
+    "model_name": "BAYON",
+    "vehicle_manufacturer_name": "HYUNDAI"
+  },
+  {
+    "model_name": "ZIP",
+    "vehicle_manufacturer_name": "PIAGGIO"
+  },
+  {
+    "model_name": "PIAGGIO 1",
+    "vehicle_manufacturer_name": "PIAGGIO"
+  },
+  {
+    "model_name": "LIBERTY",
+    "vehicle_manufacturer_name": "PIAGGIO"
+  },
+  {
+    "model_name": "MEDLEY",
+    "vehicle_manufacturer_name": "PIAGGIO"
+  },
+  {
+    "model_name": "BEVERLY",
+    "vehicle_manufacturer_name": "PIAGGIO"
+  },
+  {
+    "model_name": "PIAGGIO MP3",
+    "vehicle_manufacturer_name": "PIAGGIO"
+  },
+  {
+    "model_name": "H6",
+    "vehicle_manufacturer_name": "GREATWALL"
+  },
+  {
+    "model_name": "C180",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "RIO",
+    "vehicle_manufacturer_name": "KIA"
+  },
+  {
+    "model_name": "UNISCOOT",
+    "vehicle_manufacturer_name": "FORZA MOTO"
+  },
+  {
+    "model_name": "FORZA FTM",
+    "vehicle_manufacturer_name": "FORZA MOTO"
+  },
+  {
+    "model_name": "ZIMOTA VESPA",
+    "vehicle_manufacturer_name": "ZIMOTA"
+  },
+  {
+    "model_name": "ZIMOTA KEE",
+    "vehicle_manufacturer_name": "ZIMOTA"
+  },
+  {
+    "model_name": "MBK YAMAHA MOTOR ESPANA 5AD",
+    "vehicle_manufacturer_name": "MBK YAMAHA MOTOR"
+  },
+  {
+    "model_name": "VOLVO 240",
+    "vehicle_manufacturer_name": "VOLVO"
+  },
+  {
+    "model_name": "RENAULT SYMBOL",
+    "vehicle_manufacturer_name": "RENAULT"
+  },
+  {
+    "model_name": "KING LONG BUS",
+    "vehicle_manufacturer_name": "KING LONG"
+  },
+  {
+    "model_name": "QUBO",
+    "vehicle_manufacturer_name": "FIAT"
+  },
+  {
+    "model_name": "D-MAX",
+    "vehicle_manufacturer_name": "ISUZU"
+  },
+  {
+    "model_name": "XENON",
+    "vehicle_manufacturer_name": "TATA"
+  },
+  {
+    "model_name": "VOLVO B 11 R",
+    "vehicle_manufacturer_name": "VOLVO"
+  },
+  {
+    "model_name": "SRA2R4T",
+    "vehicle_manufacturer_name": "HAZMI"
+  },
+  {
+    "model_name": "TAFE 5900 DI 4WD",
+    "vehicle_manufacturer_name": "TAFE"
+  },
+  {
+    "model_name": "R19 EUROPA",
+    "vehicle_manufacturer_name": "RENAULT"
+  },
+  {
+    "model_name": "CHERY TIGGO 2",
+    "vehicle_manufacturer_name": "CHERY"
+  },
+  {
+    "model_name": "LOGAN",
+    "vehicle_manufacturer_name": "DACIA"
+  },
+  {
+    "model_name": "CLIO CLASSIC",
+    "vehicle_manufacturer_name": "RENAULT"
+  },
+  {
+    "model_name": "EXPRESS",
+    "vehicle_manufacturer_name": "RENAULT"
+  },
+  {
+    "model_name": "EXPRESS VAN",
+    "vehicle_manufacturer_name": "RENAULT"
+  },
+  {
+    "model_name": "CRUZE",
+    "vehicle_manufacturer_name": "CHEVROLET"
+  },
+  {
+    "model_name": "A418T",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "DOUBLE CABINE",
+    "vehicle_manufacturer_name": "TATA"
+  },
+  {
+    "model_name": "PUNTO CLASSIC",
+    "vehicle_manufacturer_name": "FIAT"
+  },
+  {
+    "model_name": "TRANSPORTER",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "DF700",
+    "vehicle_manufacturer_name": "DONGFENG - DFM"
+  },
+  {
+    "model_name": "CLIO 4",
+    "vehicle_manufacturer_name": "RENAULT"
+  },
+  {
+    "model_name": "GLC 350e",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "BT504X4",
+    "vehicle_manufacturer_name": "MAZDA"
+  },
+  {
+    "model_name": "HA110-CFC",
+    "vehicle_manufacturer_name": "HAMMER"
+  },
+  {
+    "model_name": "FIAT ULYSSE",
+    "vehicle_manufacturer_name": "FIAT"
+  },
+  {
+    "model_name": "CLIO Tce",
+    "vehicle_manufacturer_name": "RENAULT"
+  },
+  {
+    "model_name": "DUCATO 130MULTIJ",
+    "vehicle_manufacturer_name": "FIAT"
+  },
+  {
+    "model_name": "CHERY TIGGO 3",
+    "vehicle_manufacturer_name": "CHERY"
+  },
+  {
+    "model_name": "ECOGYRO GScooter S9 XBOOST",
+    "vehicle_manufacturer_name": "SCOOTER"
+  },
+  {
+    "model_name": "KUV100NXTK8",
+    "vehicle_manufacturer_name": "MAHINDRA"
+  },
+  {
+    "model_name": "TOURAN",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "NKR",
+    "vehicle_manufacturer_name": "ISUZU"
+  },
+  {
+    "model_name": "FIESTA",
+    "vehicle_manufacturer_name": "FORD"
+  },
+  {
+    "model_name": "405",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "FOCUS",
+    "vehicle_manufacturer_name": "FORD"
+  },
+  {
+    "model_name": "NAVARA",
+    "vehicle_manufacturer_name": "NISSAN"
+  },
+  {
+    "model_name": "404 UXD",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "Peugeot 404 pick-up - bâché",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "MAX 3",
+    "vehicle_manufacturer_name": "MOTOCYCLE"
+  },
+  {
+    "model_name": "L2004WD",
+    "vehicle_manufacturer_name": "MITSUBISHI"
+  },
+  {
+    "model_name": "PICANTO GT LINE",
+    "vehicle_manufacturer_name": "KIA"
+  },
+  {
+    "model_name": "GOLF 3",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "MASTER",
+    "vehicle_manufacturer_name": "RENAULT"
+  },
+  {
+    "model_name": "FORZA KTM",
+    "vehicle_manufacturer_name": "FORZA MOTO"
+  },
+  {
+    "model_name": "A418FSI",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "VESPA",
+    "vehicle_manufacturer_name": "DAYUN MOTO"
+  },
+  {
+    "model_name": "Vespa",
+    "vehicle_manufacturer_name": "Mobylette"
+  },
+  {
+    "model_name": "TIPO",
+    "vehicle_manufacturer_name": "FIAT"
+  },
+  {
+    "model_name": "PALIO",
+    "vehicle_manufacturer_name": "FIAT"
+  },
+  {
+    "model_name": "AVANZA",
+    "vehicle_manufacturer_name": "TOYOTA"
+  },
+  {
+    "model_name": "305",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "ACTYON",
+    "vehicle_manufacturer_name": "SSANGYONG"
+  },
+  {
+    "model_name": "316l",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "PUNTO II",
+    "vehicle_manufacturer_name": "FIAT"
+  },
+  {
+    "model_name": "404",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "Mustange",
+    "vehicle_manufacturer_name": "FORD"
+  },
+  {
+    "model_name": "CADDY TDI",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "CADDY",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "AMAROK",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "MODUS",
+    "vehicle_manufacturer_name": "RENAULT"
+  },
+  {
+    "model_name": "PARTNER XP",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "TOKTOK",
+    "vehicle_manufacturer_name": "UNISCOOT"
+  },
+  {
+    "model_name": "35-150 DAILY",
+    "vehicle_manufacturer_name": "IVECO"
+  },
+  {
+    "model_name": "CHL 30",
+    "vehicle_manufacturer_name": "CHL"
+  },
+  {
+    "model_name": "SAXO",
+    "vehicle_manufacturer_name": "CITROËN"
+  },
+  {
+    "model_name": "YARIS SEDAN",
+    "vehicle_manufacturer_name": "TOYOTA"
+  },
+  {
+    "model_name": "B180CDI",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "DAIMLER",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "DZIRE",
+    "vehicle_manufacturer_name": "SUZUKI"
+  },
+  {
+    "model_name": "Z750",
+    "vehicle_manufacturer_name": "KAWASAKI"
+  },
+  {
+    "model_name": "CELERIO",
+    "vehicle_manufacturer_name": "SUZUKI"
+  },
+  {
+    "model_name": "SCENIC",
+    "vehicle_manufacturer_name": "RENAULT"
+  },
+  {
+    "model_name": "DACIA SANDERO",
+    "vehicle_manufacturer_name": "DACIA"
+  },
+  {
+    "model_name": "PUNTO EVO",
+    "vehicle_manufacturer_name": "FIAT"
+  },
+  {
+    "model_name": "AERIO",
+    "vehicle_manufacturer_name": "SUZUKI"
+  },
+  {
+    "model_name": "DOBLO 90 MULTIJE",
+    "vehicle_manufacturer_name": "FIAT"
+  },
+  {
+    "model_name": "LEON TSI",
+    "vehicle_manufacturer_name": "SEAT"
+  },
+  {
+    "model_name": "c 220 cdi",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "MAZDA 2",
+    "vehicle_manufacturer_name": "MAZDA"
+  },
+  {
+    "model_name": "508",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "KINGO",
+    "vehicle_manufacturer_name": "KING LONG"
+  },
+  {
+    "model_name": "Attrage",
+    "vehicle_manufacturer_name": "MITSUBISHI"
+  },
+  {
+    "model_name": "JETTA TDI",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "IX35",
+    "vehicle_manufacturer_name": "HYUNDAI"
+  },
+  {
+    "model_name": "POLO 12L TDI",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "MG ZS",
+    "vehicle_manufacturer_name": "MG Motors"
+  },
+  {
+    "model_name": "A3 35 TFSI",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "BOOSTER SPIRIT MOTO",
+    "vehicle_manufacturer_name": "BOOSTER"
+  },
+  {
+    "model_name": "DFM JOYCAR S50",
+    "vehicle_manufacturer_name": "DONGFENG - DFM"
+  },
+  {
+    "model_name": "H1 BUS",
+    "vehicle_manufacturer_name": "HYUNDAI"
+  },
+  {
+    "model_name": "GOLF TDI",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "MEGANE COUPEE",
+    "vehicle_manufacturer_name": "RENAULT"
+  },
+  {
+    "model_name": "ARRIZO 3",
+    "vehicle_manufacturer_name": "CHERY"
+  },
+  {
+    "model_name": "C-HR",
+    "vehicle_manufacturer_name": "TOYOTA"
+  },
+  {
+    "model_name": "B7R",
+    "vehicle_manufacturer_name": "VOLVO"
+  },
+  {
+    "model_name": "MICRA",
+    "vehicle_manufacturer_name": "NISSAN"
+  },
+  {
+    "model_name": "BREAK",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "CRAFTEUR",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "ARONA FR",
+    "vehicle_manufacturer_name": "SEAT"
+  },
+  {
+    "model_name": "GOLF 6",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "RUSH",
+    "vehicle_manufacturer_name": "TOYOTA"
+  },
+  {
+    "model_name": "ARRIZZO 5",
+    "vehicle_manufacturer_name": "CHERY"
+  },
+  {
+    "model_name": "308 HDI",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "FOTON AUMARC TX351",
+    "vehicle_manufacturer_name": "FOTON"
+  },
+  {
+    "model_name": "SCOOTER FTM",
+    "vehicle_manufacturer_name": "SCOOTER"
+  },
+  {
+    "model_name": "SCOOTER FTM GOGO",
+    "vehicle_manufacturer_name": "SCOOTER"
+  },
+  {
+    "model_name": "E220CDIM6",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "GOLF 5",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "PUNTO 55",
+    "vehicle_manufacturer_name": "FIAT"
+  },
+  {
+    "model_name": "QQ",
+    "vehicle_manufacturer_name": "CHERY"
+  },
+  {
+    "model_name": "POLO 1.4",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "SIENA",
+    "vehicle_manufacturer_name": "FIAT"
+  },
+  {
+    "model_name": "BT 50",
+    "vehicle_manufacturer_name": "MAZDA"
+  },
+  {
+    "model_name": "ACCENT",
+    "vehicle_manufacturer_name": "HYUNDAI"
+  },
+  {
+    "model_name": "REWARD-NP",
+    "vehicle_manufacturer_name": "ISUZU"
+  },
+  {
+    "model_name": "CIAO",
+    "vehicle_manufacturer_name": "PIAGGIO"
+  },
+  {
+    "model_name": "GRAND i10 1.2",
+    "vehicle_manufacturer_name": "HYUNDAI"
+  },
+  {
+    "model_name": "80",
+    "vehicle_manufacturer_name": "HONDA"
+  },
+  {
+    "model_name": "QASHQAI",
+    "vehicle_manufacturer_name": "NISSAN"
+  },
+  {
+    "model_name": "ZR800",
+    "vehicle_manufacturer_name": "KAWASAKI"
+  },
+  {
+    "model_name": "ZAFIRA",
+    "vehicle_manufacturer_name": "OPEL"
+  },
+  {
+    "model_name": "1181",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "203CL",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "FORZA FIRST",
+    "vehicle_manufacturer_name": "FORZA MOTO"
+  },
+  {
+    "model_name": "JUKE",
+    "vehicle_manufacturer_name": "NISSAN"
+  },
+  {
+    "model_name": "POLO 12L",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "110-90DT",
+    "vehicle_manufacturer_name": "FIAT"
+  },
+  {
+    "model_name": "IBIZA FR",
+    "vehicle_manufacturer_name": "SEAT"
+  },
+  {
+    "model_name": "KORAK FTM",
+    "vehicle_manufacturer_name": "KORAK MOTO"
+  },
+  {
+    "model_name": "KOLEOS 2.0 D",
+    "vehicle_manufacturer_name": "RENAULT"
+  },
+  {
+    "model_name": "FORZA MAX",
+    "vehicle_manufacturer_name": "FORZA MOTO"
+  },
+  {
+    "model_name": "FORZA GSM",
+    "vehicle_manufacturer_name": "FORZA MOTO"
+  },
+  {
+    "model_name": "IBIZA 12",
+    "vehicle_manufacturer_name": "SEAT"
+  },
+  {
+    "model_name": "SCOOTER SMART",
+    "vehicle_manufacturer_name": "SCOOTER"
+  },
+  {
+    "model_name": "POLO 12",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "i10",
+    "vehicle_manufacturer_name": "HYUNDAI"
+  },
+  {
+    "model_name": "306",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "306XN",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "HUMMER MOTO 2",
+    "vehicle_manufacturer_name": "HUMMER MOTO"
+  },
+  {
+    "model_name": "POLO SEDAN",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "MOTO",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "PIAGGIO",
+    "vehicle_manufacturer_name": "LIBERTY MOTO"
+  },
+  {
+    "model_name": "ZR806",
+    "vehicle_manufacturer_name": "KAWASAKI"
+  },
+  {
+    "model_name": "POLO 12 TREND",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "A5",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "CERATO EX",
+    "vehicle_manufacturer_name": "KIA"
+  },
+  {
+    "model_name": "116I",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "MEGANE CL",
+    "vehicle_manufacturer_name": "RENAULT"
+  },
+  {
+    "model_name": "XSTRA UNISCOOT",
+    "vehicle_manufacturer_name": "SCOOTER"
+  },
+  {
+    "model_name": "AGYA 1.2 G",
+    "vehicle_manufacturer_name": "TOYOTA"
+  },
+  {
+    "model_name": "G CLASS",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "POLO 6",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "FABIA HATCH",
+    "vehicle_manufacturer_name": "SKODA"
+  },
+  {
+    "model_name": "POLO 14",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "TEZLION BUS",
+    "vehicle_manufacturer_name": "TEZELLER"
+  },
+  {
+    "model_name": "B180",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "SCOOTER",
+    "vehicle_manufacturer_name": "SMART"
+  },
+  {
+    "model_name": "TOUAREG",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "CLIO 3",
+    "vehicle_manufacturer_name": "RENAULT"
+  },
+  {
+    "model_name": "DOBLO MAXI 90 MUL",
+    "vehicle_manufacturer_name": "FIAT"
+  },
+  {
+    "model_name": "BERLINGO B9",
+    "vehicle_manufacturer_name": "CITROËN"
+  },
+  {
+    "model_name": "TARRACO FR",
+    "vehicle_manufacturer_name": "SEAT"
+  },
+  {
+    "model_name": "C15",
+    "vehicle_manufacturer_name": "CITROËN"
+  },
+  {
+    "model_name": "ASTRA G",
+    "vehicle_manufacturer_name": "OPEL"
+  },
+  {
+    "model_name": "CAPTIVA PREMIER",
+    "vehicle_manufacturer_name": "CHEVROLET"
+  },
+  {
+    "model_name": "IBIZA 1 6",
+    "vehicle_manufacturer_name": "SEAT"
+  },
+  {
+    "model_name": "CLS250",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "YEDEA LR4",
+    "vehicle_manufacturer_name": "Mobylette"
+  },
+  {
+    "model_name": "DUSTER 4WD",
+    "vehicle_manufacturer_name": "DACIA"
+  },
+  {
+    "model_name": "RENEGADE LIMIT",
+    "vehicle_manufacturer_name": "JEEP"
+  },
+  {
+    "model_name": "H1",
+    "vehicle_manufacturer_name": "HYUNDAI"
+  },
+  {
+    "model_name": "JETTA 16 TREND",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "S1000XR",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "CORSA B",
+    "vehicle_manufacturer_name": "OPEL"
+  },
+  {
+    "model_name": "SUPER MAX",
+    "vehicle_manufacturer_name": "Mobylette"
+  },
+  {
+    "model_name": "116",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "X250",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "ALFA MITO",
+    "vehicle_manufacturer_name": "ALFA ROMEO"
+  },
+  {
+    "model_name": "XENON DLE",
+    "vehicle_manufacturer_name": "TATA"
+  },
+  {
+    "model_name": "HONDA CITY",
+    "vehicle_manufacturer_name": "HONDA"
+  },
+  {
+    "model_name": "PICK UP S6",
+    "vehicle_manufacturer_name": "MAHINDRA"
+  },
+  {
+    "model_name": "GEELY GX",
+    "vehicle_manufacturer_name": "GEELY"
+  },
+  {
+    "model_name": "FORZA",
+    "vehicle_manufacturer_name": "HAMMER"
+  },
+  {
+    "model_name": "DOKKER VAN 2PL LU",
+    "vehicle_manufacturer_name": "DACIA"
+  },
+  {
+    "model_name": "R11",
+    "vehicle_manufacturer_name": "RENAULT"
+  },
+  {
+    "model_name": "YAMAHA",
+    "vehicle_manufacturer_name": "NITRO MOTO"
+  },
+  {
+    "model_name": "Daimler Chrysler",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "YARIS E",
+    "vehicle_manufacturer_name": "TOYOTA"
+  },
+  {
+    "model_name": "BRAVO",
+    "vehicle_manufacturer_name": "FIAT"
+  },
+  {
+    "model_name": "320D",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "PICK UP 4*4",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "LINEA",
+    "vehicle_manufacturer_name": "FIAT"
+  },
+  {
+    "model_name": "35C15DAILY",
+    "vehicle_manufacturer_name": "IVECO"
+  },
+  {
+    "model_name": "GOLF 5 BK",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "C180K",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "SONIC LT",
+    "vehicle_manufacturer_name": "CHEVROLET"
+  },
+  {
+    "model_name": "MS150Z2",
+    "vehicle_manufacturer_name": "MISTRAL MOTO"
+  },
+  {
+    "model_name": "SHACMAN X3000-430",
+    "vehicle_manufacturer_name": "SHACMAN"
+  },
+  {
+    "model_name": "Giulietta",
+    "vehicle_manufacturer_name": "ALFA ROMEO"
+  },
+  {
+    "model_name": "KADJAR",
+    "vehicle_manufacturer_name": "RENAULT"
+  },
+  {
+    "model_name": "B12MA",
+    "vehicle_manufacturer_name": "VOLVO"
+  },
+  {
+    "model_name": "FREE",
+    "vehicle_manufacturer_name": "PIAGGIO"
+  },
+  {
+    "model_name": "BALENO",
+    "vehicle_manufacturer_name": "SUZUKI"
+  },
+  {
+    "model_name": "ZXMCO ZX125T-12",
+    "vehicle_manufacturer_name": "ZXMCO"
+  },
+  {
+    "model_name": "SPARK",
+    "vehicle_manufacturer_name": "CHEVROLET"
+  },
+  {
+    "model_name": "LOGAN MCV",
+    "vehicle_manufacturer_name": "DACIA"
+  },
+  {
+    "model_name": "STILO",
+    "vehicle_manufacturer_name": "FIAT"
+  },
+  {
+    "model_name": "OPTIMA",
+    "vehicle_manufacturer_name": "KIA"
+  },
+  {
+    "model_name": "520D",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "MOTO STAR",
+    "vehicle_manufacturer_name": "FORZA MOTO"
+  },
+  {
+    "model_name": "2008 PURETECH",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "PANDA CROSS",
+    "vehicle_manufacturer_name": "FIAT"
+  },
+  {
+    "model_name": "EVOQUE",
+    "vehicle_manufacturer_name": "JAGUAR - LAND ROVER"
+  },
+  {
+    "model_name": "SELTOS 1.4",
+    "vehicle_manufacturer_name": "KIA"
+  },
+  {
+    "model_name": "Twingo",
+    "vehicle_manufacturer_name": "RENAULT"
+  },
+  {
+    "model_name": "POLO 7",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "MG GT BVA",
+    "vehicle_manufacturer_name": "MG Motors"
+  },
+  {
+    "model_name": "SPRINTER",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "CHERY TIGGO 3X",
+    "vehicle_manufacturer_name": "CHERY"
+  },
+  {
+    "model_name": "318l",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "PEUGEOT 4*4",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "KOLEOS",
+    "vehicle_manufacturer_name": "RENAULT"
+  },
+  {
+    "model_name": "VMAX 1700",
+    "vehicle_manufacturer_name": "YAMAHA MOTO"
+  },
+  {
+    "model_name": "VMAX",
+    "vehicle_manufacturer_name": "YAMAHA MOTO"
+  },
+  {
+    "model_name": "FIRST MOTO",
+    "vehicle_manufacturer_name": "MOTOCYCLE"
+  },
+  {
+    "model_name": "E200",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "K02S",
+    "vehicle_manufacturer_name": "DFSK"
+  },
+  {
+    "model_name": "XSARA",
+    "vehicle_manufacturer_name": "CITROËN"
+  },
+  {
+    "model_name": "XIAMEN",
+    "vehicle_manufacturer_name": "KING LONG"
+  },
+  {
+    "model_name": "CADDY COMBI",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "N 145 S/E27",
+    "vehicle_manufacturer_name": "OTOKAR"
+  },
+  {
+    "model_name": "PARTNER",
+    "vehicle_manufacturer_name": "ZIMOTA"
+  },
+  {
+    "model_name": "GEELY GX3",
+    "vehicle_manufacturer_name": "GEELY"
+  },
+  {
+    "model_name": "AMAROK TDI",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "MAX II",
+    "vehicle_manufacturer_name": "FIRST MOTOS"
+  },
+  {
+    "model_name": "Veloster",
+    "vehicle_manufacturer_name": "HYUNDAI"
+  },
+  {
+    "model_name": "Corolla Sedan",
+    "vehicle_manufacturer_name": "TOYOTA"
+  },
+  {
+    "model_name": "Rio CRDI",
+    "vehicle_manufacturer_name": "KIA"
+  },
+  {
+    "model_name": "Vostro",
+    "vehicle_manufacturer_name": "SCOOTER"
+  },
+  {
+    "model_name": "Bulldozer",
+    "vehicle_manufacturer_name": "CATERPILLAR"
+  },
+  {
+    "model_name": "SCIROCC014LSPOR",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "Trafic",
+    "vehicle_manufacturer_name": "RENAULT"
+  },
+  {
+    "model_name": "CTTE",
+    "vehicle_manufacturer_name": "ISUZU"
+  },
+  {
+    "model_name": "R9",
+    "vehicle_manufacturer_name": "RENAULT"
+  },
+  {
+    "model_name": "Express",
+    "vehicle_manufacturer_name": "RENAULT"
+  },
+  {
+    "model_name": "BT50 4X4",
+    "vehicle_manufacturer_name": "MAZDA"
+  },
+  {
+    "model_name": "Espace 2.0 t",
+    "vehicle_manufacturer_name": "RENAULT"
+  },
+  {
+    "model_name": "Espace",
+    "vehicle_manufacturer_name": "RENAULT"
+  },
+  {
+    "model_name": "KERAX37032",
+    "vehicle_manufacturer_name": "RENAULT"
+  },
+  {
+    "model_name": "RKS CLASSIC 125",
+    "vehicle_manufacturer_name": "Zimota Keeway Moto"
+  },
+  {
+    "model_name": "Haval",
+    "vehicle_manufacturer_name": "GREATWALL"
+  },
+  {
+    "model_name": "HAVAL GWM H6",
+    "vehicle_manufacturer_name": "GREATWALL"
+  },
+  {
+    "model_name": "HAVAL H6",
+    "vehicle_manufacturer_name": "GREATWALL"
+  },
+  {
+    "model_name": "CLA 250",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "MG 3",
+    "vehicle_manufacturer_name": "MG Motors"
+  },
+  {
+    "model_name": "504",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "CADDY MAXI FOURGO",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "GLK 200",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "KONA HYBRID",
+    "vehicle_manufacturer_name": "HYUNDAI"
+  },
+  {
+    "model_name": "HAVAL JOLION",
+    "vehicle_manufacturer_name": "GREATWALL"
+  },
+  {
+    "model_name": "Chrysler",
+    "vehicle_manufacturer_name": "JEEP"
+  },
+  {
+    "model_name": "Transporter TD",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "LOVOLFL956F",
+    "vehicle_manufacturer_name": "LOVOL"
+  },
+  {
+    "model_name": "BRAVIA PLUS",
+    "vehicle_manufacturer_name": "BRAVIA MOTO"
+  },
+  {
+    "model_name": "Raptor",
+    "vehicle_manufacturer_name": "FORD"
+  },
+  {
+    "model_name": "Carens",
+    "vehicle_manufacturer_name": "KIA"
+  },
+  {
+    "model_name": "XUV 300 W6",
+    "vehicle_manufacturer_name": "MAHINDRA"
+  },
+  {
+    "model_name": "MINITRUCK",
+    "vehicle_manufacturer_name": "DFSK"
+  },
+  {
+    "model_name": "FORZA GOLD",
+    "vehicle_manufacturer_name": "FORZA MOTO"
+  },
+  {
+    "model_name": "HMK102B",
+    "vehicle_manufacturer_name": "HIDROMEK"
+  },
+  {
+    "model_name": "206SD",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "PFGO",
+    "vehicle_manufacturer_name": "APRILIA"
+  },
+  {
+    "model_name": "BW 550",
+    "vehicle_manufacturer_name": "YAMAHA MOTO"
+  },
+  {
+    "model_name": "POLO 3",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "F12",
+    "vehicle_manufacturer_name": "MALAGUTI"
+  },
+  {
+    "model_name": "L3540D",
+    "vehicle_manufacturer_name": "KUBOTA"
+  },
+  {
+    "model_name": "TRANSIT",
+    "vehicle_manufacturer_name": "FORD"
+  },
+  {
+    "model_name": "3008 GT LINE",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "Aprilia Scarabeo Moto",
+    "vehicle_manufacturer_name": "APRILIA"
+  },
+  {
+    "model_name": "TATA SUPER A C E",
+    "vehicle_manufacturer_name": "TATA"
+  },
+  {
+    "model_name": "HIGER BUS",
+    "vehicle_manufacturer_name": "HIGER"
+  },
+  {
+    "model_name": "SEDAN",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "Ranger XLT",
+    "vehicle_manufacturer_name": "FORD"
+  },
+  {
+    "model_name": "A180",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "7865",
+    "vehicle_manufacturer_name": "LANDINI"
+  },
+  {
+    "model_name": "XTRAIL",
+    "vehicle_manufacturer_name": "NISSAN"
+  },
+  {
+    "model_name": "CROMA",
+    "vehicle_manufacturer_name": "FIAT"
+  },
+  {
+    "model_name": "KUGA",
+    "vehicle_manufacturer_name": "FORD"
+  },
+  {
+    "model_name": "DUSTER DCI",
+    "vehicle_manufacturer_name": "DACIA"
+  },
+  {
+    "model_name": "CX3",
+    "vehicle_manufacturer_name": "MAZDA"
+  },
+  {
+    "model_name": "Mustang",
+    "vehicle_manufacturer_name": "FORD"
+  },
+  {
+    "model_name": "MG5 NET BLUE",
+    "vehicle_manufacturer_name": "MG Motors"
+  },
+  {
+    "model_name": "TRANSIT 410L",
+    "vehicle_manufacturer_name": "FORD"
+  },
+  {
+    "model_name": "SUPER FLY",
+    "vehicle_manufacturer_name": "MISTRAL MOTO"
+  },
+  {
+    "model_name": "MEGANE TCE",
+    "vehicle_manufacturer_name": "RENAULT"
+  },
+  {
+    "model_name": "E200 CDI",
+    "vehicle_manufacturer_name": "DAIMLER AG"
+  },
+  {
+    "model_name": "LAREDO",
+    "vehicle_manufacturer_name": "JEEP"
+  },
+  {
+    "model_name": "K440",
+    "vehicle_manufacturer_name": "RENAULT TRUCKS"
+  },
+  {
+    "model_name": "STRALIS 430",
+    "vehicle_manufacturer_name": "IVECO"
+  },
+  {
+    "model_name": "ZIMOTA JOY 110",
+    "vehicle_manufacturer_name": "ZIMOTA"
+  },
+  {
+    "model_name": "GLORY 580 1.5T CVT",
+    "vehicle_manufacturer_name": "DFSK"
+  },
+  {
+    "model_name": "FIAT 500 DOLCEVITA",
+    "vehicle_manufacturer_name": "FIAT"
+  },
+  {
+    "model_name": "SK110-A",
+    "vehicle_manufacturer_name": "MOTO SENKE"
+  },
+  {
+    "model_name": "CRETA",
+    "vehicle_manufacturer_name": "HYUNDAI"
+  },
+  {
+    "model_name": "C200CDI",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "R8860S",
+    "vehicle_manufacturer_name": "LANDINI"
+  },
+  {
+    "model_name": "Aveo",
+    "vehicle_manufacturer_name": "CHEVROLET"
+  },
+  {
+    "model_name": "MG 5",
+    "vehicle_manufacturer_name": "MG Motors"
+  },
+  {
+    "model_name": "VIRTUS TSI",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "GEELY GC6",
+    "vehicle_manufacturer_name": "GEELY"
+  },
+  {
+    "model_name": "SAME EXPLORER 85",
+    "vehicle_manufacturer_name": "SAME"
+  },
+  {
+    "model_name": "FH440",
+    "vehicle_manufacturer_name": "VOLVO"
+  },
+  {
+    "model_name": "AUMARK C8215",
+    "vehicle_manufacturer_name": "FOTON"
+  },
+  {
+    "model_name": "Ateca Xperience",
+    "vehicle_manufacturer_name": "SEAT"
+  },
+  {
+    "model_name": "KUV 100 NXT K6+",
+    "vehicle_manufacturer_name": "MAHINDRA"
+  },
+  {
+    "model_name": "Booster Rocket",
+    "vehicle_manufacturer_name": "BOOSTER"
+  },
+  {
+    "model_name": "CERATO",
+    "vehicle_manufacturer_name": "KIA"
+  },
+  {
+    "model_name": "POLO 5",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "FOX",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "SPRESSO",
+    "vehicle_manufacturer_name": "SUZUKI"
+  },
+  {
+    "model_name": "ACCORD",
+    "vehicle_manufacturer_name": "HONDA"
+  },
+  {
+    "model_name": "A6",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "Qashqai Pure",
+    "vehicle_manufacturer_name": "NISSAN"
+  },
+  {
+    "model_name": "Ciaz",
+    "vehicle_manufacturer_name": "SUZUKI"
+  },
+  {
+    "model_name": "DS5",
+    "vehicle_manufacturer_name": "CITROËN"
+  },
+  {
+    "model_name": "DS",
+    "vehicle_manufacturer_name": "CITROËN"
+  },
+  {
+    "model_name": "GLE 53",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "DAILY 50-150",
+    "vehicle_manufacturer_name": "IVECO"
+  },
+  {
+    "model_name": "MAJESTY YP150",
+    "vehicle_manufacturer_name": "YAMAHA MOTO"
+  },
+  {
+    "model_name": "SKODA SCALA",
+    "vehicle_manufacturer_name": "SKODA"
+  },
+  {
+    "model_name": "418i",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "POER",
+    "vehicle_manufacturer_name": "GREATWALL"
+  },
+  {
+    "model_name": "35E12",
+    "vehicle_manufacturer_name": "IVECO"
+  },
+  {
+    "model_name": "B9",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "MINI ONE COUNTRYMAN",
+    "vehicle_manufacturer_name": "MINI"
+  },
+  {
+    "model_name": "309",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "308 BK",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "GLA 200 D",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "ANTARA",
+    "vehicle_manufacturer_name": "OPEL"
+  },
+  {
+    "model_name": "AEROX",
+    "vehicle_manufacturer_name": "YAMAHA MOTO"
+  },
+  {
+    "model_name": "HEROISM",
+    "vehicle_manufacturer_name": "KYMCO"
+  },
+  {
+    "model_name": "BALY",
+    "vehicle_manufacturer_name": "HONDA"
+  },
+  {
+    "model_name": "GOLF 7",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "TIGGO 7 PRO",
+    "vehicle_manufacturer_name": "CHERY"
+  },
+  {
+    "model_name": "BORA",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "GRAND I10 X CENT",
+    "vehicle_manufacturer_name": "HYUNDAI"
+  },
+  {
+    "model_name": "Tiguan 20L",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "HILUX SRS",
+    "vehicle_manufacturer_name": "TOYOTA"
+  },
+  {
+    "model_name": "FIGO TREND",
+    "vehicle_manufacturer_name": "FORD"
+  },
+  {
+    "model_name": "ECOSPORT ECOBOOST",
+    "vehicle_manufacturer_name": "FORD"
+  },
+  {
+    "model_name": "NEW STAR TRUCK",
+    "vehicle_manufacturer_name": "CHANA"
+  },
+  {
+    "model_name": "FTM",
+    "vehicle_manufacturer_name": "Himalayan Moto"
+  },
+  {
+    "model_name": "SONIC LS",
+    "vehicle_manufacturer_name": "CHEVROLET"
+  },
+  {
+    "model_name": "C200",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "CITAN",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "PICASSO",
+    "vehicle_manufacturer_name": "CITROËN"
+  },
+  {
+    "model_name": "MG3 VTI",
+    "vehicle_manufacturer_name": "MORRIS"
+  },
+  {
+    "model_name": "FORZA D-MAX",
+    "vehicle_manufacturer_name": "FORZA MOTO"
+  },
+  {
+    "model_name": "G410",
+    "vehicle_manufacturer_name": "SCANIA"
+  },
+  {
+    "model_name": "JETTA 19 TDI",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "Suzuki Spresso",
+    "vehicle_manufacturer_name": "SUZUKI"
+  },
+  {
+    "model_name": "MONDEO",
+    "vehicle_manufacturer_name": "FORD"
+  },
+  {
+    "model_name": "E220CDI",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "KENBO DVVT S3",
+    "vehicle_manufacturer_name": "BAIC YINXIANG"
+  },
+  {
+    "model_name": "TIGGO 8 PRO",
+    "vehicle_manufacturer_name": "CHERY"
+  },
+  {
+    "model_name": "H2 1.5T",
+    "vehicle_manufacturer_name": "GREATWALL"
+  },
+  {
+    "model_name": "MAXXER250",
+    "vehicle_manufacturer_name": "KWANG YANG"
+  },
+  {
+    "model_name": "BURGMAN STREET",
+    "vehicle_manufacturer_name": "SUZUKI MOTO"
+  },
+  {
+    "model_name": "FOTON TUNLAND",
+    "vehicle_manufacturer_name": "BEIQI FOTON"
+  },
+  {
+    "model_name": "Cheerful",
+    "vehicle_manufacturer_name": "CYCLOMOTEUR FTM"
+  },
+  {
+    "model_name": "Duster",
+    "vehicle_manufacturer_name": "DACIA"
+  },
+  {
+    "model_name": "207BK",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "COBRA FTM",
+    "vehicle_manufacturer_name": "MOTO COBRA"
+  },
+  {
+    "model_name": "MINI TRUCK K01H 1 1",
+    "vehicle_manufacturer_name": "DFSK"
+  },
+  {
+    "model_name": "TITANIUM",
+    "vehicle_manufacturer_name": "FORD"
+  },
+  {
+    "model_name": "DFM AX4",
+    "vehicle_manufacturer_name": "DONGFENG - DFM"
+  },
+  {
+    "model_name": "STONIC",
+    "vehicle_manufacturer_name": "KIA"
+  },
+  {
+    "model_name": "F3 VVL",
+    "vehicle_manufacturer_name": "BYD"
+  },
+  {
+    "model_name": "Q2 35 TFSI",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "Latitude",
+    "vehicle_manufacturer_name": "RENAULT"
+  },
+  {
+    "model_name": "LANDINI SUPER 100 B",
+    "vehicle_manufacturer_name": "LANDINI"
+  },
+  {
+    "model_name": "SORENTO AWD",
+    "vehicle_manufacturer_name": "KIA"
+  },
+  {
+    "model_name": "KALOS",
+    "vehicle_manufacturer_name": "CHEVROLET"
+  },
+  {
+    "model_name": "AURIS",
+    "vehicle_manufacturer_name": "TOYOTA"
+  },
+  {
+    "model_name": "TIGER3A",
+    "vehicle_manufacturer_name": "SYM MOTO"
+  },
+  {
+    "model_name": "BERLINGO V",
+    "vehicle_manufacturer_name": "CITROËN"
+  },
+  {
+    "model_name": "DOBLO PROFESSIONAL",
+    "vehicle_manufacturer_name": "FIAT"
+  },
+  {
+    "model_name": "C250",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "MERLO P40.17EE",
+    "vehicle_manufacturer_name": "MERLO"
+  },
+  {
+    "model_name": "SONIC",
+    "vehicle_manufacturer_name": "CHEVROLET"
+  },
+  {
+    "model_name": "AMAZE I VTEC",
+    "vehicle_manufacturer_name": "HONDA"
+  },
+  {
+    "model_name": "DREAM DY1245T-23",
+    "vehicle_manufacturer_name": "DAYUN MOTO"
+  },
+  {
+    "model_name": "L300",
+    "vehicle_manufacturer_name": "MITSUBISHI"
+  },
+  {
+    "model_name": "DOBLO 90 MULTIJET",
+    "vehicle_manufacturer_name": "FIAT"
+  },
+  {
+    "model_name": "HYBRID CAYENNE",
+    "vehicle_manufacturer_name": "PORSCHE"
+  },
+  {
+    "model_name": "FX1",
+    "vehicle_manufacturer_name": "SCOOTER UNISCOOT"
+  },
+  {
+    "model_name": "ACTROS 2042 S",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "MAVERICK X3",
+    "vehicle_manufacturer_name": "CAN AM MOTO"
+  },
+  {
+    "model_name": "E46",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "Sharan",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "Eco Classic",
+    "vehicle_manufacturer_name": "ISUZU"
+  },
+  {
+    "model_name": "108",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "ZIMOTA EAGLE",
+    "vehicle_manufacturer_name": "ZIMOTA"
+  },
+  {
+    "model_name": "505",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "XUV300 W8",
+    "vehicle_manufacturer_name": "MAHINDRA"
+  },
+  {
+    "model_name": "35-15 DAILY",
+    "vehicle_manufacturer_name": "IVECO"
+  },
+  {
+    "model_name": "PARTNER XR",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "218i",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "320i",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "CLA 180",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "65SC15",
+    "vehicle_manufacturer_name": "IVECO"
+  },
+  {
+    "model_name": "FTM110",
+    "vehicle_manufacturer_name": "Himalayan Moto"
+  },
+  {
+    "model_name": "FEASTER FS125-4",
+    "vehicle_manufacturer_name": "CHONGQING FEAS"
+  },
+  {
+    "model_name": "PISTA HR",
+    "vehicle_manufacturer_name": "HTA MOTO"
+  },
+  {
+    "model_name": "TIGGO 7",
+    "vehicle_manufacturer_name": "CHERY"
+  },
+  {
+    "model_name": "COOPERS",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "CLA 200",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "MIRAGE GLX",
+    "vehicle_manufacturer_name": "MITSUBISHI"
+  },
+  {
+    "model_name": "R21",
+    "vehicle_manufacturer_name": "RENAULT"
+  },
+  {
+    "model_name": "I VTEC",
+    "vehicle_manufacturer_name": "HONDA"
+  },
+  {
+    "model_name": "ZS",
+    "vehicle_manufacturer_name": "MG Motors"
+  },
+  {
+    "model_name": "LAGUNA",
+    "vehicle_manufacturer_name": "RENAULT"
+  },
+  {
+    "model_name": "VIVARO",
+    "vehicle_manufacturer_name": "OPEL"
+  },
+  {
+    "model_name": "BERLINE 306",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "50",
+    "vehicle_manufacturer_name": "PIAGGIO"
+  },
+  {
+    "model_name": "CLASSIC",
+    "vehicle_manufacturer_name": "RENAULT"
+  },
+  {
+    "model_name": "XT660X",
+    "vehicle_manufacturer_name": "YAMAHA MOTO"
+  },
+  {
+    "model_name": "S350",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "GLC 200D4 MATIC",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "E350CDI",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "MIRAGE GLS",
+    "vehicle_manufacturer_name": "MITSUBISHI"
+  },
+  {
+    "model_name": "KENBO S2 DVVT",
+    "vehicle_manufacturer_name": "BAIC YINXIANG"
+  },
+  {
+    "model_name": "CORSA SWING",
+    "vehicle_manufacturer_name": "OPEL"
+  },
+  {
+    "model_name": "SWING",
+    "vehicle_manufacturer_name": "OPEL"
+  },
+  {
+    "model_name": "ASTRA BK",
+    "vehicle_manufacturer_name": "OPEL"
+  },
+  {
+    "model_name": "SINUS",
+    "vehicle_manufacturer_name": "ZIMOTA"
+  },
+  {
+    "model_name": "DFM SX3",
+    "vehicle_manufacturer_name": "DONGFENG - DFM"
+  },
+  {
+    "model_name": "PUNTO 55 S",
+    "vehicle_manufacturer_name": "FIAT"
+  },
+  {
+    "model_name": "308 SW",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "SWIFT 3",
+    "vehicle_manufacturer_name": "SUZUKI"
+  },
+  {
+    "model_name": "CHEROKEE",
+    "vehicle_manufacturer_name": "CHRYSLER"
+  },
+  {
+    "model_name": "XCeed - Berline",
+    "vehicle_manufacturer_name": "KIA"
+  },
+  {
+    "model_name": "35C13",
+    "vehicle_manufacturer_name": "IVECO"
+  },
+  {
+    "model_name": "Tucson Htrac 1.6",
+    "vehicle_manufacturer_name": "HYUNDAI"
+  },
+  {
+    "model_name": "YPSILON",
+    "vehicle_manufacturer_name": "LANCIA"
+  },
+  {
+    "model_name": "AGORA",
+    "vehicle_manufacturer_name": "RENAULT"
+  },
+  {
+    "model_name": "EURO PARD 820",
+    "vehicle_manufacturer_name": "FOTON"
+  },
+  {
+    "model_name": "DAILY 70150",
+    "vehicle_manufacturer_name": "IVECO"
+  },
+  {
+    "model_name": "Vitara",
+    "vehicle_manufacturer_name": "SUZUKI"
+  },
+  {
+    "model_name": "FAW BESTURN X40",
+    "vehicle_manufacturer_name": "FAW"
+  },
+  {
+    "model_name": "Rexton",
+    "vehicle_manufacturer_name": "SSANGYONG"
+  },
+  {
+    "model_name": "E3",
+    "vehicle_manufacturer_name": "CHERY"
+  },
+  {
+    "model_name": "ACTYON SPORT",
+    "vehicle_manufacturer_name": "SSANGYONG"
+  },
+  {
+    "model_name": "PASSAT 16 CONFORT",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "Stepway",
+    "vehicle_manufacturer_name": "DACIA"
+  },
+  {
+    "model_name": "Cuxi",
+    "vehicle_manufacturer_name": "Linhai Moto"
+  },
+  {
+    "model_name": "ERTIGA",
+    "vehicle_manufacturer_name": "SUZUKI"
+  },
+  {
+    "model_name": "VTT SUZUKI ERTIGA",
+    "vehicle_manufacturer_name": "SUZUKI"
+  },
+  {
+    "model_name": "YAMAHA FLAME",
+    "vehicle_manufacturer_name": "YAMAHA MOTO"
+  },
+  {
+    "model_name": "C220",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "YP125",
+    "vehicle_manufacturer_name": "MBK"
+  },
+  {
+    "model_name": "GOLDEN DRAGON XI",
+    "vehicle_manufacturer_name": "GOLDEN DRAGON"
+  },
+  {
+    "model_name": "K2500",
+    "vehicle_manufacturer_name": "KIA"
+  },
+  {
+    "model_name": "IBIZA XCELLENCE",
+    "vehicle_manufacturer_name": "SEAT"
+  },
+  {
+    "model_name": "116 série 1",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "STANT",
+    "vehicle_manufacturer_name": "BOOSTER"
+  },
+  {
+    "model_name": "114D",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "A3TDI",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "FIESTA ECOBOOST",
+    "vehicle_manufacturer_name": "FORD"
+  },
+  {
+    "model_name": "A3 TFSI",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "MG GT",
+    "vehicle_manufacturer_name": "MORRIS"
+  },
+  {
+    "model_name": "BANGO",
+    "vehicle_manufacturer_name": "JIALING"
+  },
+  {
+    "model_name": "SKY",
+    "vehicle_manufacturer_name": "HONDA"
+  },
+  {
+    "model_name": "C180 KOMPRESSOR",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "520 (sedan)",
+    "vehicle_manufacturer_name": "Lifan Breez"
+  },
+  {
+    "model_name": "520",
+    "vehicle_manufacturer_name": "Lifan Breez"
+  },
+  {
+    "model_name": "AMAROK TDI4 MOTO",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "COMBO",
+    "vehicle_manufacturer_name": "OPEL"
+  },
+  {
+    "model_name": "POWER",
+    "vehicle_manufacturer_name": "Hongben Moto"
+  },
+  {
+    "model_name": "GLC 220 D",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "T CXOSS",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "SPORTAGE CRDI AWD",
+    "vehicle_manufacturer_name": "KIA"
+  },
+  {
+    "model_name": "SUPER DEER",
+    "vehicle_manufacturer_name": "IMM"
+  },
+  {
+    "model_name": "607",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "RAV4 HYBRID",
+    "vehicle_manufacturer_name": "TOYOTA"
+  },
+  {
+    "model_name": "T-Roc",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "GSM 110",
+    "vehicle_manufacturer_name": "HENSIM"
+  },
+  {
+    "model_name": "XCeed",
+    "vehicle_manufacturer_name": "KIA"
+  },
+  {
+    "model_name": "IBIZA STYLE",
+    "vehicle_manufacturer_name": "SEAT"
+  },
+  {
+    "model_name": "BERLINGO MULTISPACE",
+    "vehicle_manufacturer_name": "CITROËN"
+  },
+  {
+    "model_name": "MG 6",
+    "vehicle_manufacturer_name": "MG Motors"
+  },
+  {
+    "model_name": "A5 35 TFSI S LINE",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "HE HEV",
+    "vehicle_manufacturer_name": "GREATWALL"
+  },
+  {
+    "model_name": "Neoplan",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "STARIA 2.2D",
+    "vehicle_manufacturer_name": "HYUNDAI"
+  },
+  {
+    "model_name": "A2",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "KEE110",
+    "vehicle_manufacturer_name": "Zimota Keeway Moto"
+  },
+  {
+    "model_name": "CHERY TIGGO 4",
+    "vehicle_manufacturer_name": "CHERY"
+  },
+  {
+    "model_name": "DONGFENGE21",
+    "vehicle_manufacturer_name": "DONGFENG - DFM"
+  },
+  {
+    "model_name": "GLC300",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "DAILY - BUS",
+    "vehicle_manufacturer_name": "IVECO - FIAT"
+  },
+  {
+    "model_name": "AZUR",
+    "vehicle_manufacturer_name": "GUSITE"
+  },
+  {
+    "model_name": "LEOPARD 200",
+    "vehicle_manufacturer_name": "LEOPARD MOTO"
+  },
+  {
+    "model_name": "A160",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "JIMNY",
+    "vehicle_manufacturer_name": "SUZUKI"
+  },
+  {
+    "model_name": "E180",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "VERACRUZ",
+    "vehicle_manufacturer_name": "ZNEN"
+  },
+  {
+    "model_name": "ML350",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "TUSCONIX35",
+    "vehicle_manufacturer_name": "HYUNDAI"
+  },
+  {
+    "model_name": "NOTE",
+    "vehicle_manufacturer_name": "NISSAN"
+  },
+  {
+    "model_name": "WINGLE",
+    "vehicle_manufacturer_name": "GREATWALL"
+  },
+  {
+    "model_name": "CUPRA",
+    "vehicle_manufacturer_name": "CUPRA"
+  },
+  {
+    "model_name": "GLE 43 AMG",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "B2900",
+    "vehicle_manufacturer_name": "MAZDA"
+  },
+  {
+    "model_name": "HS 20T",
+    "vehicle_manufacturer_name": "MG Motors"
+  },
+  {
+    "model_name": "GOLF 16 TREND",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "SGM MAX",
+    "vehicle_manufacturer_name": "MOTOCYCLE"
+  },
+  {
+    "model_name": "GOLF 12 TREND",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "GSXR 1000",
+    "vehicle_manufacturer_name": "SUZUKI MOTO"
+  },
+  {
+    "model_name": "MINIONE",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "S-CROSS",
+    "vehicle_manufacturer_name": "SUZUKI"
+  },
+  {
+    "model_name": "GRAND TIGER",
+    "vehicle_manufacturer_name": "HEBEIZHONGXING"
+  },
+  {
+    "model_name": "XENON X2",
+    "vehicle_manufacturer_name": "TATA"
+  },
+  {
+    "model_name": "ERMAX",
+    "vehicle_manufacturer_name": "KAWASAKI"
+  },
+  {
+    "model_name": "B2500D",
+    "vehicle_manufacturer_name": "MAZDA"
+  },
+  {
+    "model_name": "X2 SDRIVE 18i",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "MINI TRUCK K01H 1.3",
+    "vehicle_manufacturer_name": "DFSK"
+  },
+  {
+    "model_name": "KAROQ",
+    "vehicle_manufacturer_name": "SKODA"
+  },
+  {
+    "model_name": "MG6 20T",
+    "vehicle_manufacturer_name": "MG Motors"
+  },
+  {
+    "model_name": "YARIS HYBRID",
+    "vehicle_manufacturer_name": "TOYOTA"
+  },
+  {
+    "model_name": "BBM 110",
+    "vehicle_manufacturer_name": "Himalayan Moto"
+  },
+  {
+    "model_name": "RR2",
+    "vehicle_manufacturer_name": "MAN"
+  },
+  {
+    "model_name": "380T38 TRAKKER",
+    "vehicle_manufacturer_name": "IVECO"
+  },
+  {
+    "model_name": "SUPER FORZA",
+    "vehicle_manufacturer_name": "FORZA MOTO"
+  },
+  {
+    "model_name": "Ludix",
+    "vehicle_manufacturer_name": "PEUGEOT"
+  },
+  {
+    "model_name": "CARAVELLE",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "A6 55 TFSI QUATTR",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "K4",
+    "vehicle_manufacturer_name": "RENAULT TRUCKS"
+  },
+  {
+    "model_name": "PARTNER 110",
+    "vehicle_manufacturer_name": "Keeway Moto"
+  },
+  {
+    "model_name": "STRALIS 400",
+    "vehicle_manufacturer_name": "IVECO"
+  },
+  {
+    "model_name": "719",
+    "vehicle_manufacturer_name": "WALLYSCAR"
+  },
+  {
+    "model_name": "STONIC GTLINE",
+    "vehicle_manufacturer_name": "KIA"
+  },
+  {
+    "model_name": "Trajet",
+    "vehicle_manufacturer_name": "HYUNDAI"
+  },
+  {
+    "model_name": "MAZDA 6",
+    "vehicle_manufacturer_name": "MAZDA"
+  },
+  {
+    "model_name": "SM5",
+    "vehicle_manufacturer_name": "Renault Samsung"
+  },
+  {
+    "model_name": "SM 520",
+    "vehicle_manufacturer_name": "Renault Samsung"
+  },
+  {
+    "model_name": "R18",
+    "vehicle_manufacturer_name": "RENAULT"
+  },
+  {
+    "model_name": "Forthing T5 EVO",
+    "vehicle_manufacturer_name": "DONGFENG - DFM"
+  },
+  {
+    "model_name": "MAZDA BT50",
+    "vehicle_manufacturer_name": "MAZDA"
+  },
+  {
+    "model_name": "SKODA KAMIQ",
+    "vehicle_manufacturer_name": "SKODA"
+  },
+  {
+    "model_name": "FIGO",
+    "vehicle_manufacturer_name": "FORD"
+  },
+  {
+    "model_name": "X1SDRIVE18I",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "GRAND CHEROKEE",
+    "vehicle_manufacturer_name": "CHRYSLER"
+  },
+  {
+    "model_name": "E220",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "MT07",
+    "vehicle_manufacturer_name": "YAMAHA MOTO"
+  },
+  {
+    "model_name": "SYMPHONY ST",
+    "vehicle_manufacturer_name": "SYM MOTO"
+  },
+  {
+    "model_name": "TOLEDO",
+    "vehicle_manufacturer_name": "SEAT"
+  },
+  {
+    "model_name": "ALTEA",
+    "vehicle_manufacturer_name": "SEAT"
+  },
+  {
+    "model_name": "GEELY GX3 PRO",
+    "vehicle_manufacturer_name": "GEELY"
+  },
+  {
+    "model_name": "SY 125",
+    "vehicle_manufacturer_name": "SANYA MOTO"
+  },
+  {
+    "model_name": "SLC125",
+    "vehicle_manufacturer_name": "RONGLI"
+  },
+  {
+    "model_name": "DAILY",
+    "vehicle_manufacturer_name": "IVECO"
+  },
+  {
+    "model_name": "SANDERO STEPWAY",
+    "vehicle_manufacturer_name": "DACIA"
+  },
+  {
+    "model_name": "FTM HAMMER III",
+    "vehicle_manufacturer_name": "ALPHA"
+  },
+  {
+    "model_name": "GR-FORCE",
+    "vehicle_manufacturer_name": "Bewheels"
+  },
+  {
+    "model_name": "R1250",
+    "vehicle_manufacturer_name": "BMW MOTO"
+  },
+  {
+    "model_name": "GOLF PLUS",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "ITUCY",
+    "vehicle_manufacturer_name": "SPARK MOTO"
+  },
+  {
+    "model_name": "F700GS",
+    "vehicle_manufacturer_name": "BMW MOTO"
+  },
+  {
+    "model_name": "Z1000AB5",
+    "vehicle_manufacturer_name": "KAWASAKI"
+  },
+  {
+    "model_name": "SPORTAGE GT LINE",
+    "vehicle_manufacturer_name": "KIA"
+  },
+  {
+    "model_name": "CHERY TIGGO 1X",
+    "vehicle_manufacturer_name": "CHERY"
+  },
+  {
+    "model_name": "CORDOBA",
+    "vehicle_manufacturer_name": "SEAT"
+  },
+  {
+    "model_name": "Fortuner",
+    "vehicle_manufacturer_name": "TOYOTA"
+  },
+  {
+    "model_name": "OCTAVIA STYLE",
+    "vehicle_manufacturer_name": "SKODA"
+  },
+  {
+    "model_name": "DFSK ESC C32",
+    "vehicle_manufacturer_name": "DFSK"
+  },
+  {
+    "model_name": "CROSS 40S",
+    "vehicle_manufacturer_name": "LAMBORGHINI"
+  },
+  {
+    "model_name": "K2700",
+    "vehicle_manufacturer_name": "KIA"
+  },
+  {
+    "model_name": "MAX 125",
+    "vehicle_manufacturer_name": "FIRST MOTOS"
+  },
+  {
+    "model_name": "E200CGI",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "FIAT 500 CULT-CLUB",
+    "vehicle_manufacturer_name": "FIAT"
+  },
+  {
+    "model_name": "GLE 500",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "GOLF 8",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "ALTO",
+    "vehicle_manufacturer_name": "SUZUKI"
+  },
+  {
+    "model_name": "SLC 125",
+    "vehicle_manufacturer_name": "Hongli"
+  },
+  {
+    "model_name": "ET 2",
+    "vehicle_manufacturer_name": "PIAGGIO"
+  },
+  {
+    "model_name": "PISTA VCX",
+    "vehicle_manufacturer_name": "HTA MOTO"
+  },
+  {
+    "model_name": "FOTON TUNLANDE",
+    "vehicle_manufacturer_name": "FOTON"
+  },
+  {
+    "model_name": "T-CROSS",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "MG EHS PHEV",
+    "vehicle_manufacturer_name": "MG Motors"
+  },
+  {
+    "model_name": "PHANTOM RC",
+    "vehicle_manufacturer_name": "LONGJIA"
+  },
+  {
+    "model_name": "REWARD-NQ",
+    "vehicle_manufacturer_name": "ISUZU"
+  },
+  {
+    "model_name": "CB1000R",
+    "vehicle_manufacturer_name": "HONDA"
+  },
+  {
+    "model_name": "PW",
+    "vehicle_manufacturer_name": "DIAMOND"
+  },
+  {
+    "model_name": "SELTOS 1.4 TURBO",
+    "vehicle_manufacturer_name": "KIA"
+  },
+  {
+    "model_name": "A4 TFSI",
+    "vehicle_manufacturer_name": "AUDI"
+  },
+  {
+    "model_name": "GROOVE PREMIER",
+    "vehicle_manufacturer_name": "CHEVROLET"
+  },
+  {
+    "model_name": "NAVARE LE",
+    "vehicle_manufacturer_name": "NISSAN"
+  },
+  {
+    "model_name": "HD 35",
+    "vehicle_manufacturer_name": "HYUNDAI"
+  },
+  {
+    "model_name": "ML 320 CDI",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "FORZA GMC",
+    "vehicle_manufacturer_name": "FORZA MOTO"
+  },
+  {
+    "model_name": "VITO",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "M7040D",
+    "vehicle_manufacturer_name": "KUBOTA"
+  },
+  {
+    "model_name": "ML 250 CDI",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "AVENSIS",
+    "vehicle_manufacturer_name": "TOYOTA"
+  },
+  {
+    "model_name": "FORZA XTF",
+    "vehicle_manufacturer_name": "FORZA MOTO"
+  },
+  {
+    "model_name": "PHANTOM",
+    "vehicle_manufacturer_name": "FORZA MOTO"
+  },
+  {
+    "model_name": "DOBLO  PANORAMA",
+    "vehicle_manufacturer_name": "FIAT"
+  },
+  {
+    "model_name": "FORZA SUPER MAX",
+    "vehicle_manufacturer_name": "FORZA MOTO"
+  },
+  {
+    "model_name": "GS3 200T",
+    "vehicle_manufacturer_name": "GAC MOTOR"
+  },
+  {
+    "model_name": "MINI COOPER",
+    "vehicle_manufacturer_name": "BMW"
+  },
+  {
+    "model_name": "EMAX",
+    "vehicle_manufacturer_name": "Hongli"
+  },
+  {
+    "model_name": "CLASSE CLA",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "ADAM AG",
+    "vehicle_manufacturer_name": "OPEL"
+  },
+  {
+    "model_name": "ADAM",
+    "vehicle_manufacturer_name": "OPEL"
+  },
+  {
+    "model_name": "SC6021",
+    "vehicle_manufacturer_name": "HONDA"
+  },
+  {
+    "model_name": "LEON XCELLENCE",
+    "vehicle_manufacturer_name": "SEAT"
+  },
+  {
+    "model_name": "ZIMOTA JOY",
+    "vehicle_manufacturer_name": "ZIMOTA"
+  },
+  {
+    "model_name": "FORWARD-FV",
+    "vehicle_manufacturer_name": "ISUZU"
+  },
+  {
+    "model_name": "FIESTA FLAIR",
+    "vehicle_manufacturer_name": "FORD"
+  },
+  {
+    "model_name": "GREATWALL M4",
+    "vehicle_manufacturer_name": "GREATWALL"
+  },
+  {
+    "model_name": "CLASSE C",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "KA",
+    "vehicle_manufacturer_name": "FORD"
+  },
+  {
+    "model_name": "SRB272",
+    "vehicle_manufacturer_name": "SOTIME"
+  },
+  {
+    "model_name": "S MAX",
+    "vehicle_manufacturer_name": "Bewheels"
+  },
+  {
+    "model_name": "HECHA",
+    "vehicle_manufacturer_name": "HELI"
+  },
+  {
+    "model_name": "Multivan",
+    "vehicle_manufacturer_name": "VOLKSWAGEN"
+  },
+  {
+    "model_name": "Fronx",
+    "vehicle_manufacturer_name": "SUZUKI"
+  },
+  {
+    "model_name": "C440 DXI 11",
+    "vehicle_manufacturer_name": "RENAULT TRUCKS"
+  },
+  {
+    "model_name": "SKODA KUSHAQ",
+    "vehicle_manufacturer_name": "SKODA"
+  },
+  {
+    "model_name": "Mobylette FTM",
+    "vehicle_manufacturer_name": "Mobylette"
+  },
+  {
+    "model_name": "GLORY 500 FENGON",
+    "vehicle_manufacturer_name": "DFSK"
+  },
+  {
+    "model_name": "C200K",
+    "vehicle_manufacturer_name": "MERCEDES-BENZ"
+  },
+  {
+    "model_name": "ORBIT",
+    "vehicle_manufacturer_name": "SYM MOTO"
+  },
+  {
+    "model_name": "ORBIT 2",
+    "vehicle_manufacturer_name": "SYM MOTO"
+  },
+  {
+    "model_name": "HL 125",
+    "vehicle_manufacturer_name": "Hongli"
+  },
+  {
+    "model_name": "TRANSIT CUSTOM",
+    "vehicle_manufacturer_name": "FORD"
+  },
+  {
+    "model_name": "i30 1.0T",
+    "vehicle_manufacturer_name": "HYUNDAI"
+  },
+  {
+    "model_name": "FREELANDER2",
+    "vehicle_manufacturer_name": "JAGUAR - LAND ROVER"
+  },
+  {
+    "model_name": "CAPPUCCINO",
+    "vehicle_manufacturer_name": "GUSITE"
+  },
+  {
+    "model_name": "70C15",
+    "vehicle_manufacturer_name": "IVECO"
+  },
+  {
+    "model_name": "LX",
+    "vehicle_manufacturer_name": "PIAGGIO"
+  }
+]

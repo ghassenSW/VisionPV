@@ -109,14 +109,77 @@ Exemples :
     - **Fonctionnaire Public** : État/Secteur public (Enseignant, Professeur, Policier, Militaire).
     - **Sans emploi** : Chômeur, Femme au foyer, Étudiant, Élève, Retraité, Enfant.
     - **Profession libérale** : Secteur privé, Ouvrier, Journalier, Commerçant, Agriculteur, Chauffeur.
-14. **Type de véhicule (MAPPING)** : Vous devez impérativement faire correspondre le véhicule identifié à l'une des catégories suivantes, et UNIQUEMENT à celles-ci :
-    - Louage, Taxi Individuel, Véhicule rapide d’intervention, Motocyclette légère (50-125 cm³), Vélo ordinaire ,Train, Engin de travaux ,Tricycle à moteur ,Motocyclette (supérieur à 125cm3) ,Quadricycles à moteur , Taxi collectif ,Véhicule administratif ,Auto Ecole , Location ,Véhicule de transport rural ,Véhicule touristique privé (transport  personnel) ,Taxi Touristique, Trottinette ,Autobus public (transport régional) - transport personnel, Motocyclette (supérieur à 50cm3) - Administratif, Autobus TCV  (transport en commun de voyageurs), Ambulance, Objets impliqués, Bus, Motocyclette (inférieur à 50cm3), voiture, Métro, véhicules Electrique, Remorquage, Remorque et semi remorque, Tracteur, véhicules, Camion
+
+14. **Type de véhicule (MAPPING HIÉRARCHIQUE ET STRICT)**:
+    Consigne : Pour chaque véhicule identifié, vous devez mapper sa nature vers UNE SEULE valeur de la liste officielle ci-dessous. Utilisez les indices textuels du procès-verbal pour choisir la catégorie la plus précise.
+
+    *) Liste Officielle (Valeurs Autorisées) :
+    ['Louage', 'Taxi Individuel', 'Véhicule rapide d’intervention', 'Motocyclette légère (50-125 cm³)', 'Vélo ordinaire', 'Train', 'Engin de travaux', 'Tricycle à moteur', 'Motocyclette (supérieur à 125cm3)', 'Quadricycles à moteur', 'Taxi collectif', 'Véhicule administratif', 'Auto Ecole', 'Location', 'Véhicule de transport rural', 'Véhicule touristique privé (transport personnel)', 'Taxi Touristique', 'Trottinette', 'Autobus public (transport régional) - transport personnel', 'Motocyclette (supérieur à 50cm3) - Administratif', 'Autobus TCV (transport en commun de voyageurs)', 'Ambulance', 'Objets impliqués', 'Bus', 'Motocyclette (inférieur à 50cm3)', 'voiture', 'Métro', 'véhicules Electrique', 'Remorquage', 'Remorque et semi remorque', 'Tracteur', 'véhicules', 'Camion']
+
+    
+
+    **) Guide de Décision et Mots-Clés :
+
+    Véhicules de Tourisme :
+
+    'voiture' : Terme générique ("voiture particulière", "M1") sans précision d'usage.  
+
+    'Véhicule touristique privé (transport personnel)' : Si mention de "propriété privée" ou "usage personnel".  
+
+    'Location' : Si mention d'une agence de location ou "voiture louée".  
+
+    'Véhicule administratif' : Si mention de "ministère", "société publique" ou présence d'une plaque rouge/bleue.  
+
+    Transport Public & Collectif :
+
+    'Louage' : Mention explicite de "Louage" ou transport interurbain entre villes.  
+
+    'Taxi Individuel' : Mention de "Taxi" sans autre précision.  
+
+    'Véhicule de transport rural' : Transport de passagers en zone rurale (souvent mentionné comme "Transport Rural").  
+
+    'Autobus public (transport régional) - transport personnel' : Mention de "Bus SRT", "Bus régional" ou grand autocar de transport public.  
+
+    Deux-roues et assimilés :
+
+    'Motocyclette (inférieur à 50cm3)' : Si mention de "Vélomoteur", "Mob" ou petite cylindrée.  
+
+    'Motocyclette légère (50-125 cm³)' : Si mention de "Scooter" ou cylindrée moyenne.  
+
+    'Motocyclette (supérieur à 125cm3)' : Si mention de "Grosse cylindrée" ou "Moto de sport".  
+
+    Poids lourds et Travaux :
+
+    'Camion' : Mention de "Poids lourd" ou transport de marchandises.  
+
+    'Tracteur' : Si mention explicite de "Tracteur agricole".  
+
+    'Engin de travaux' : Pelleteuse, bulldozer ou matériel de chantier.  
+
+    Urgence et Spéciaux :
+
+    'Ambulance' : Véhicule de secours médical.  
+
+    'Objets impliqués' : Si le dommage concerne un obstacle fixe (mur, poteau, arbre) et non un autre véhicule.  
+
+    ++ Deux-roues (RÈGLE DE PRIORITÉ) :
+
+        'Motocyclette (inférieur à 50cm3)' (VALEUR PAR DÉFAUT) : Utilisez cette catégorie pour tout deux-roues motorisé (vélomoteur, mobylette, scooter) s'il n'y a aucune précision sur la cylindrée dans le texte.  
+
+        Exceptions (SI INDICE PRÉCIS) :
+
+        Utilisez 'Motocyclette légère (50-125 cm³)' UNIQUEMENT si le texte mentionne explicitement un indice de capacité (ex: "100cc", "125cc") ou un modèle de scooter de taille moyenne (ex: "Vespa", "Piaggio Liberty").  
+
+        Utilisez 'Motocyclette (supérieur à 125cm3)' UNIQUEMENT si le texte mentionne une "Grosse cylindrée" ou une marque de moto puissante (ex: "Kawasaki", "BMW", "Yamaha T-Max").
+
+    ***) RÈGLE D'OR :
+    La valeur extraite doit correspondre EXACTEMENT à l'orthographe de la liste officielle. Si le texte est vague, privilégiez la catégorie la plus simple ('voiture' pour les automobiles, 'véhicules' pour les types indéterminés).
+    
 15. **Type de Poste (_reasoning_Poste_Type)** : Identifiez l'organisme ayant rédigé le PV en analysant l'en-tête (en haut à droite). Vous devez effectuer un choix binaire obligatoire pour le champ interne `_reasoning_Poste_Type` :
     - Si vous voyez les mots "الحرس الوطني", inscrivez exclusivement : "Garde Nationale". Vous devez utiliser cette valeur pour remplir `nationalGuardHQ` et mettre `policeHQ` à `null`.
     - Si vous voyez les mots "الأمن الوطني" ou "الشرطة", inscrivez exclusivement : "Poste de Police". Vous devez utiliser cette valeur pour remplir `policeHQ` et mettre `nationalGuardHQ` à `null`.
     Interdiction : Ne créez aucune autre catégorie.
 
-### LOGIQUE PRÉCISE POUR LES VÉHICULES :
 ### LOGIQUE PRÉCISE POUR LES VÉHICULES :
 16. **Identification du Véhicule ("N° Imm") - Immatriculation ou Châssis :**
     - STRATÉGIE DE RECHERCHE : Identifiez en priorité le numéro d'immatriculation (plaque minéralogique). Si celui-ci est absent ou illisible, extrayez impérativement le numéro de série ou de châssis (souvent plus long et complexe).
@@ -128,6 +191,15 @@ Exemples :
     - FORMATS D'IMMATRICULATION ATYPIQUES : Si le numéro ne correspond à aucun format classique abordé ci-dessus, repérez et extrayez n'importe quel autre format aléatoire ou atypique (mélange de lettres, chiffres, etc.) à condition que le contexte du texte le désigne explicitement comme étant la plaque ou l'immatriculation du véhicule.
     - RÈGLE DE SORTIE : Le champ "registrationNumber" doit contenir soit la plaque, soit le châssis.
     - ZÉRO HALLUCINATION : Si aucune donnée d'identification n'est présente dans le texte, renvoyez null.
+    - RÈGLE CRITIQUE — DEUX-ROUES ET VÉHICULES MOTORISÉS (MOTOS, SCOOTERS, TRICYCLES) :
+        ⚠️ L'ABSENCE D'ASSURANCE N'IMPLIQUE PAS L'ABSENCE DE PLAQUE. Ce sont deux informations INDÉPENDANTES.
+        Une moto, un scooter ou un tricycle PEUT être "Non assuré" ET avoir quand même une plaque d'immatriculation (ex: "123TU4567", "12-345-678").
+        OBLIGATION : Même si le véhicule est de type deux-roues OU s'il est explicitement mentionné comme "غير مؤمنة" (non assuré), vous devez TOUJOURS chercher et extraire son numéro d'immatriculation ou de châssis s'il est présent dans le texte.
+        Exceptions légitimes où `null` est acceptable pour `registrationNumber` :
+            * Vélo ordinaire (bicyclette sans moteur) : non immatriculé.
+            * Trottinette non motorisée : non immatriculée.
+            * Le texte ne mentionne explicitement aucun numéro de plaque ni de châssis pour ce véhicule.
+        Pour tout autre véhicule motorisé (moto, scooter, tricycle à moteur, quadricycle) : cherchez activement la plaque avant de retourner null.
 
 16b. **Modèle du Véhicule (model)** : 
     - STRATÉGIE DE RECHERCHE : Cherchez dans la section descriptive du véhicule le nom du modèle exact. Les mots-clés pivots incluent :
@@ -146,7 +218,21 @@ Exemples :
     - FORMAT STANDARD INTERNATIONAL : Utilisez les noms de marques tels qu'ils sont reconnus internationalement et dans les listes officielles (ex: "FORD" et non "FORTES", "PEUGEOT" et non "POUGEOT").
     - ABSENCE OU INCERTITUDE : Si le fabricant ne peut pas être trouvé, reste flou ou ambigü, renvoyez null.
 
+That confirms it — instruction 17 is a single thin line with zero guidance on where to find the CIN, how to link it to the right vehicle, or what to do when the driver isn't a victim. Here are the exact changes:
+
+Change 1 — Expand instruction 17 (the only change needed in the instructions block)
+Location: Line 157 — replace this single line:
 17. **Conducteurs des véhicules** : Pour chaque véhicule impliqué, identifiez le conducteur. Extrayez uniquement son numéro de CIN dans le champ "driverIdentity".
+Replace with:
+17. **Conducteurs des véhicules (driverIdentity)** : Pour chaque véhicule impliqué, identifiez le conducteur et extrayez uniquement son numéro de CIN (8 chiffres) dans le champ `driverIdentity`.
+    - STRATÉGIE DE RECHERCHE : Le CIN du conducteur se trouve dans la section descriptive du véhicule, souvent introduit par les mots-clés arabes :
+        * "بطاقة تعريف" / "ب.ت.و" / "رقم البطاقة" (numéro de carte d'identité)
+        * "يقودها" / "سائقها" / "بقيادة" (conduit par)
+        Le CIN est généralement un nombre de 8 chiffres placé après l'identité du conducteur.
+    - LINKAGE VÉHICULE↔CONDUCTEUR : Associez le CIN au bon véhicule en vous basant sur le contexte narratif (ex: "السيارة الأولى ... يقودها ... ب.ت.و 12345678" → ce CIN appartient au conducteur du premier véhicule).
+    - CAS DU CONDUCTEUR VICTIME : Si le conducteur figure également dans la liste des victimes, dupliquez son CIN dans les deux endroits : `driverIdentity` dans `vehicles[]` ET `identityNumber` dans `victims[]`. Ce sont deux champs indépendants.
+    - CAS DU CONDUCTEUR NON VICTIME (INDEMNE) : Si le conducteur est indemne (non listé dans les victimes), son CIN doit quand même apparaître dans `driverIdentity`. Ne le laissez pas à null sous prétexte qu'il n'est pas blessé.
+    - ABSENCE : Si aucun CIN n'est trouvable pour le conducteur d'un véhicule, renvoyez null.
 18. **Établissement de santé (Hôpital/Clinique)** : Identifiez le lieu de soins (mots-clés "مستشفى", "مصحة", "معهد" associés à "تم نقله" ou "توجيهه").
     - Transcrivez impérativement en français (ex: "Hôpital Charles Nicolle", "Clinique Hannibal").
     - ATTENTION AUX TRANSFERTS (CAS MULTIPLES) : Suivez le parcours médical détaillé dans le texte. Si au cours du récit de l'accident, la victime a été admise dans plusieurs établissements successivement (ex: d'abord un hôpital local pour les premiers soins, puis un transfert vers un établissement de référence pour une opération), vous DEVEZ déduire et retenir EXCLUSIVEMENT l'établissement final et définitif vers lequel la victime a été orientée en fin de compte. Rentrez ce nom sous forme de chaîne de caractères simple (pas de liste).
@@ -164,30 +250,18 @@ Exemples :
     
     - RÈGLE : La valeur extraite doit correspondre EXACTEMENT à l'une des entrées de PROFESSION_LIST = ['Retraité', 'Sans emploi', 'Profession libérale', "Agent d'exécution", 'Enseignant universitaire', 'Pétanqueur professionnel', 'Pétanqueur', 'Médecin expert - laboratoire', 'Médecin expert', 'Médecin expert judiciaire', 'Médecin expert assurance', 'Fonctionnaire Public'].
 
-20. **Type de véhicule (MAPPING STRICT)** : 
-    Identifiez le type de chaque véhicule impliqué et mappez-le exclusivement vers l'une des valeurs de la liste suivante :
-    - Véhicules de tourisme : 'voiture', 'Véhicule touristique privé (transport personnel)', 'Location', 'Véhicule administratif'.
-    - Transport public/collectif : 'Taxi Individuel', 'Taxi collectif', 'Taxi Touristique', 'Louage', 'Véhicule de transport rural', 'Bus', 'Autobus TCV (transport en commun de voyageurs)', 'Autobus public (transport régional) - transport personnel'.
-    - Deux-roues et assimilés : 'Vélo ordinaire', 'Trottinette', 'Motocyclette (inférieur à 50cm3)', 'Motocyclette légère (50-125 cm³)', 'Motocyclette (supérieur à 125cm3)', 'Motocyclette (supérieur à 50cm3) - Administratif', 'Tricycle à moteur', 'Quadricycles à moteur'.
-    - Poids lourds et Travaux : 'Camion', 'Tracteur', 'Remorque et semi remorque', 'Engin de travaux', 'Remorquage'.
-    - Urgence et Spéciaux : 'Ambulance', 'Véhicule rapide d’intervention', 'Auto Ecole', 'Objets impliqués'.
-    - Rail : 'Train', 'Métro'.
-    - Autres : 'véhicules Electrique', 'véhicules'.
-
-    - RÈGLE : La valeur doit correspondre EXACTEMENT à l'orthographe de la liste officielle: VEHICLE_TYPE_LIST = ['Louage', 'Taxi Individuel', 'Véhicule rapide d’intervention', 'Motocyclette légère (50-125 cm³)', 'Vélo ordinaire', 'Train', 'Engin de travaux', 'Tricycle à moteur', 'Motocyclette (supérieur à 125cm3)', 'Quadricycles à moteur', 'Taxi collectif', 'Véhicule administratif', 'Auto Ecole', 'Location', 'Véhicule de transport rural', 'Véhicule touristique privé (transport  personnel)', 'Autobus Couplé  (transport régional) - Police', 'Taxi Touristique', 'Trottinette', 'Autobus public (transport régional) - transport personnel', 'Motocyclette (supérieur à 50cm3) - Administratif', 'Autobus TCV  (transport en commun de voyageurs)', 'Ambulance', 'Objets impliqués', 'Bus', 'Motocyclette (inférieur à 50cm3)', 'voiture', 'Métro', 'véhicules Electrique', 'Remorquage', 'Remorque et semi remorque', 'Tracteur', 'véhicules', 'Camion']
-
-21. 15. **Informations Entreprise (Victimes)** :
+20. 15. **Informations Entreprise (Victimes)** :
     - Examinez si la victime est mentionnée comme agissant pour le compte d'une société ou si un identifiant fiscal (Matricule Fiscal) est associé à son identité.
     - **belongCompany** : `true` si le texte mentionne une entreprise employeuse ou un matricule fiscal pour la victime, sinon `false`.
     - **companyFiscalTaxId** : Extrayez le matricule fiscal (souvent composé de chiffres et de lettres, ex: 1234567/A/M/000). Si `belongCompany` est `false`, ce champ doit être `null`.
 
-22. 17. **Gouvernorat du décès (MAPPING STRICT)** :
+21. 17. **Gouvernorat du décès (MAPPING STRICT)** :
     - Si la victime est décédée, identifiez le gouvernorat où le décès a été constaté.
     - Vous devez impérativement mapper ce lieu vers l'une des valeurs suivantes (en MAJUSCULES) :
     'ARIANA', 'BEJA', 'GABES', 'GAFSA', 'JENDOUBA', 'KAIROUAN', 'KASSERINE', 'KEBILI', 'KEF', 'MAHDIA', 'MANOUBA', 'MEDENINE', 'MONASTIR', 'NABEUL', 'SFAX', 'SOUSSE', 'TATAOUINE', 'TOZEUR', 'TUNIS', 'ZAGHOUAN', 'BIZERTE', 'SILIANA', 'BEN_AROUS', 'SIDI_BOUZID'.
     - Si le lieu n'est pas clair, utilisez le gouvernorat de l'accident ou `null`.
 
-23. **Cause médicale du décès (MAPPING STRICT)** :
+22. **Cause médicale du décès (MAPPING STRICT)** :
     - Analysez les mentions relatives au décès de la victime pour choisir l'une des trois options suivantes :
     - "Suite à l’accident" : Si le texte indique que la mort est survenue sur le coup, lors du transport, ou à l'hôpital à cause des blessures subies.
     - "Non déterminé" : Si le PV mentionne que la cause exacte sera définie par une autopsie ultérieure ou si le texte est ambigu sur le lien direct.
@@ -210,7 +284,7 @@ Exemples :
     "_reasoning_contexte": "1. Résumez la dynamique de l'accident : qui conduisait quoi, dans quelle direction, et que s'est-il passé ?",
     "_reasoning_lieu": "2. Citez le passage décrivant le lieu exact du sinistre (rue, route, point kilométrique, etc.) et déduisez-en son emplacement.",
     "_reasoning_causes": "3. Citez le passage précis traitant de l'infraction/panne, puis déduisez-en formellement le terme STRICT dans la liste officielle.",
-    "_reasoning_vehicules": "4. Listez les véhicules impliqués. Pour chaque assurance trouvée, appliquez le mapping autorisé (ex: 'AMI' devient 'BNA Assurances'). Identifiez également le modèle et la marque du véhicule.",
+    "_reasoning_vehicules": "4. Listez les véhicules impliqués. Pour chaque assurance trouvée, appliquez le mapping autorisé (ex: 'AMI' devient 'BNA Assurances'). Identifiez également le modèle et la marque du véhicule. IMPORTANT : Pour chaque deux-roues ou véhicule non assuré, vérifiez EXPLICITEMENT si une plaque ou un numéro de châssis est mentionné dans le texte avant de mettre null dans registrationNumber.",
     "_reasoning_victimes": "5. Cherchez la rubrique des dégâts corporels. Comptez blessés/morts. Identifiez âge. S'il y a des blessés, analysez leur parcours de soin et déterminez expressément l'établissement final dans lequel la victime a été admise (l'hôpital ultime). EXCLUEZ les personnes indemnes.",
     "_reasoning_Poste_Type": "6. CHOIX : Poste de Police ou Garde Nationale",
     "_reasoning_Total_decedes": "7. Total décédés (nombre entier)",
