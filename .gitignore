@@ -1,5 +1,5 @@
 # Environments
-gemini/application_default_credentials.json
+gemini/
 .env
 .venv
 env/
