@@ -6,16 +6,16 @@ from difflib import SequenceMatcher
 from datetime import datetime
 from dotenv import load_dotenv
 from google import genai
-from utils import log_timing
-from prompt import PROMPT_TEMPLATE
+from app.core.utils import log_timing
+from app.core.prompt import PROMPT_TEMPLATE
 
 logger = logging.getLogger(__name__)
 
-# Déterminer le dossier où se trouve le fichier Python actuel
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+# Déterminer la racine du projet VisionPV
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # 1. Charger les Régions par Gouvernorat (depuis JSON hiérarchique)
-region_json_path = os.path.join(BASE_DIR, 'regions_by_governorate.json')
+region_json_path = os.path.join(PROJECT_ROOT, 'data', 'regions_by_governorate.json')
 if os.path.exists(region_json_path):
     with open(region_json_path, 'r', encoding='utf-8') as f:
         REGIONS_BY_GOV = json.load(f)
@@ -25,7 +25,7 @@ else:
     REGIONS_BY_GOV = {}
 
 # 2. Charger les Modèles par Marque (depuis JSON hiérarchique)
-vehicle_json_path = os.path.join(BASE_DIR, 'models_by_manufacturer.json')
+vehicle_json_path = os.path.join(PROJECT_ROOT, 'data', 'models_by_manufacturer.json')
 if os.path.exists(vehicle_json_path):
     with open(vehicle_json_path, 'r', encoding='utf-8') as f:
         MODELS_BY_MAKER = json.load(f)
@@ -35,15 +35,15 @@ else:
     MODELS_BY_MAKER = {}
 
 
-# Force load the .env relative to this file's directory so paths are consistent
-env_path = os.path.join(os.path.dirname(__file__), ".env")
+# Force load the .env from the project root
+env_path = os.path.join(PROJECT_ROOT, ".env")
 load_dotenv(env_path)
 
-# Ensure the credentials path is absolute based on the script's directory
+# Ensure the credentials path is absolute based on the project root
 creds_path = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
 if creds_path and not os.path.isabs(creds_path):
     # Use forward slashes for cross-platform compatibility (works in Docker)
-    creds_full_path = os.path.join(os.path.dirname(__file__), creds_path)
+    creds_full_path = os.path.join(PROJECT_ROOT, creds_path)
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = creds_full_path.replace("\\", "/")
 
 # --- CONFIGURATION ---
@@ -55,7 +55,7 @@ if not project or not location:
 client = genai.Client(vertexai=True, project=project, location=location)
 
 # Import hardcoded regions and headquarters for fuzzy matching
-from FTUSA_names import REGION_LIST, POLICE_HQ_LIST, NAV_GUARD_HQ_LIST, GOUVERNORAT_LIST, VEHICLE_MODEL_LIST, VEHICLE_MANUFACTURER_LIST, HEALTH_INSTITUTION_LIST
+from app.core.ftusa_names import REGION_LIST, POLICE_HQ_LIST, NAV_GUARD_HQ_LIST, GOUVERNORAT_LIST, VEHICLE_MODEL_LIST, VEHICLE_MANUFACTURER_LIST, HEALTH_INSTITUTION_LIST
 
 def get_best_fuzzy_match(extracted_str, valid_list, threshold=0.7, log_prefix="match", force_valid_list=False):
     """

@@ -1,9 +1,14 @@
 import os
+import sys
 import shutil
 import uuid
 import logging
 import time
 import uvicorn
+
+# Add the project root to sys.path so we can run this script directly
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from fastapi import APIRouter, FastAPI, UploadFile, File, HTTPException, Depends, Form, Request
 from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
@@ -26,8 +31,9 @@ if not root_logger.handlers:
     handler.setFormatter(logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s"))
     root_logger.addHandler(handler)
 
-from OCR_mistral import process_entire_pdf
-from LLM_gemini import process_pv
+from app.schemas import HealthResponse
+from app.services.ocr_mistral import process_entire_pdf
+from app.services.llm_gemini import process_pv
 
 MAX_UPLOAD_SIZE = 50 * 1024 * 1024  # 50 MB
 

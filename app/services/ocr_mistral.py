@@ -6,7 +6,7 @@ from pdf2image import convert_from_path
 from mistralai import Mistral
 from mistralai.models import SDKError
 from dotenv import load_dotenv
-from utils import log_timing
+from app.core.utils import log_timing
 
 logger = logging.getLogger(__name__)
 

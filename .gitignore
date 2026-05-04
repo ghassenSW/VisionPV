@@ -5,16 +5,19 @@ env/
 venv/
 ENV/
 env.bak/
-venv.bak/
 
 # Python
 __pycache__/
 *.py[cod]
-*$py.class
-*.so
+*.class
 
-# Output folders
-accident_data/
-ocr_text/
-"PV dataset/"
+# Temporary uploads
 temp_uploads/
+
+# Credentials & Secrets
+*credentials*.json
+*secret*.json
+*key*.json
+*service_account*.json
+prophet_muhammad.json
+
