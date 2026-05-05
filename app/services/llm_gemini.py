@@ -6,7 +6,7 @@ from difflib import SequenceMatcher
 from datetime import datetime
 from dotenv import load_dotenv
 from google import genai
-from app.core.utils import log_timing
+from app.core.utils import log_timing, calculate_gemini_cost
 from app.core.prompt import PROMPT_TEMPLATE
 
 logger = logging.getLogger(__name__)
@@ -206,9 +206,13 @@ def run_text_step(truncated_text, date_depot="", requestId=""):
         }
     )
 
+    stats = calculate_gemini_cost(response)
+    logger.info(f"Cost for this PV (Text Extraction): ${stats['total_cost_usd']:.6f} "
+                f"(Input: {stats['input_tokens']}, Output: {stats['output_tokens']})")
+
     raw_content = response.text
     try:
-        return json.loads(raw_content)
+        return json.loads(raw_content), stats['total_cost_usd']
     except json.JSONDecodeError as e:
         logger.error(f"Gemini returned malformed JSON: {e}")
         logger.error(f"Raw response (first 500 chars): {raw_content[:500]}")
@@ -217,7 +221,7 @@ def run_text_step(truncated_text, date_depot="", requestId=""):
 
 @log_timing
 def process_pv(ocr_text, date_depot='', requestId=""):
-    payload = run_text_step(ocr_text, date_depot=date_depot, requestId=requestId)
+    payload, llm_cost = run_text_step(ocr_text, date_depot=date_depot, requestId=requestId)
     
     # Prepend requestId to the final payload
     if requestId:
@@ -329,4 +333,4 @@ def process_pv(ocr_text, date_depot='', requestId=""):
     for field in ('_reasoning_contexte', '_reasoning_causes', '_reasoning_lieu', '_reasoning_vehicules', '_reasoning_victimes', '_reasoning_Poste_Type', '_reasoning_Total_decedes', '_reasoning_Total_blesses'):
         payload.pop(field, None)
         
-    return payload
+    return payload, llm_cost

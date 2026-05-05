@@ -1,8 +1,8 @@
-# VisionPV 📄👁️
+# VisionPV
 
 VisionPV is a robust, AI-powered API designed to automatically extract and structure data from Tunisian accident reports (Procès-Verbal). It leverages a multi-modal pipeline combining Mistral's advanced OCR capabilities with Google Gemini's Vision and Language models.
 
-## ✨ Key Features
+## Key Features
 - **Multi-modal Pipeline:** Concurrent execution of Mistral OCR for full text extraction and Gemini Vision for targeted region extraction (e.g., arrival stamps).
 - **Intelligent Fuzzy Matching:** Replaced heavy semantic embeddings with lightweight, hierarchical fuzzy logic to accurately map extracted entities (Cities, Vehicle Models, Insurances) to official FTUSA standard lists.
 - **Modular Architecture:** Clean, production-ready FastAPI structure with strict separation of concerns (`app/services`, `app/core`, `data/`).
@@ -10,7 +10,7 @@ VisionPV is a robust, AI-powered API designed to automatically extract and struc
 - **Docker Ready:** Fully containerized with a lightweight footprint, bypassing the need for heavy libraries like Pandas.
 - **Secure:** Enforces explicit `.gitignore` rules shielding sensitive credentials (like `application_default_credentials.json`).
 
-## 🚀 Getting Started (Demo Guide)
+## Getting Started (Demo Guide)
 
 ### 1. Prerequisites
 - Python 3.11+
@@ -46,10 +46,10 @@ docker-compose up --build -d
 ```
 The API will be automatically available at `http://localhost:8080`.
 
-## 📡 API Usage & Demo
+## API Usage & Demo
 
 The application comes with built-in interactive documentation via Swagger UI. Once the server is running, visit:
-👉 **[http://localhost:8080/docs](http://localhost:8080/docs)**
+**[http://localhost:8080/docs](http://localhost:8080/docs)**
 
 **Endpoint:** `POST /api/report/extract`
 

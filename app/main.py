@@ -152,8 +152,9 @@ async def pv_extraction_endpoint(
         try:
             ocr_result = process_entire_pdf(temp_pdf_path)
             # Safely unpack in case process_entire_pdf returns unexpectedly
-            if isinstance(ocr_result, tuple) and len(ocr_result) == 2:
-                full_ocr_text, date_depot = ocr_result
+            if isinstance(ocr_result, tuple) and len(ocr_result) >= 2:
+                full_ocr_text = ocr_result[0]
+                date_depot = ocr_result[1]
             else:
                 logger.error(f"[{request_id}] process_entire_pdf returned unexpected type/length: {ocr_result}")
                 
@@ -170,7 +171,11 @@ async def pv_extraction_endpoint(
         logger.info(f"[{request_id}] Starting LLM extraction...")
         
         try:
-            final_response = process_pv(full_ocr_text, date_depot=date_depot, requestId=requestId)
+            val = process_pv(full_ocr_text, date_depot=date_depot, requestId=requestId)
+            if isinstance(val, tuple) and len(val) >= 2:
+                final_response = val[0]
+            else:
+                final_response = val
         except Exception as e:
             logger.error(f"[{request_id}] Gemini extraction failed: {e}", exc_info=True)
             

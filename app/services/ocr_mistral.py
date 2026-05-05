@@ -6,7 +6,7 @@ from pdf2image import convert_from_path
 from mistralai import Mistral
 from mistralai.models import SDKError
 from dotenv import load_dotenv
-from app.core.utils import log_timing
+from app.core.utils import log_timing, calculate_gemini_cost, calculate_mistral_ocr_cost
 
 logger = logging.getLogger(__name__)
 
@@ -66,7 +66,9 @@ def _ocr_full_pdf(pdf_path):
             },
             include_image_base64=False
         )
-        return _merge_pages_markdown(response)
+        ocr_stats = calculate_mistral_ocr_cost(response)
+        logger.info(f"Mistral OCR: {ocr_stats['pages']} pages | Cost: ${ocr_stats['cost']:.6f}")
+        return _merge_pages_markdown(response), ocr_stats['cost']
     finally:
         try:
             client.files.delete(file_id=file_id)
@@ -102,15 +104,20 @@ def _extract_date_depot_gemini(pil_image):
 
     try:
         response = gemini_client.models.generate_content(
-            model='gemini-3.1-flash-image-preview',
+            model='gemini-3.1-flash-lite-preview',
             contents=[prompt_str, pil_image]
         )
+        
+        stats = calculate_gemini_cost(response)
+        logger.info(f"Cost for this PV (Stamp Extraction): ${stats['total_cost_usd']:.6f} "
+                    f"(Input: {stats['input_tokens']}, Output: {stats['output_tokens']})")
+        
         date_depot = response.text.strip()
         logger.info(f"Gemini returned: {date_depot}")
-        return date_depot
+        return date_depot, stats['total_cost_usd']
     except Exception as e:
         logger.error(f"Error calling Gemini: {e}")
-        return ""
+        return "", 0.0
 
 def _process_gemini_page1(pdf_path):
     logger.info("Loading page 1 for Gemini stamp extraction...")
@@ -123,15 +130,22 @@ def _process_gemini_page1(pdf_path):
                 if attempt > 0:
                     logger.info(f"Retrying Gemini stamp extraction (Attempt {attempt + 1}/3)...")
                 
-                date_depot = _extract_date_depot_gemini(pil_image)
+                result = _extract_date_depot_gemini(pil_image)
+                # Handle cases where the tuple unpacking might fail if previous code returned scalar, 
+                # but we updated it to return tuple
+                if isinstance(result, tuple):
+                    date_depot, cost = result
+                else:
+                    date_depot, cost = result, 0.0
+
                 if date_depot:
-                    return date_depot
+                    return date_depot, cost
                     
             logger.info("All 3 attempts failed to extract date_depot. Returning None.")
     except Exception as e:
         logger.error(f"Error converting pdf or calling Gemini for page 1: {e}")
     
-    return None
+    return None, 0.0
 
 @log_timing
 def process_entire_pdf(pdf_path):
@@ -143,6 +157,14 @@ def process_entire_pdf(pdf_path):
     with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
         future_ocr = executor.submit(_ocr_full_pdf, pdf_path)
         future_gemini = executor.submit(_process_gemini_page1, pdf_path)
+        
+        full_text, m_cost = future_ocr.result()
+        date_depot, g_cost = future_gemini.result()
+
+        total_pv_cost = m_cost + g_cost
+        logger.info(f"--- TOTAL PV PROCESSING COST: ${total_pv_cost:.6f} ---")
+        
+        return full_text, date_depot, total_pv_cost
         
         full_document_text = future_ocr.result()
         date_depot = future_gemini.result()
