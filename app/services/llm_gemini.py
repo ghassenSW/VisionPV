@@ -2,6 +2,7 @@ import os
 import json
 import logging
 import re
+import unicodedata
 from difflib import SequenceMatcher
 from datetime import datetime
 from dotenv import load_dotenv
@@ -10,6 +11,17 @@ from app.core.utils import log_timing, calculate_gemini_cost
 from app.core.prompt import PROMPT_TEMPLATE
 
 logger = logging.getLogger(__name__)
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# CRITICAL CONTRACT: STRICT FUZZY MATCHING ENFORCEMENT
+# ═══════════════════════════════════════════════════════════════════════════════
+# ALL fuzzy-matched field values MUST BE one of:
+#   1. A value from the valid list (if fuzzy match score >= threshold), OR
+#   2. None/null (if score < threshold)
+#
+# NEVER return the original extracted text for fuzzy-matched fields.
+# This contract is enforced by get_best_fuzzy_match() and get_smart_fuzzy_match().
+# ═══════════════════════════════════════════════════════════════════════════════
 
 # Déterminer la racine du projet VisionPV
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -55,26 +67,104 @@ if not project or not location:
 client = genai.Client(vertexai=True, project=project, location=location)
 
 # Import hardcoded regions and headquarters for fuzzy matching
-from app.core.ftusa_names import REGION_LIST, POLICE_HQ_LIST, NAV_GUARD_HQ_LIST, GOUVERNORAT_LIST, VEHICLE_MODEL_LIST, VEHICLE_MANUFACTURER_LIST, HEALTH_INSTITUTION_LIST
+from app.core.ftusa_names import CLAIM_REASON_LIST, DEATH_MEDICAL_CAUSE_LIST, INSURANCE_LIST, REGION_LIST, POLICE_HQ_LIST, NAV_GUARD_HQ_LIST, GOUVERNORAT_LIST, SOCIAL_STATE_LIST, VEHICLE_MODEL_LIST, VEHICLE_MANUFACTURER_LIST, VEHICLE_TYPE_LIST, HEALTH_INSTITUTION_LIST
+
+
+def _normalize_assert_key(value):
+    text = re.sub(r"\s+", " ", str(value).strip())
+    text = unicodedata.normalize("NFKD", text)
+    text = "".join(character for character in text if not unicodedata.combining(character))
+    return text.casefold()
+
+
+def assert_value_in_list(value, valid_list, field_name):
+    """Return the canonical list value if present, otherwise None.
+
+    This is a strict validation gate: list-backed fields are allowed to survive
+    only when their extracted value resolves to an official value from the list.
+    """
+    if value is None:
+        return None
+
+    if isinstance(value, list):
+        validated_values = []
+        for item in value:
+            validated_item = assert_value_in_list(item, valid_list, field_name)
+            if validated_item is not None:
+                validated_values.append(validated_item)
+            else:
+                logger.warning(f"{field_name}: dropped value outside allowed list: {item!r}")
+        return validated_values
+
+    if isinstance(value, str):
+        candidate = value.strip()
+        if not candidate or candidate.lower() in {"null", "none", "n/a"}:
+            return None
+        normalized_candidate = _normalize_assert_key(candidate)
+    else:
+        normalized_candidate = _normalize_assert_key(value)
+
+    for allowed_value in valid_list:
+        if normalized_candidate == _normalize_assert_key(allowed_value):
+            if value != allowed_value:
+                logger.info(f"{field_name}: canonicalized {value!r} -> {allowed_value!r}")
+            return allowed_value
+
+    logger.warning(f"{field_name}: value outside allowed list -> {value!r}")
+    return None
+
+
+def assert_list_backed_fields(payload):
+    """Enforce that every list-backed field resolves to an allowed value or None."""
+    payload["governorate"] = assert_value_in_list(payload.get("governorate"), GOUVERNORAT_LIST, "governorate")
+    payload["region"] = assert_value_in_list(payload.get("region"), REGION_LIST, "region")
+    payload["nationalGuardHQ"] = assert_value_in_list(payload.get("nationalGuardHQ"), NAV_GUARD_HQ_LIST, "nationalGuardHQ")
+    payload["policeHQ"] = assert_value_in_list(payload.get("policeHQ"), POLICE_HQ_LIST, "policeHQ")
+    payload["claimReasons"] = assert_value_in_list(payload.get("claimReasons"), CLAIM_REASON_LIST, "claimReasons")
+
+    if isinstance(payload.get("vehicles"), list):
+        for vehicle in payload["vehicles"]:
+            if not isinstance(vehicle, dict):
+                continue
+            vehicle["type"] = assert_value_in_list(vehicle.get("type"), VEHICLE_TYPE_LIST, "vehicles.type")
+            vehicle["insurance"] = assert_value_in_list(vehicle.get("insurance"), INSURANCE_LIST, "vehicles.insurance")
+            vehicle["model"] = assert_value_in_list(vehicle.get("model"), VEHICLE_MODEL_LIST, "vehicles.model")
+            vehicle["manufacturer"] = assert_value_in_list(vehicle.get("manufacturer"), VEHICLE_MANUFACTURER_LIST, "vehicles.manufacturer")
+
+    if isinstance(payload.get("victims"), list):
+        for victim in payload["victims"]:
+            if not isinstance(victim, dict):
+                continue
+            victim["gender"] = assert_value_in_list(victim.get("gender"), ["MALE", "FEMALE"], "victims.gender")
+            victim["casualtyType"] = assert_value_in_list(victim.get("casualtyType"), ["INJURY", "DEATH"], "victims.casualtyType")
+            victim["casualtyCategory"] = assert_value_in_list(victim.get("casualtyCategory"), ["DRIVER", "PASSENGER", "PEDESTRIAN"], "victims.casualtyCategory")
+            victim["deathGovernorate"] = assert_value_in_list(victim.get("deathGovernorate"), GOUVERNORAT_LIST, "victims.deathGovernorate")
+            victim["deathMedicalCause"] = assert_value_in_list(victim.get("deathMedicalCause"), DEATH_MEDICAL_CAUSE_LIST, "victims.deathMedicalCause")
+            victim["profession"] = assert_value_in_list(victim.get("profession"), SOCIAL_STATE_LIST, "victims.profession")
+
+    return payload
 
 def get_best_fuzzy_match(extracted_str, valid_list, threshold=0.7, log_prefix="match", force_valid_list=False):
     """
-    Fuzzy match with option to enforce result is always from valid_list.
+    Fuzzy match with STRICT enforcement: result is ALWAYS from valid_list or None.
+    
+    CRITICAL CONTRACT: If score >= threshold, returns best match from valid_list.
+                       If score < threshold, returns None (NEVER returns original extracted_str).
     
     Args:
         extracted_str: Text to match
         valid_list: List of valid values to match against
         threshold: Minimum match score to consider valid (0.0-1.0)
         log_prefix: Label for logging
-        force_valid_list: If True, always return best match from list even if below threshold.
-                          If False, return original string if below threshold.
+        force_valid_list: Deprecated. Kept for backward compatibility but no longer affects behavior.
+                          All calls MUST expect result to be from valid_list or None.
     
     Returns:
-        Best match from valid_list if score >= threshold or force_valid_list=True,
-        otherwise returns original extracted_str (or None if force_valid_list=True and no matches).
+        Best match from valid_list if score >= threshold, otherwise None.
+        GUARANTEED: Never returns original extracted_str when force_valid_list=True.
     """
     if not extracted_str or not valid_list:
-        return extracted_str
+        return None if force_valid_list else extracted_str
     
     best_match = None
     highest_ratio = 0.0
@@ -88,32 +178,24 @@ def get_best_fuzzy_match(extracted_str, valid_list, threshold=0.7, log_prefix="m
             if ratio == 1.0:  # Perfect match, no need to keep checking
                 break
     
-    # Decide what to return
-    NULL_THRESHOLD = 0.4
-
+    # STRICT ENFORCEMENT: No soft thresholds, no fallbacks to original text
     if best_match is None:
         logger.warning(f"No {log_prefix} candidates found in valid list for '{extracted_str}'")
-        return None if force_valid_list else extracted_str
+        return None
     
     if highest_ratio >= threshold:
-        logger.info(f"Fuzzy {log_prefix}: '{extracted_str}' -> '{best_match}' (score: {highest_ratio:.2f}) [ACCEPTED]")
+        logger.info(f"Fuzzy {log_prefix}: '{extracted_str}' -> '{best_match}' (score: {highest_ratio:.2f}) [ACCEPTED ✓]")
         return best_match
-    
-    # Below threshold
-    if force_valid_list:
-        if highest_ratio >= NULL_THRESHOLD:
-            logger.info(f"Fuzzy {log_prefix}: '{extracted_str}' -> '{best_match}' (score: {highest_ratio:.2f}) [FORCED_FROM_LIST]")
-            return best_match
-        else:
-            logger.info(f"Fuzzy {log_prefix}: '{extracted_str}' -> None (best score: {highest_ratio:.2f} < {NULL_THRESHOLD}) [FORCED_NULL]")
-            return None
     else:
-        logger.info(f"No {log_prefix} fuzzy match found for '{extracted_str}' (best score: {highest_ratio:.2f}, threshold: {threshold}) [REJECTED]")
-        return extracted_str
+        logger.warning(f"Fuzzy {log_prefix}: '{extracted_str}' -> None (score: {highest_ratio:.2f} < threshold: {threshold}) [REJECTED → NULL]")
+        return None
 
 def get_smart_fuzzy_match(query, default_list, mapping_dict=None, parent_value=None, threshold=0.7, force_valid_list=True):
     """
     Hierarchical fuzzy match: search in parent-specific sublist, fallback to default_list.
+    
+    STRICT CONTRACT (inherited from get_best_fuzzy_match): Result is ALWAYS from valid_list or None.
+    If score < threshold, returns None—NEVER returns original unmatched query.
     
     Args:
         query: Text to match (e.g., extracted model name)
@@ -121,11 +203,11 @@ def get_smart_fuzzy_match(query, default_list, mapping_dict=None, parent_value=N
         mapping_dict: Hierarchical mapping {parent: [children]} (e.g., MODELS_BY_MAKER)
         parent_value: Parent category value (e.g., matched manufacturer)
         threshold: Minimum match score
-        force_valid_list: If True, always return value from valid_list even if below threshold
+        force_valid_list: If True, enforces strict null-or-valid-list behavior (default: True)
     
     Returns:
         Best match from appropriate list (parent-specific or default).
-        Guaranteed to be from valid list if force_valid_list=True.
+        GUARANTEED: Always from valid_list or None—never original query text.
     """
     if not query:
         return None
@@ -141,7 +223,7 @@ def get_smart_fuzzy_match(query, default_list, mapping_dict=None, parent_value=N
         if parent_value and mapping_dict:
             logger.info(f"Parent '{parent_value}' not found in mapping. Using default list of {len(default_list)} items.")
     
-    # Perform fuzzy match with forced validation
+    # Perform fuzzy match with strict validation (enforces null-or-valid-list contract)
     return get_best_fuzzy_match(query, search_list, threshold, force_valid_list=force_valid_list)
 
 
@@ -328,6 +410,9 @@ def process_pv(ocr_text, date_depot='', requestId=""):
                 # Fuzzy match healthInstitution
                 if victim.get("healthInstitution"):
                     victim["healthInstitution"] = get_best_fuzzy_match(victim["healthInstitution"], HEALTH_INSTITUTION_LIST, 0.60, "healthInstitution", force_valid_list=True)
+
+    # Final assertion pass: every list-backed field must resolve to an allowed value or None.
+    payload = assert_list_backed_fields(payload)
 
     # Remove all reasoning fields before returning
     for field in ('_reasoning_contexte', '_reasoning_causes', '_reasoning_lieu', '_reasoning_vehicules', '_reasoning_victimes', '_reasoning_Poste_Type', '_reasoning_Total_decedes', '_reasoning_Total_blesses'):

@@ -49,8 +49,50 @@ Format de sortie : YYYY-MM-DD (Convertissez les mois écrits en toutes lettres e
 - RÈGLES CRUCIALES :
     INTERDICTION ABSOLUE de créer une nouvelle catégorie ou de modifier l'orthographe de la liste.
     COPIER-COLLER EXACT : Les valeurs dans le JSON doivent être identiques caractère par caractère à la liste ci-dessous et formatées en tant que liste (array) de chaînes de caractères.
-- LISTE OFFICIELLE OBLIGATOIRE :
-    Marcher sur la chaussé, Stationnement innaproprié, Dépassement interdit, Excès de vitesse, Non respect de la priorité, Téléphone portable au volant, Ne pas prendre les précautions nécessaires, Non respect des signalisations de l'agent de Police de la circulation, Non respect de la distance de sécurité, Non respect des signalisations, Non respect du panneau "céder le passage", Sortie (soudaine) de la route/chaussée /pavé, Non mentionné / Non déterminé, Panneau "Attention Travaux" non affiché, Ne pas signaler "véhicule en panne", Nouveau en conduite, Panne technique, Ne pas prendre les précautions nécessaires lors du dépassement au rond point "céder le passage", Véhicule non destiné pour le transport des marchandises, Non respect des feux de signalisations, Interdiction de circuler des poids lourds, Conduite sans assurance + sans permis de conduire, Acte de violence, Chute du / des piéton(s), Panne mécanique / technique, Arrêt innaproprié, Défaut d'attention, accidents en chaine, Changer de direction, Collision par l'arrière, Chutes sur la route, Passage à niveau, Rouler dans un sens interdit, Vitesse réduite, Circulation sur trottoir, Circulation sur passage piétons, Infraction routière, Conduire en état d'ébriété, Conduire en état de fatigue, Rouler sans lumière la nuit, Fraude, Explosion d'une roue, Route glissante.
+- LISTE OFFICIELLE OBLIGATOIRE (valeurs exactes à utiliser) :
+    "Marcher sur la chaussé",
+    "Stationnement innaproprié",
+    "Dépassement interdit",
+    "Excès de vitesse",
+    "Non respect de la priorité",
+    "Téléphone portable au volant",
+    "Ne pas prendre les précautions nécessaires",
+    "Non respect des signalisations de l'agent  de Police de la circulation ",
+    "Non respect de la distance de sécurité",
+    "Non respect des signalisations",
+    "Non respect du panneau \"céder le passage\"",
+    "Sortie (soudaine) de la route/chaussée /pavé",
+    " Non mentionné / Non déterminé",
+    "Panneau \"Attention Travaux\" non affiché",
+    "Ne pas signaler \"véhicule en panne\"",
+    "Nouveau en conduite",
+    "Panne technique",
+    "Ne pas prendre les précautions nécessaires lors du dépassement au rond point \"céder le passage\"",
+    "Véhicule non destiné pour le transport des marchandises",
+    "Non respect des feux de signalisations",
+    "Interdiction de circuler des poids lourds",
+    "Conduite sans assurance + sans permis de conduire",
+    "Acte de violence",
+    "Chute du / des piéton(s)",
+    "Panne mécanique / technique",
+    "Arrêt innaproprié",
+    "Défaut d'attention",
+    "accidents en chaine",
+    "Changer de direction",
+    "Collision par l'arrière",
+    "Chutes sur la route",
+    "Passage à niveau",
+    "Rouler dans un sens interdit",
+    "Vitesse réduite",
+    "Circulation sur trottoir",
+    "Circulation sur passage piétons",
+    "Infraction routière",
+    "Conduire en état d'ébriété",
+    "Conduire en état de fatigue",
+    "Rouler sans lumière la nuit",
+    "Fraude",
+    "Explosion d'une roue",
+    "Route glissante"
 
 8. **nationalGuardHQ / policeHQ** : Identifiez le nom géographique principal (la ville ou région) en analysant les en-têtes administratifs situés en haut à droite de chaque page. Ce nom se trouve généralement à la fin d'une ligne hiérarchique, souvent précédé de la particule "ب" (en/à).
 Exemples de structures à repérer :
@@ -271,6 +313,7 @@ Replace with:
 ### RÈGLES DE FORMATAGE :
 - Langue : FRANÇAIS exclusivement.
 - Causes de sinistre : Fournissez une LISTE de chaînes de caractères (ex: ["Excès de vitesse", "Collision par l'arrière"]).
+- Champs à liste fermée : si une valeur extraite ne correspond pas exactement à la liste officielle du champ, remplacez-la par null.
 - Compagnie : Nom commercial en MAJUSCULES. **Si le texte mentionne "AMI" ou "أمي", écrivez "BNA Assurance"**. Si "غير مؤمنة" -> "Non assuré".
 - N° Imm : MAJUSCULES_SANS_ESPACE. Suivez scrupuleusement les règles du point 16 (Interdiction d'inventer le TU).
 - Type de véhicule : **CHOIX STRICT** dans la liste définie au point n°14. Ne créez aucune autre catégorie.
