@@ -243,22 +243,6 @@ Exemples :
             * Le texte ne mentionne explicitement aucun numéro de plaque ni de châssis pour ce véhicule.
         Pour tout autre véhicule motorisé (moto, scooter, tricycle à moteur, quadricycle) : cherchez activement la plaque avant de retourner null.
 
-16b. **Modèle du Véhicule (model)** : 
-    - STRATÉGIE DE RECHERCHE : Cherchez dans la section descriptive du véhicule le nom du modèle exact. Les mots-clés pivots incluent :
-        * En arabe : "نموذج" (modèle), "طراز" (type/modèle), "صنف" (classe), souvent suivis du nom en arabe ou translittéré.
-        * En français : "Modèle", "Type", "Marque et modèle" ou simplement le nom commercial du modèle (ex: "Clio", "Golf", "Civic").
-    - TRANSCRIPTION OBLIGATOIRE EN FRANÇAIS : Si le modèle est écrit en arabe (ex: "هيونداي أكسنت"), procédez à une translittération phonétique en français (ex: "Accent"). Vous devez TOUJOURS écrire le modèle en alphabet latin, jamais en arabe.
-    - STRUCTURE ALPHANUMÉRIQUE : Le modèle peut être composé de lettres et/ou de chiffres représentant la désignation commerciale exacte du modèle (ex: "Golf 7", "Clio IV", "C-HR", "M340i", "A3 35 TFSI").
-    - ABSENCE OU INCERTITUDE : Si le modèle ne peut pas être trouvé, reste flou ou ambigü dans le document, renvoyez null.
-
-16c. **Fabricant/Marque du Véhicule (manufacturer)** :
-    - STRATÉGIE DE RECHERCHE : Identifiez le fabricant du véhicule en cherchant :
-        * En arabe : "الصانع" (fabricant), "الماركة" (la marque), "مصنع" (usine/fabricant), ou simplement le nom de la marque directement mentionné (ex: "تويوتا", "فولكسفاغن", "بيجو").
-        * En français : "Marque", "Fabricant", "Constructeur" ou le nom de la marque automobile connue (ex: "Toyota", "Volkswagen", "Peugeot").
-    - FORMAT OBLIGATOIRE EN MAJUSCULES : Le fabricant doit TOUJOURS être écrit en MAJUSCULES (ex: "TOYOTA", "PEUGEOT", "MERCEDES-BENZ", "VOLKSWAGEN").
-    - TRANSCRIPTION OBLIGATOIRE EN FRANÇAIS : Si la marque est écrite en arabe, procédez à une translittération phonétique en français/anglais standard (ex: "سوزوكي" → "SUZUKI", "هيونداي" → "HYUNDAI").
-    - FORMAT STANDARD INTERNATIONAL : Utilisez les noms de marques tels qu'ils sont reconnus internationalement et dans les listes officielles (ex: "FORD" et non "FORTES", "PEUGEOT" et non "POUGEOT").
-    - ABSENCE OU INCERTITUDE : Si le fabricant ne peut pas être trouvé, reste flou ou ambigü, renvoyez null.
 
 That confirms it — instruction 17 is a single thin line with zero guidance on where to find the CIN, how to link it to the right vehicle, or what to do when the driver isn't a victim. Here are the exact changes:
 
@@ -327,7 +311,7 @@ Replace with:
     "_reasoning_contexte": "1. Résumez la dynamique de l'accident : qui conduisait quoi, dans quelle direction, et que s'est-il passé ?",
     "_reasoning_lieu": "2. Citez le passage décrivant le lieu exact du sinistre (rue, route, point kilométrique, etc.) et déduisez-en son emplacement.",
     "_reasoning_causes": "3. Citez le passage précis traitant de l'infraction/panne, puis déduisez-en formellement le terme STRICT dans la liste officielle.",
-    "_reasoning_vehicules": "4. Listez les véhicules impliqués. Pour chaque assurance trouvée, appliquez le mapping autorisé (ex: 'AMI' devient 'BNA Assurances'). Identifiez également le modèle et la marque du véhicule. IMPORTANT : Pour chaque deux-roues ou véhicule non assuré, vérifiez EXPLICITEMENT si une plaque ou un numéro de châssis est mentionné dans le texte avant de mettre null dans registrationNumber.",
+    "_reasoning_vehicules": "4. Listez les véhicules impliqués. Pour chaque assurance trouvée, appliquez le mapping autorisé (ex: 'AMI' devient 'BNA Assurances'). IMPORTANT : Pour chaque deux-roues ou véhicule non assuré, vérifiez EXPLICITEMENT si une plaque ou un numéro de châssis est mentionné dans le texte avant de mettre null dans registrationNumber.",
     "_reasoning_victimes": "5. Cherchez la rubrique des dégâts corporels. Comptez blessés/morts. Identifiez âge. S'il y a des blessés, analysez leur parcours de soin et déterminez expressément l'établissement final dans lequel la victime a été admise (l'hôpital ultime). EXCLUEZ les personnes indemnes.",
     "_reasoning_Poste_Type": "6. CHOIX : Poste de Police ou Garde Nationale",
     "_reasoning_Total_decedes": "7. Total décédés (nombre entier)",
@@ -348,9 +332,7 @@ Replace with:
     "vehicles": [
         {{
         "type": "VALEUR EXACTE DE LA LISTE (ex: Louage, Taxi Individuel, etc.)",
-        "insurance": "NOM EN FRANÇAIS (ex: BNA Assurances). IMPORTANT: Si le véhicule n'a pas d'assurance (ex: bicyclette, charrette) ou s'il est explicitement mentionné comme non assuré, écrivez 'Non assuré'. Ne mettez JAMAIS null pour un défaut d'assurance",
-        "model": "Modèle du véhicule ou null",
-        "manufacturer": "Marque du véhicule ou null",
+        "insurance": "NOM EN FRANÇAIS (ex: BNA Assurances). IMPORTANT: Si le véhicule n'a pas d'assurance (ex: bicycre, charrette) ou s'il est explicitement mentionné comme non assuré, écrivez 'Non assuré'. Ne mettez JAMAIS null pour un défaut d'assurance",
         "registrationNumber": "MAJUSCULES_SANS_ESPACE ou null",
         "driverIdentity": "8 chiffres ou null"
         }}

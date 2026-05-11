@@ -12,21 +12,8 @@ from app.core.prompt import PROMPT_TEMPLATE
 
 logger = logging.getLogger(__name__)
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# CRITICAL CONTRACT: STRICT FUZZY MATCHING ENFORCEMENT
-# ═══════════════════════════════════════════════════════════════════════════════
-# ALL fuzzy-matched field values MUST BE one of:
-#   1. A value from the valid list (if fuzzy match score >= threshold), OR
-#   2. None/null (if score < threshold)
-#
-# NEVER return the original extracted text for fuzzy-matched fields.
-# This contract is enforced by get_best_fuzzy_match() and get_smart_fuzzy_match().
-# ═══════════════════════════════════════════════════════════════════════════════
-
-# Déterminer la racine du projet VisionPV
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-# 1. Charger les Régions par Gouvernorat (depuis JSON hiérarchique)
 region_json_path = os.path.join(PROJECT_ROOT, 'data', 'regions_by_governorate.json')
 if os.path.exists(region_json_path):
     with open(region_json_path, 'r', encoding='utf-8') as f:
@@ -128,8 +115,8 @@ def assert_list_backed_fields(payload):
                 continue
             vehicle["type"] = assert_value_in_list(vehicle.get("type"), VEHICLE_TYPE_LIST, "vehicles.type")
             vehicle["insurance"] = assert_value_in_list(vehicle.get("insurance"), INSURANCE_LIST, "vehicles.insurance")
-            vehicle["model"] = assert_value_in_list(vehicle.get("model"), VEHICLE_MODEL_LIST, "vehicles.model")
-            vehicle["manufacturer"] = assert_value_in_list(vehicle.get("manufacturer"), VEHICLE_MANUFACTURER_LIST, "vehicles.manufacturer")
+            # vehicle["model"] = assert_value_in_list(vehicle.get("model"), VEHICLE_MODEL_LIST, "vehicles.model")
+            # vehicle["manufacturer"] = assert_value_in_list(vehicle.get("manufacturer"), VEHICLE_MANUFACTURER_LIST, "vehicles.manufacturer")
 
     if isinstance(payload.get("victims"), list):
         for victim in payload["victims"]:
@@ -145,24 +132,6 @@ def assert_list_backed_fields(payload):
     return payload
 
 def get_best_fuzzy_match(extracted_str, valid_list, threshold=0.7, log_prefix="match", force_valid_list=False):
-    """
-    Fuzzy match with STRICT enforcement: result is ALWAYS from valid_list or None.
-    
-    CRITICAL CONTRACT: If score >= threshold, returns best match from valid_list.
-                       If score < threshold, returns None (NEVER returns original extracted_str).
-    
-    Args:
-        extracted_str: Text to match
-        valid_list: List of valid values to match against
-        threshold: Minimum match score to consider valid (0.0-1.0)
-        log_prefix: Label for logging
-        force_valid_list: Deprecated. Kept for backward compatibility but no longer affects behavior.
-                          All calls MUST expect result to be from valid_list or None.
-    
-    Returns:
-        Best match from valid_list if score >= threshold, otherwise None.
-        GUARANTEED: Never returns original extracted_str when force_valid_list=True.
-    """
     if not extracted_str or not valid_list:
         return None if force_valid_list else extracted_str
     
@@ -191,24 +160,6 @@ def get_best_fuzzy_match(extracted_str, valid_list, threshold=0.7, log_prefix="m
         return None
 
 def get_smart_fuzzy_match(query, default_list, mapping_dict=None, parent_value=None, threshold=0.7, force_valid_list=True):
-    """
-    Hierarchical fuzzy match: search in parent-specific sublist, fallback to default_list.
-    
-    STRICT CONTRACT (inherited from get_best_fuzzy_match): Result is ALWAYS from valid_list or None.
-    If score < threshold, returns None—NEVER returns original unmatched query.
-    
-    Args:
-        query: Text to match (e.g., extracted model name)
-        default_list: Fallback list of all valid values (e.g., VEHICLE_MODEL_LIST)
-        mapping_dict: Hierarchical mapping {parent: [children]} (e.g., MODELS_BY_MAKER)
-        parent_value: Parent category value (e.g., matched manufacturer)
-        threshold: Minimum match score
-        force_valid_list: If True, enforces strict null-or-valid-list behavior (default: True)
-    
-    Returns:
-        Best match from appropriate list (parent-specific or default).
-        GUARANTEED: Always from valid_list or None—never original query text.
-    """
     if not query:
         return None
     
@@ -369,24 +320,24 @@ def process_pv(ocr_text, date_depot='', requestId=""):
     payload["policeHQ"] = police_hq
 
     # Apply fuzzy matching to vehicle model and manufacturer
-    if payload.get("vehicles") and isinstance(payload["vehicles"], list):
-        for vehicle in payload["vehicles"]:
-            if isinstance(vehicle, dict):                
-                # Fuzzy match manufacturer (normalize to UPPERCASE first)
-                if vehicle.get("manufacturer"):
-                    mfg = vehicle["manufacturer"].upper().strip()
-                    vehicle["manufacturer"] = get_best_fuzzy_match(mfg, VEHICLE_MANUFACTURER_LIST, 0.75, "vehicle_manufacturer", force_valid_list=True)
-                
-                # Fuzzy match model against manufacturer-specific sublist (FORCED to be from VEHICLE_MODEL_LIST)
-                if vehicle.get("model"):
-                    vehicle["model"] = get_smart_fuzzy_match(
-                        query=vehicle["model"],
-                        default_list=VEHICLE_MODEL_LIST,
-                        mapping_dict=MODELS_BY_MAKER,
-                        parent_value=vehicle.get("manufacturer"),
-                        threshold=0.70,
-                        force_valid_list=True  # CRITICAL: Ensures model is ALWAYS from VEHICLE_MODEL_LIST
-                    )
+    # if payload.get("vehicles") and isinstance(payload["vehicles"], list):
+    #     for vehicle in payload["vehicles"]:
+    #         if isinstance(vehicle, dict):                
+    #             # Fuzzy match manufacturer (normalize to UPPERCASE first)
+    #             if vehicle.get("manufacturer"):
+    #                 mfg = vehicle["manufacturer"].upper().strip()
+    #                 vehicle["manufacturer"] = get_best_fuzzy_match(mfg, VEHICLE_MANUFACTURER_LIST, 0.75, "vehicle_manufacturer", force_valid_list=True)
+    #             
+    #             # Fuzzy match model against manufacturer-specific sublist (FORCED to be from VEHICLE_MODEL_LIST)
+    #             if vehicle.get("model"):
+    #                 vehicle["model"] = get_smart_fuzzy_match(
+    #                     query=vehicle["model"],
+    #                     default_list=VEHICLE_MODEL_LIST,
+    #                     mapping_dict=MODELS_BY_MAKER,
+    #                     parent_value=vehicle.get("manufacturer"),
+    #                     threshold=0.70,
+    #                     force_valid_list=True  # CRITICAL: Ensures model is ALWAYS from VEHICLE_MODEL_LIST
+    #                 )
     # Normalize all date fields to YYYY-MM-DD format
     date_fields = ['submissionDate', 'reportDate', 'accidentDate']
     for field in date_fields:
