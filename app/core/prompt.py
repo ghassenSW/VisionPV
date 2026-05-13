@@ -133,6 +133,7 @@ LOGIQUE DE MAPPING :
 "بوات" / "BUAT" → BUAT
 "كارط" / "CARTE" → CARTE
 "كومار" / "COMAR" → COMAR
+"الأمانة تكافل" / "EL AMANA TAKAFUL" → Al Baraka Assurances
 "البركة" / "BARAKA" → Al Baraka Assurances
 "قات" / "GAT" → GAT
 "كتاما" / "CTAMA" → Groupe CTAMA
@@ -245,9 +246,10 @@ Exemples :
 
 ### LOGIQUE PRÉCISE POUR LES VÉHICULES :
 16. **Identification du Véhicule ("N° Imm") - Immatriculation ou Châssis :**
-    - STRATÉGIE DE RECHERCHE : Identifiez en priorité le numéro d'immatriculation (plaque minéralogique). Si celui-ci est absent ou illisible, extrayez impérativement le numéro de série ou de châssis (souvent plus long et complexe).
+    - STRATÉGIE DE RECHERCHE : Identifiez en priorité le numéro d'immatriculation (mots clés arabes: "رقم منجمي", "لوحة منجمية", "رقمها"). Si celui-ci est absent, cherchez IMPÉRATIVEMENT les mots clés "هيكل" (châssis), "هيكلها" (son châssis), ou "رقم الهيكل" (numéro de châssis) et extrayez la longue suite alphanumérique qui les suit dans le champ registrationNumber.
     - NETTOYAGE STRICT DU FORMAT : Toute valeur extraite doit être normalisée : supprimez tous les espaces blancs, étoiles ou caractères spéciaux qui ne font pas partie du code (ex: "ABC - 123 * 45" -> "ABC12345").
     - EXTRACTION PRIORITAIRE DES CODES LONGS (CHÂSSIS/VIN) : Une attention particulière doit être portée aux identifiants longs (ex: 17 caractères). Ne tronquez jamais ces numéros. Toute chaîne alphanumérique longue identifiée comme un châssis doit être extraite dans son intégralité (ex: "1FA6P8CF4G52XXXXX").
+    - RÈGLE ÉCRASANTE ("SANS PLAQUE" / "NON ASSURÉ") : Le mot arabe "هيكل" (châssis) ou "هيكلها" DOIT déclencher l'extraction de la suite de 17 caractères dans registrationNumber. Même si le véhicule est explicitement mentionné comme "بدون لوحة منجمية" (sans plaque) ou "غير مؤمنة" (non assuré), IL NE FAUT PAS METTRE `null` si le numéro de châssis est présent ! Le châssis remplace la plaque absente.
     - CONSERVATION DES MARQUEURS NATIONAUX ET INTERDICTION DE "TUN" : Si un pays ou une mention spécifique est écrit entre les chiffres (ex: TU, TN, F, تونس), remplacez-le par son code international ("TU" pour la Tunisie) sans espaces. L'utilisation de "TUN" est STRICTEMENT INTERDITE. Si vous vous apprêtez à écrire "123TUN456", vous devez immédiatement le corriger en "123TU456".
     - ABSENCE DE MARQUEUR : Si la plaque utilise uniquement des tirets ou des points sans mention de pays (ex: "11-222-333"), conservez la ponctuation d'origine telle quelle sans rien inventer (ex: "11-222-333").
     - CONVERSION DES RÉGIMES SPÉCIAUX : Détectez les mentions de régimes particuliers (ex: "Régime Suspensif", "ن ت") et convertissez-les en préfixes standards (ex: "1234 ن ت" -> "RS1234").
@@ -262,15 +264,8 @@ Exemples :
             * Vélo ordinaire (bicyclette sans moteur) : non immatriculé.
             * Trottinette non motorisée : non immatriculée.
             * Le texte ne mentionne explicitement aucun numéro de plaque ni de châssis pour ce véhicule.
-        Pour tout autre véhicule motorisé (moto, scooter, tricycle à moteur, quadricycle) : cherchez activement la plaque avant de retourner null.
+        Pour tout autre véhicule motorisé (moto, scooter, tricycle à moteur, quadricycle) : cherchez activement la plaque ou le châssis (هيكل) avant de retourner null.
 
-
-That confirms it — instruction 17 is a single thin line with zero guidance on where to find the CIN, how to link it to the right vehicle, or what to do when the driver isn't a victim. Here are the exact changes:
-
-Change 1 — Expand instruction 17 (the only change needed in the instructions block)
-Location: Line 157 — replace this single line:
-17. **Conducteurs des véhicules** : Pour chaque véhicule impliqué, identifiez le conducteur. Extrayez uniquement son numéro de CIN dans le champ "driverIdentity".
-Replace with:
 17. **Conducteurs des véhicules (driverIdentity)** : Pour chaque véhicule impliqué, identifiez le conducteur et extrayez uniquement son numéro de CIN (8 chiffres) dans le champ `driverIdentity`.
     - STRATÉGIE DE RECHERCHE : Le CIN du conducteur se trouve dans la section descriptive du véhicule, souvent introduit par les mots-clés arabes :
         * "بطاقة تعريف" / "ب.ت.و" / "رقم البطاقة" (numéro de carte d'identité)
