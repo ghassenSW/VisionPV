@@ -31,11 +31,32 @@ Logique de validation : Si plusieurs dates sont présentes, la Date du PV est ce
 Format de sortie : YYYY-MM-DD (Convertissez les mois écrits en toutes lettres en chiffres).
 5. **Date d'Accident** : Cherchez dans le récit des faits commençant par "جد الحادث jour...". Format YYYY-MM-DD.
 5b. **Heure de l'Accident** : Extrayez l'heure la plus proche du lieu ou du récit de l'accident quand elle est explicitement présente. Le format de sortie doit être strictement HH:MM:SS, avec secondes toujours égales à 00 et heures/minutes sur deux chiffres.
-6. **Lieu d'Accident / Délégation / Gouvernorat** : 
-    - Lisez le contexte de la zone géographique de l'accident (rue, route nationale, point kilométrique, ou la rubrique "مكان الحادث").
-    - Extrayez la formulation complète dans le champ "Lieu d'Accident" et traduisez-la TOUJOURS en français (ex: "Route Nationale 1", "Rue Habib Bourguiba"). L'arabe est strictement interdit.
-    - À partir de ce lieu, déduisez LOGIQUEMENT la **Délégation** correspondante à cette zone géographique (en français, ex: "Sousse Médina", "La Marsa"...).
-    - À partir de ce lieu ou de cette délégation, déduisez également LOGIQUEMENT le **Gouvernorat** dans lequel se trouve l'accident (en français, ex: "Sousse", "Tunis"...).
+6. **Lieu d'Accident / Délégation / Gouvernorat (EXTRACTION OBLIGATOIRE)** : 
+    - OBLIGATION STRICTE : Vous devez impérativement extraire l'adresse complète du lieu d'accident mentionné dans le document.
+    - STRATÉGIE DE RECHERCHE : Localisez dans le texte les mots-clés arabes et français associés au lieu d'accident :
+        * "مكان الحادث" (lieu de l'accident)
+        * "جد الحادث" (lieu de l'accident - variante)
+        * "طريق" ou "الطريق" (route/chemin)
+        * "شارع" (rue)
+        * "دوار" (rond-point)
+        * "جسر" (pont)
+        * "كم" ou "كيلومتر" (kilomètre - pour les routes nationales)
+        * "نقطة كيلومترية" (point kilométrique)
+        * "حي" (quartier)
+        * "مدينة" ou "بلدة" (ville/localité)
+    - COMPOSITION DE L'ADRESSE : L'adresse du lieu d'accident DOIT inclure tous les éléments géographiques mentionnés, dans cet ordre de priorité :
+        1. Type de voie (Route Nationale, Rue, Avenue, Boulevard, Chemin, Pont, Rond-point, etc.)
+        2. Numéro ou point kilométrique (si mentionné) - ex: "Route Nationale 1, Km 45" ou "Rue Habib Bourguiba N°120"
+        3. Intersection ou point de repère (si mentionné) - ex: "à l'intersection avec la Rue du Château"
+        4. Quartier/Secteur (si mentionné) - ex: "Quartier Medina"
+        5. Ville/Localité (OBLIGATOIRE) - ex: "Sousse", "Tunis"
+    - FORMAT DE SORTIE POUR "Lieu d'Accident" : Composez une chaîne unique combinant tous les éléments trouvés, séparés par des virgules et des espaces. Exemple : "Route Nationale 1, Km 45, Quartier Ben Arous, Sousse".
+    - DÉLÉGATION (DÉDUCTION LOGIQUE) : À partir du lieu d'accident extrait, déduisez la délégation administrative correspondante (en français). Exemples : "Sousse Médina", "La Marsa", "Sfax Sud", "Tunis Raoued", etc.
+    - GOUVERNORAT (DÉDUCTION LOGIQUE) : À partir du lieu ou de la délégation, déduisez le gouvernorat complet (en français). Exemples : "Sousse", "Tunis", "Sfax", "Bizerte", etc.
+    - LANGUE OBLIGATOIRE : Transcrivez TOUJOURS en français (alphabet latin). L'arabe est strictement interdit dans tous les champs (Lieu, Délégation, Gouvernorat).
+    - CAS DE ROUTE NATIONALE/RÉGIONALE : Si l'accident se déroule sur une route nationale ou régionale (ex: "Route Nationale 1", "Route Régionale 7"), incluez systématiquement le numéro et le point kilométrique si disponible.
+    - ABSENCE D'ADRESSE PRÉCISE : Si seulement la ville/délégation est mentionnée sans détail de rue, fournissez au minimum le nom de la délégation et du gouvernorat. Ne laissez pas le champ à null si au moins une localité est trouvable.
+
 7. **Causes de sinistre** (CLASSIFICATION MULTIPLE POSSIBLE) :
     - VOTRE MISSION : Vous devez agir comme un classifieur de données. Vous ne devez pas inventer de texte. Votre but est de faire correspondre le récit de l'accident à UNE OU PLUSIEURS VALEURS de la liste officielle ci-dessous.
 - LOGIQUE DE DÉCISION (À SUIVRE DANS L'ORDRE) :
@@ -276,18 +297,41 @@ Replace with:
     
     - RÈGLE : La valeur extraite doit correspondre EXACTEMENT à l'une des entrées de PROFESSION_LIST = ['Retraité', 'Sans emploi', 'Profession libérale', "Agent d'exécution", 'Enseignant universitaire', 'Pétanqueur professionnel', 'Pétanqueur', 'Médecin expert - laboratoire', 'Médecin expert', 'Médecin expert judiciaire', 'Médecin expert assurance', 'Fonctionnaire Public'].
 
-20. 15. **Informations Entreprise (Victimes)** :
+20. **Adresse de la Victime (EXTRACTION OBLIGATOIRE)** :
+    - OBLIGATION STRICTE : Vous devez impérativement extraire l'adresse complète de chaque victime mentionnée dans le document.
+    - STRATÉGIE DE RECHERCHE : Localisez dans le texte les mots-clés arabes et français associés à l'adresse de la victime :
+        * "عنوان" (adresse)
+        * "يسكن في" (habite à)
+        * "الإقامة" (résidence)
+        * "سكنه" (son domicile)
+        * "شارع" (rue)
+        * "حي" (quartier)
+        * "بلدة" (localité/village)
+        * "مدينة" (ville)
+        * "الطريق" (route)
+    - COMPOSITION DE L'ADRESSE : L'adresse extraite DOIT inclure tous les éléments géographiques mentionnés dans le document, dans cet ordre de priorité :
+        1. Nom de la rue (si mentionné) - ex: "Rue Habib Bourguiba"
+        2. Numéro ou point de repère (si mentionné) - ex: "N°45" ou "près de la mosquée"
+        3. Quartier/Secteur (si mentionné) - ex: "Quartier Al-Khaldounia"
+        4. Ville/Localité (OBLIGATOIRE) - ex: "Tunis", "Sfax"
+        5. Gouvernorat (si mentionné) - ex: "Gouvernorat de Sousse"
+    - FORMAT DE SORTIE : Composez une chaîne de caractères unique combinant tous les éléments trouvés, séparés par des virgules et des espaces. Exemple : "Rue Habib Bourguiba, N°45, Quartier Medina, Tunis, Gouvernorat de Tunis".
+    - LANGUE OBLIGATOIRE : Transcrivez TOUJOURS en français (alphabet latin). L'arabe est strictement interdit dans le JSON.
+    - CAS D'ADRESSE INCOMPLÈTE : Si seulement la ville est mentionnée sans rue ni quartier, fournissez au minimum la ville. Ne laissez pas le champ à null si au moins une localité est trouvable.
+    - ABSENCE D'ADRESSE : Retournez null UNIQUEMENT si le document ne mentionne AUCUNE information d'adresse pour cette victime.
+
+21. 15. **Informations Entreprise (Victimes)** :
     - Examinez si la victime est mentionnée comme agissant pour le compte d'une société ou si un identifiant fiscal (Matricule Fiscal) est associé à son identité.
     - **belongCompany** : `true` si le texte mentionne une entreprise employeuse ou un matricule fiscal pour la victime, sinon `false`.
     - **companyFiscalTaxId** : Extrayez le matricule fiscal (souvent composé de chiffres et de lettres, ex: 1234567/A/M/000). Si `belongCompany` est `false`, ce champ doit être `null`.
 
-21. 17. **Gouvernorat du décès (MAPPING STRICT)** :
+22. 17. **Gouvernorat du décès (MAPPING STRICT)** :
     - Si la victime est décédée, identifiez le gouvernorat où le décès a été constaté.
     - Vous devez impérativement mapper ce lieu vers l'une des valeurs suivantes (en MAJUSCULES) :
     'ARIANA', 'BEJA', 'GABES', 'GAFSA', 'JENDOUBA', 'KAIROUAN', 'KASSERINE', 'KEBILI', 'KEF', 'MAHDIA', 'MANOUBA', 'MEDENINE', 'MONASTIR', 'NABEUL', 'SFAX', 'SOUSSE', 'TATAOUINE', 'TOZEUR', 'TUNIS', 'ZAGHOUAN', 'BIZERTE', 'SILIANA', 'BEN_AROUS', 'SIDI_BOUZID'.
     - Si le lieu n'est pas clair, utilisez le gouvernorat de l'accident ou `null`.
 
-22. **Cause médicale du décès (MAPPING STRICT)** :
+23. **Cause médicale du décès (MAPPING STRICT)** :
     - Analysez les mentions relatives au décès de la victime pour choisir l'une des trois options suivantes :
     - "Suite à l’accident" : Si le texte indique que la mort est survenue sur le coup, lors du transport, ou à l'hôpital à cause des blessures subies.
     - "Non déterminé" : Si le PV mentionne que la cause exacte sera définie par une autopsie ultérieure ou si le texte est ambigu sur le lien direct.
