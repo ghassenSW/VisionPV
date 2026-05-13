@@ -268,12 +268,13 @@ Exemples :
 
 17. **Conducteurs des véhicules (driverIdentity)** : Pour chaque véhicule impliqué, identifiez le conducteur et extrayez uniquement son numéro de CIN (8 chiffres) dans le champ `driverIdentity`.
     - STRATÉGIE DE RECHERCHE : Le CIN du conducteur se trouve dans la section descriptive du véhicule, souvent introduit par les mots-clés arabes :
+        * "صاحب بطاقة تعريف" / "صاحب ب.ت.و" (titulaire de la carte d'identité)
         * "بطاقة تعريف" / "ب.ت.و" / "رقم البطاقة" (numéro de carte d'identité)
         * "يقودها" / "سائقها" / "بقيادة" (conduit par)
         Le CIN est généralement un nombre de 8 chiffres placé après l'identité du conducteur.
     - LINKAGE VÉHICULE↔CONDUCTEUR : Associez le CIN au bon véhicule en vous basant sur le contexte narratif (ex: "السيارة الأولى ... يقودها ... ب.ت.و 12345678" → ce CIN appartient au conducteur du premier véhicule).
+    - RÈGLE ÉCRASANTE - CONDUCTEUR INDEMNE : Il est TRÈS FRÉQUENT qu'un conducteur ne soit pas blessé (non victime). Vous DEVEZ OBLIGATOIREMENT extraire son CIN dans `driverIdentity` du `vehicles[]`. Ne confondez pas le statut de victime (blessé) et l'identité du conducteur (partie impliquée). Lisez minutieusement le "بيان سائق" (déclaration du conducteur) pour trouver sa carte d'identité.
     - CAS DU CONDUCTEUR VICTIME : Si le conducteur figure également dans la liste des victimes, dupliquez son CIN dans les deux endroits : `driverIdentity` dans `vehicles[]` ET `identityNumber` dans `victims[]`. Ce sont deux champs indépendants.
-    - CAS DU CONDUCTEUR NON VICTIME (INDEMNE) : Si le conducteur est indemne (non listé dans les victimes), son CIN doit quand même apparaître dans `driverIdentity`. Ne le laissez pas à null sous prétexte qu'il n'est pas blessé.
     - ABSENCE : Si aucun CIN n'est trouvable pour le conducteur d'un véhicule, renvoyez null.
 18. **Établissement de santé (Hôpital/Clinique)** : Identifiez le lieu de soins (mots-clés "مستشفى", "مصحة", "معهد" associés à "تم نقله" ou "توجيهه").
     - Transcrivez impérativement en français (ex: "Hôpital Charles Nicolle", "Clinique Hannibal").
@@ -350,7 +351,7 @@ Exemples :
     "_reasoning_contexte": "1. Résumez la dynamique de l'accident : qui conduisait quoi, dans quelle direction, et que s'est-il passé ?",
     "_reasoning_lieu": "2. Citez le passage décrivant le lieu exact du sinistre (rue, route, point kilométrique, etc.) et déduisez-en son emplacement.",
     "_reasoning_causes": "3. Citez le passage précis traitant de l'infraction/panne, puis déduisez-en formellement le terme STRICT dans la liste officielle.",
-    "_reasoning_vehicules": "4. Listez les véhicules impliqués. Pour chaque assurance trouvée, appliquez le mapping autorisé (ex: 'AMI' devient 'BNA Assurances'). IMPORTANT : Pour chaque deux-roues ou véhicule non assuré, vérifiez EXPLICITEMENT si une plaque ou un numéro de châssis est mentionné dans le texte avant de mettre null dans registrationNumber.",
+    "_reasoning_vehicules": "4. Listez les véhicules impliqués. Pour chaque assurance trouvée, appliquez le mapping. EXTRACTION DU CHÂSSIS : Si le véhicule est non assuré / deux-roues, CHERCHEZ le mot 'هيكل' et mettez les 17 caractères dans registrationNumber ! EXTRACTION DU CONDUCTEUR : Pour chaque véhicule, TOUVEZ le mot 'صاحب بطاقة تعريف' dans sa description ou sa déclaration et mettez les 8 chiffres dans driverIdentity, MÊME S'IL N'EST PAS BLESSÉ.",
     "_reasoning_victimes": "5. Cherchez la rubrique des dégâts corporels. Comptez blessés/morts. Identifiez âge. S'il y a des blessés, analysez leur parcours de soin et déterminez expressément l'établissement final dans lequel la victime a été admise (l'hôpital ultime). EXCLUEZ les personnes indemnes.",
     "_reasoning_Poste_Type": "6. CHOIX : Poste de Police ou Garde Nationale",
     "_reasoning_Total_decedes": "7. Total décédés (nombre entier)",
