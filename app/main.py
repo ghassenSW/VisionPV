@@ -141,7 +141,7 @@ async def pv_extraction_endpoint(
 
         file_size = os.path.getsize(temp_pdf_path)
         if file_size > MAX_UPLOAD_SIZE:
-            logger.error(f"[{request_id}] Fichier trop volumineux: {file_size}")
+            logger.error(f"[{request_id}] File too large: {file_size} bytes")
             
             return JSONResponse(status_code=400, content={"success": False, "error": "INVALID_REQUEST", "details": "The uploaded file is too large. Maximum allowed size is 50 MB."})
         logger.info(f"[{request_id}] File saved ({file_size // 1024} KB) in {time.time() - t0:.2f}s")

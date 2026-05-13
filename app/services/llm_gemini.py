@@ -18,19 +18,19 @@ region_json_path = os.path.join(PROJECT_ROOT, 'data', 'regions_by_governorate.js
 if os.path.exists(region_json_path):
     with open(region_json_path, 'r', encoding='utf-8') as f:
         REGIONS_BY_GOV = json.load(f)
-    logger.info(f"✅ Régions chargées: {len(REGIONS_BY_GOV)} gouvernorats")
+    logger.info(f"✅ Loaded regions: {len(REGIONS_BY_GOV)} governorates")
 else:
-    logger.error(f"Fichier manquant : {region_json_path}")
+    logger.error(f"Missing file: {region_json_path}")
     REGIONS_BY_GOV = {}
 
-# 2. Charger les Modèles par Marque (depuis JSON hiérarchique)
+# 2. Load Models by Manufacturer (from hierarchical JSON)
 vehicle_json_path = os.path.join(PROJECT_ROOT, 'data', 'models_by_manufacturer.json')
 if os.path.exists(vehicle_json_path):
     with open(vehicle_json_path, 'r', encoding='utf-8') as f:
         MODELS_BY_MAKER = json.load(f)
-    logger.info(f"✅ Modèles chargés: {len(MODELS_BY_MAKER)} fabricants")
+    logger.info(f"✅ Loaded models: {len(MODELS_BY_MAKER)} manufacturers")
 else:
-    logger.error(f"Fichier manquant : {vehicle_json_path}")
+    logger.error(f"Missing file: {vehicle_json_path}")
     MODELS_BY_MAKER = {}
 
 
@@ -228,7 +228,7 @@ def run_text_step(truncated_text, date_depot="", requestId=""):
         truncated_text=truncated_text
     )
 
-    logger.info("Appel Gemini (Analyse du texte narratif)...")
+    logger.info("Calling Gemini (Narrative text analysis)...")
     
     response = client.models.generate_content(
         model='gemini-3.1-flash-lite-preview',
@@ -277,7 +277,7 @@ def process_pv(ocr_text, date_depot='', requestId=""):
             query=payload["region"],
             default_list=REGION_LIST,
             mapping_dict=REGIONS_BY_GOV,
-            parent_value=payload.get("governorate") # Utilise le résultat du dessus
+            parent_value=payload.get("governorate") # Uses the result from above
         )
 
     accident_time = payload.get("accidentTime")
