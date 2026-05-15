@@ -9,7 +9,7 @@ from app.db.models import (
 from app.schemas import SimpleListUpdate, HierarchicalListUpdate
 from app.db.crud import replace_simple_list
 
-router = APIRouter(prefix="/data", tags=["data-update"])
+router = APIRouter(prefix="/api", tags=["data-update"])
 
 
 def _refresh_llm_reference_lists():

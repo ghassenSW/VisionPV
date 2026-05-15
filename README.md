@@ -66,3 +66,50 @@ curl -X POST "http://localhost:8080/api/report/extract" \
 **Other Useful Endpoints:**
 - `GET /api/version` - Check API version.
 - `GET /api/health` - Check system health and available endpoints.
+
+## Reference Data Update API
+
+The API exposes several POST endpoints under the `/data` prefix to update reference lists used at runtime by the extraction pipeline. Each update endpoint accepts JSON payloads and will refresh the in-memory reference lists used by the LLM pipeline after a successful update.
+
+Common request shapes (Pydantic schemas in `app/schemas.py`):
+
+- `SimpleListUpdate` — `{ "items": ["Value A", "Value B"] }`
+- `HierarchicalListUpdate` — `{ "items": { "Governorate A": ["Region 1", "Region 2"], "Governorate B": [...] } }`
+
+Endpoints (all POST):
+
+- `/api/regions/update` — Replace regions per governorate (accepts `HierarchicalListUpdate`). For each governorate key supplied, the endpoint deletes existing regions for that governorate and inserts the provided list; missing governorates are created.
+- `/api/insurance-company/update` — Replace insurance companies (accepts `SimpleListUpdate`).
+- `/api/claim-reason/update` — Replace claim reasons (accepts `SimpleListUpdate`).
+- `/api/death-medical-cause/update` — Replace death medical causes (accepts `SimpleListUpdate`).
+- `/api/health-institution/update` — Replace health institutions (accepts `SimpleListUpdate`).
+- `/api/nav-guard-hq/update` — Replace naval guard HQs (accepts `SimpleListUpdate`).
+- `/api/police-hq/update` — Replace police HQs (accepts `SimpleListUpdate`).
+- `/api/social-state/update` — Replace social states (accepts `SimpleListUpdate`).
+- `/api/vehicle-type/update` — Replace vehicle types (accepts `SimpleListUpdate`).
+
+Examples (using `curl`, adjust host/port if running in Docker):
+
+Replace claim reasons with two values:
+
+```bash
+curl -X POST "http://localhost:8080/api/claim-reason/update" \
+  -H "Content-Type: application/json" \
+  -d '{"items": ["Collision", "Vol"]}'
+```
+
+Update regions for two governorates:
+
+```bash
+curl -X POST "http://localhost:8080/api/regions/update" \
+  -H "Content-Type: application/json" \
+  -d '{"items": {"Tunis": ["Bab Saadoun", "Carthage"], "Sfax": ["Sakiet Ezzit", "Gremda"]}}'
+```
+
+Notes and behaviour:
+
+- Each endpoint calls the runtime refresh function so subsequent extraction requests will use the updated lists immediately.
+- Payloads must be valid JSON and use the `items` key as shown above.
+- The API does not perform destructive truncation of unrelated tables — updates are scoped per endpoint (for example `regions/update` deletes and replaces regions only for the governorates present in the payload).
+- Use the interactive docs at `/docs` to try endpoints from the browser and to see request/response examples.
+
