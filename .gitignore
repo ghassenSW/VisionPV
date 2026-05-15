@@ -16,6 +16,11 @@ __pycache__/
 # Temporary uploads
 temp_uploads/
 
+# Local DB helper scripts (dev only)
+app/db/visualize_db.py
+app/db/verify_*.py
+app/db/exact_sync_from_sources.py
+
 # Credentials & Secrets
 *credentials*.json
 *secret*.json

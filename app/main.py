@@ -34,6 +34,7 @@ if not root_logger.handlers:
 from app.schemas import HealthResponse
 from app.services.ocr_mistral import process_entire_pdf
 from app.services.llm_gemini import process_pv
+from app.routers.data_update import router as data_update_router
 
 MAX_UPLOAD_SIZE = 50 * 1024 * 1024  # 50 MB
 
@@ -222,6 +223,7 @@ def health_check_explicit():
 
 
 app.include_router(api_v1)
+app.include_router(data_update_router)
 
 # Root redirect for backwards compatibility
 @app.get("/")

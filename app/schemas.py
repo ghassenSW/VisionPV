@@ -1,6 +1,7 @@
 """Pydantic schemas for API request/response validation."""
 
 from typing import Any, Optional
+from typing import Dict, List
 from pydantic import BaseModel, Field
 
 
@@ -36,3 +37,11 @@ class HealthResponse(BaseModel):
     status: str = "running"
     message: str = "PV Extraction API is active"
     uris: dict[str, str] = Field(default_factory=_default_api_uris)
+
+
+class SimpleListUpdate(BaseModel):
+    items: List[str]
+
+
+class HierarchicalListUpdate(BaseModel):
+    items: Dict[str, List[str]]

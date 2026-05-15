@@ -1,4 +1,17 @@
 services:
+  db:
+    image: postgres:15
+    container_name: visionpv_db
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: visionpv
+    ports:
+      - "5433:5432"
+    restart: unless-stopped
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
   api:
     build:
       context: .
@@ -8,6 +21,13 @@ services:
       - "8080:8080"
     env_file:
       - .env
+    environment:
+      DATABASE_URL: "postgresql://myuser:mypassword@db:5432/visionpv"
     volumes:
       - .:/app
     restart: unless-stopped
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:

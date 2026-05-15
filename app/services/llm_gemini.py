@@ -9,29 +9,68 @@ from dotenv import load_dotenv
 from google import genai
 from app.core.utils import log_timing, calculate_gemini_cost
 from app.core.prompt import PROMPT_TEMPLATE
+from sqlalchemy.orm import Session
+from app.db.database import engine
+from app.db.models import (
+    Governorate, Region, InsuranceCompany, ClaimReason,
+    DeathMedicalCause, HealthInstitution, NavGuardHq,
+    PoliceHq, SocialState, VehicleType
+)
 
 logger = logging.getLogger(__name__)
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-region_json_path = os.path.join(PROJECT_ROOT, 'data', 'regions_by_governorate.json')
-if os.path.exists(region_json_path):
-    with open(region_json_path, 'r', encoding='utf-8') as f:
-        REGIONS_BY_GOV = json.load(f)
-    logger.info(f"✅ Loaded regions: {len(REGIONS_BY_GOV)} governorates")
-else:
-    logger.error(f"Missing file: {region_json_path}")
-    REGIONS_BY_GOV = {}
+# Load hierarchical regions from the database (Governorate -> Region)
+REGIONS_BY_GOV = {}
+ALL_JSON_REGIONS = []
+CLAIM_REASON_LIST = []
+DEATH_MEDICAL_CAUSE_LIST = []
+INSURANCE_LIST = []
+POLICE_HQ_LIST = []
+NAV_GUARD_HQ_LIST = []
+GOUVERNORAT_LIST = []
+SOCIAL_STATE_LIST = []
+VEHICLE_TYPE_LIST = []
+HEALTH_INSTITUTION_LIST = []
+
+
+def refresh_reference_lists():
+    """Reload all reference lists from PostgreSQL so updates are reflected immediately."""
+    global REGIONS_BY_GOV, ALL_JSON_REGIONS
+    global CLAIM_REASON_LIST, DEATH_MEDICAL_CAUSE_LIST, INSURANCE_LIST
+    global POLICE_HQ_LIST, NAV_GUARD_HQ_LIST, GOUVERNORAT_LIST
+    global SOCIAL_STATE_LIST, VEHICLE_TYPE_LIST, HEALTH_INSTITUTION_LIST
+
+    try:
+        with Session(engine) as db:
+            govs = db.query(Governorate).order_by(Governorate.name).all()
+            REGIONS_BY_GOV = {}
+            for gov in govs:
+                regions = [r.name for r in db.query(Region).filter(Region.governorate_id == gov.id).order_by(Region.name).all()]
+                REGIONS_BY_GOV[gov.name] = regions
+            ALL_JSON_REGIONS = [region for regions in REGIONS_BY_GOV.values() for region in regions]
+
+            CLAIM_REASON_LIST = [r.name for r in db.query(ClaimReason).order_by(ClaimReason.name).all()]
+            DEATH_MEDICAL_CAUSE_LIST = [r.name for r in db.query(DeathMedicalCause).order_by(DeathMedicalCause.name).all()]
+            INSURANCE_LIST = [r.name for r in db.query(InsuranceCompany).order_by(InsuranceCompany.name).all()]
+            POLICE_HQ_LIST = [r.name for r in db.query(PoliceHq).order_by(PoliceHq.name).all()]
+            NAV_GUARD_HQ_LIST = [r.name for r in db.query(NavGuardHq).order_by(NavGuardHq.name).all()]
+            GOUVERNORAT_LIST = [r.name for r in db.query(Governorate).order_by(Governorate.name).all()]
+            SOCIAL_STATE_LIST = [r.name for r in db.query(SocialState).order_by(SocialState.name).all()]
+            VEHICLE_TYPE_LIST = [r.name for r in db.query(VehicleType).order_by(VehicleType.name).all()]
+            HEALTH_INSTITUTION_LIST = [r.name for r in db.query(HealthInstitution).order_by(HealthInstitution.name).all()]
+
+        logger.info(f"✅ Refreshed DB reference lists: {len(REGIONS_BY_GOV)} governorates")
+    except Exception as e:
+        logger.error(f"Error refreshing DB reference lists: {e}")
+
+
+refresh_reference_lists()
 
 # 2. Load Models by Manufacturer (from hierarchical JSON)
-vehicle_json_path = os.path.join(PROJECT_ROOT, 'data', 'models_by_manufacturer.json')
-if os.path.exists(vehicle_json_path):
-    with open(vehicle_json_path, 'r', encoding='utf-8') as f:
-        MODELS_BY_MAKER = json.load(f)
-    logger.info(f"✅ Loaded models: {len(MODELS_BY_MAKER)} manufacturers")
-else:
-    logger.error(f"Missing file: {vehicle_json_path}")
-    MODELS_BY_MAKER = {}
+# Vehicle models/manufacturers remain file-backed for now (unused in strict mode)
+MODELS_BY_MAKER = {}
 
 
 # Force load the .env from the project root
@@ -53,8 +92,33 @@ if not project or not location:
 
 client = genai.Client(vertexai=True, project=project, location=location)
 
-# Import hardcoded regions and headquarters for fuzzy matching
-from app.core.ftusa_names import CLAIM_REASON_LIST, DEATH_MEDICAL_CAUSE_LIST, INSURANCE_LIST, REGION_LIST, POLICE_HQ_LIST, NAV_GUARD_HQ_LIST, GOUVERNORAT_LIST, SOCIAL_STATE_LIST, VEHICLE_MODEL_LIST, VEHICLE_MANUFACTURER_LIST, VEHICLE_TYPE_LIST, HEALTH_INSTITUTION_LIST
+# Load simple reference lists from the database
+def _fetch_names(model):
+    try:
+        with Session(engine) as db:
+            return [r.name for r in db.query(model).order_by(model.name).all()]
+    except Exception as e:
+        logger.error(f"Error fetching {model}: {e}")
+        return []
+
+
+def _get_claim_reasons_block():
+    claim_reasons = _fetch_names(ClaimReason)
+    if not claim_reasons:
+        logger.warning("No claim reasons found in database for prompt injection.")
+        return '    "Non mentionné / Non déterminé"'
+
+    return "\n".join(f'    "{reason}",' for reason in claim_reasons)
+
+CLAIM_REASON_LIST = _fetch_names(ClaimReason)
+DEATH_MEDICAL_CAUSE_LIST = _fetch_names(DeathMedicalCause)
+INSURANCE_LIST = _fetch_names(InsuranceCompany)
+POLICE_HQ_LIST = _fetch_names(PoliceHq)
+NAV_GUARD_HQ_LIST = _fetch_names(NavGuardHq)
+GOUVERNORAT_LIST = _fetch_names(Governorate)
+SOCIAL_STATE_LIST = _fetch_names(SocialState)
+VEHICLE_TYPE_LIST = _fetch_names(VehicleType)
+HEALTH_INSTITUTION_LIST = _fetch_names(HealthInstitution)
 
 
 def _normalize_assert_key(value):
@@ -104,7 +168,7 @@ def assert_value_in_list(value, valid_list, field_name):
 def assert_list_backed_fields(payload):
     """Enforce that every list-backed field resolves to an allowed value or None."""
     payload["governorate"] = assert_value_in_list(payload.get("governorate"), GOUVERNORAT_LIST, "governorate")
-    payload["region"] = assert_value_in_list(payload.get("region"), REGION_LIST, "region")
+    payload["region"] = assert_value_in_list(payload.get("region"), ALL_JSON_REGIONS, "region")
     payload["nationalGuardHQ"] = assert_value_in_list(payload.get("nationalGuardHQ"), NAV_GUARD_HQ_LIST, "nationalGuardHQ")
     payload["policeHQ"] = assert_value_in_list(payload.get("policeHQ"), POLICE_HQ_LIST, "policeHQ")
     payload["claimReasons"] = assert_value_in_list(payload.get("claimReasons"), CLAIM_REASON_LIST, "claimReasons")
@@ -179,7 +243,7 @@ def get_smart_fuzzy_match(query, default_list, mapping_dict=None, parent_value=N
 
 
 def get_best_delegation_match(extracted_delegation, threshold=0.7):
-    return get_best_fuzzy_match(extracted_delegation, REGION_LIST, threshold, "delegation")
+    return get_best_fuzzy_match(extracted_delegation, ALL_JSON_REGIONS, threshold, "delegation")
 
 
 def normalize_date_to_iso(date_str):
@@ -225,7 +289,8 @@ def run_text_step(truncated_text, date_depot="", requestId=""):
     prompt = PROMPT_TEMPLATE.format(
         date_depot_instruction=_date_depot_instruction(date_depot),
         requestId=requestId if requestId else "N/A",
-        truncated_text=truncated_text
+        truncated_text=truncated_text,
+        claim_reasons_block=_get_claim_reasons_block()
     )
 
     logger.info("Calling Gemini (Narrative text analysis)...")
@@ -254,6 +319,7 @@ def run_text_step(truncated_text, date_depot="", requestId=""):
 
 @log_timing
 def process_pv(ocr_text, date_depot='', requestId=""):
+    refresh_reference_lists()
     payload, llm_cost = run_text_step(ocr_text, date_depot=date_depot, requestId=requestId)
     
     # Prepend requestId to the final payload
@@ -273,12 +339,17 @@ def process_pv(ocr_text, date_depot='', requestId=""):
     if payload.get("governorate"):
         payload["governorate"] = get_best_fuzzy_match(payload["governorate"], GOUVERNORAT_LIST, 0.80, "governorate", force_valid_list=True)
     if payload.get("region"):
-        payload["region"] = get_smart_fuzzy_match(
-            query=payload["region"],
-            default_list=REGION_LIST,
-            mapping_dict=REGIONS_BY_GOV,
-            parent_value=payload.get("governorate") # Uses the result from above
-        )
+        if payload.get("governorate") and payload["governorate"] in REGIONS_BY_GOV:
+            payload["region"] = get_best_fuzzy_match(
+                payload["region"],
+                REGIONS_BY_GOV[payload["governorate"]],
+                0.70,
+                "region",
+                force_valid_list=True
+            )
+        else:
+            logger.warning(f"Region '{payload['region']}' dropped because no valid governorate was found to scope the fuzzy match.")
+            payload["region"] = None
 
     accident_time = payload.get("accidentTime")
     if isinstance(accident_time, str) and accident_time.strip():
