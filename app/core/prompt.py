@@ -50,28 +50,48 @@ Format de sortie : YYYY-MM-DD (Convertissez les mois écrits en toutes lettres e
         3. Intersection ou point de repère (si mentionné) - ex: "à l'intersection avec la Rue du Château"
         4. Quartier/Secteur (si mentionné) - ex: "Quartier Medina"
         5. Ville/Localité (OBLIGATOIRE) - ex: "Sousse", "Tunis"
-    - FORMAT DE SORTIE POUR "Lieu d'Accident" : Composez une chaîne unique combinant tous les éléments trouvés, séparés par des virgules et des espaces. Exemple : "Route Nationale 1, Km 45, Quartier Ben Arous, Sousse".
-    - DÉLÉGATION (DÉDUCTION LOGIQUE) : À partir du lieu d'accident extrait, déduisez la délégation administrative correspondante (en français). Exemples : "Sousse Médina", "La Marsa", "Sfax Sud", "Tunis Raoued", etc.
-    - GOUVERNORAT (DÉDUCTION LOGIQUE) : À partir du lieu ou de la délégation, déduisez le gouvernorat complet (en français). Exemples : "Sousse", "Tunis", "Sfax", "Bizerte", etc.
+        - FORMAT DE SORTIE POUR "Lieu d'Accident" : Composez une chaîne unique combinant tous les éléments trouvés, séparés par des virgules et des espaces. Exemple : "Route Nationale 1, Km 45, Quartier Ben Arous, Sousse".
+        - DÉLÉGATION / RÉGION (DÉDUCTION LOGIQUE) :
+            * Si l'adresse suit la structure typique "<rue>, <région>, <gouvernorat>", EXTRAIRE la partie centrale (la région) pour remplir le champ `region`. Exemple : "Rue Habib Bourguiba, Sousse Médina, Sousse" → `region` = "Sousse Médina".
+            * Priorité : si la région est explicitement donnée ailleurs dans le document (rubrique distincte, en-tête ou liste), utilisez cette mention plutôt que d'extraire depuis l'adresse. Sinon, déduisez la région depuis l'adresse complète.
+            * Ne dupliquez pas le gouvernorat : assurez-vous que `region` n'est pas identique à `governorate`. Si l'adresse ne contient pas de portion région claire (ex : seulement "Ville, Gouvernorat"), préférez la délégation si identifiable, sinon retournez `null` pour `region`.
+            Exemples de régions valides : "Sousse Médina", "La Marsa", "Sfax Sud", "Tunis Raoued".
+        - GOUVERNORAT (DÉDUCTION LOGIQUE) : À partir du lieu ou de la délégation, déduisez le gouvernorat complet (en français). Exemples : "Sousse", "Tunis", "Sfax", "Bizerte", etc.
     - LANGUE OBLIGATOIRE : Transcrivez TOUJOURS en français (alphabet latin). L'arabe est strictement interdit dans tous les champs (Lieu, Délégation, Gouvernorat).
     - CAS DE ROUTE NATIONALE/RÉGIONALE : Si l'accident se déroule sur une route nationale ou régionale (ex: "Route Nationale 1", "Route Régionale 7"), incluez systématiquement le numéro et le point kilométrique si disponible.
     - ABSENCE D'ADRESSE PRÉCISE : Si seulement la ville/délégation est mentionnée sans détail de rue, fournissez au minimum le nom de la délégation et du gouvernorat. Ne laissez pas le champ à null si au moins une localité est trouvable.
 
-7. **Causes de sinistre** (CLASSIFICATION MULTIPLE POSSIBLE) :
-    - VOTRE MISSION : Vous devez agir comme un classifieur de données. Vous ne devez pas inventer de texte. Votre but est de faire correspondre le récit de l'accident à UNE OU PLUSIEURS VALEURS de la liste officielle ci-dessous.
-- LOGIQUE DE DÉCISION (À SUIVRE DANS L'ORDRE) :
-    Analyse des faits : Identifiez les "faits générateurs" (les éléments qui ont déclenché l'accident) dans le récit.
-    Recherche de correspondance exacte : Parcourez la liste ci-dessous. Si des valeurs correspondent précisément aux infractions citées (ex: l'alcool est mentionné -> "Conduire en état d'ébriété", plus un excès de vitesse -> "Excès de vitesse"), sélectionnez-les TOUTES.
-    Priorité sur "عدم اخذ الاحتياطات" : Si le texte arabe cite "عدم اخذ الاحتياطات اللازمة إثناء السياقة" combiné à une autre action spécifique (ex: "و المداهمة من الخلف"), IGNOREZ "Ne pas prendre les précautions nécessaires" et extrayez la ou les causes les plus précises ("Collision par l'arrière").
-    # Application des SOLUTIONS DE SECOURS (FALLBACKS) :
-    # Si vous identifiez une erreur humaine mais qu'aucun terme de la liste n'est assez précis, ajoutez obligatoirement : "Ne pas prendre les précautions nécessaires".
-    # Si vous identifiez un problème sur le véhicule (freins, moteur, direction) sans plus de précision, ajoutez obligatoirement : "Panne mécanique / technique".
-    # Si le texte est totalement muet sur la cause ou contradictoire, utilisez obligatoirement : "Non mentionné / Non déterminé".
-- RÈGLES CRUCIALES :
-    INTERDICTION ABSOLUE de créer une nouvelle catégorie ou de modifier l'orthographe de la liste.
-    COPIER-COLLER EXACT : Les valeurs dans le JSON doivent être identiques caractère par caractère à la liste ci-dessous et formatées en tant que liste (array) de chaînes de caractères.
-- LISTE OFFICIELLE OBLIGATOIRE (valeurs exactes à utiliser) :
-    {claim_reasons_block}
+7. **Causes de sinistre** (CLASSIFICATION MULTIPLE) :
+
+- **CIBLE D'EXTRACTION :** 
+Localisez prioritairement la section du texte commençant par "أسباب الحادث" (Causes de l'accident) ou contenant les termes "تبين وأن أسباب الحادث تتمثل في". Extrayez les causes uniquement à partir des constatations des agents ou des conclusions de l'enquête présentes dans ce bloc.
+
+- **FOCUS ABSOLU SUR LE BLOC 'أسباب الحادث' :**
+    - Priorisez exclusivement le bloc clairement intitulé "أسباب الحادث" (ou variantes proches) : ce bloc contient en général LA LISTE COMPLÈTE et explicite des causes du sinistre. Extrayez en priorité toutes les causes à partir de ce bloc.
+    - Si plusieurs occurrences du titre existent, choisissez celle qui présente la liste la plus structurée (numérotation, puces, ou énumération claire).
+    - N'utilisez d'autres sections du PV pour compléter ou remplacer les éléments extraits du bloc 'أسباب الحادث' que si ce dernier est manifestement incomplet, illisible, ou absent.
+    - Quand vous extrayez des éléments depuis ce bloc, citez textuellement la ligne ou le numéro correspondant dans `_reasoning_causes` pour justification.
+
+- **VOTRE MISSION :** 
+Agir en tant que classifieur strict. Vous ne devez pas interpréter, mais faire correspondre les faits techniques décrits en arabe aux valeurs de la liste officielle.
+
+- **LOGIQUE DE DÉCISION PRIORITAIRE :**
+    1. **Spécificité avant tout :** Si une action précise est mentionnée (ex: demi-tour, feu rouge, sens interdit), sélectionnez la catégorie spécifique correspondante.
+    2. **Gestion du cumul "Précautions" :** Si le texte cite "عدم أخذ الاحتياطات اللازمة" (Ne pas prendre les précautions nécessaires) EN PLUS d'une faute précise (ex: changement de direction), extrayez LES DEUX.
+    3. **Localisation des responsabilités :** Si le PV liste des causes pour le conducteur 01 et le conducteur 02 (ex: 01 حسب الدراجي / 02 حسب سائق الشاحنة), extrayez toutes les raisons mentionnées dans ces points.
+
+- **RÈGLES DE FALLBACK (SÉCURITÉ) :**
+    - Si une erreur humaine est évidente mais non listée spécifiquement : utilisez "Ne pas prendre les précautions nécessaires".
+    - Si le texte mentionne un problème lié au véhicule (pneu, freins, moteur) : utilisez "Panne mécanique / technique" ou "Explosion d'une roue" selon la précision.
+    - Si la section "أسباب الحادث" est vide ou illisible : utilisez "Non mentionné / Non déterminé".
+
+- **RÈGLES DE FORMATAGE :**
+    - **INTERDICTION** de créer des catégories.
+    - **COPIER-COLLER EXACT** : Les valeurs doivent être identiques au caractère près (majuscules, accents, espaces) à la liste fournie.
+    - **SORTIE JSON** : Retournez un tableau (array) de chaînes de caractères.
+
+- **LISTE OFFICIELLE OBLIGATOIRE :**
+{claim_reasons_block}
 
 8. **nationalGuardHQ / policeHQ** : Identifiez le nom géographique principal (la ville ou région) en analysant les en-têtes administratifs situés en haut à droite de chaque page. Ce nom se trouve généralement à la fin d'une ligne hiérarchique, souvent précédé de la particule "ب" (en/à).
 Exemples de structures à repérer :
@@ -81,7 +101,7 @@ Comme ces en-têtes se répètent sur toutes les pages, utilisez la page la plus
 9. **Identification de l'Assurance** : Identifiez la compagnie d'assurance et transcrivez-la en utilisant uniquement les noms de la liste officielle ci-dessous.
 RÈGLE CRUCIALE : La compagnie AMI (Assurances Mutuelles Ittihad / أمي) doit impérativement être écrite "BNA Assurances".
 LISTE AUTORISÉE : Vous devez choisir l'un de ces noms exacts :
-Al Baraka Assurances, Assurance Biat, Assurance étrangère, Assurance militaire, Astrée, At-Takafulia, BH Assurance, BNA Assurances, BUAT, CARTE, COMAR, GAT, Groupe CTAMA, Inconnue, LLoyd Tunisien, MAE, Maghrébia, Non assuré, Propriété de l'état, STAR, Zitouna Takaful.
+{insurance_list_block}
 LOGIQUE DE MAPPING :
 "بيات" / "BIAT" → Assurance Biat
 "أستري" / "ASTRÉE"  → Astrée
@@ -109,7 +129,10 @@ Si l'assurance est étrangère / issue d'un autre pays (ex: "أجنبية") : As
 
 ### LOGIQUE PRÉCISE POUR LES VICTIMES :
 10. **Sélection des victimes** : Incluez UNIQUEMENT les personnes ayant subi des dommages corporels. Vérifiez la section "الأضرار البدنية" et les compteurs "عدد الجرحى" / "عدد القتلى". Si une personne est indemne, ne l'ajoutez pas au JSON.
-10b. **Numéro de CIN** : Cherchez systématiquement la Carte d'Identité Nationale (ex: "بطاقة تعريف", "ب.ت.و") pour CHAQUE victime. Si vous trouvez un N° de CIN (généralement 8 chiffres), affectez-le au champ "CIN". Si introuvable, indiquez impérativement `null`.
+10b. **Numéro de CIN** : Cherchez systématiquement la Carte d'Identité Nationale (ex: "بطاقة تعريف", "ب.ت.و") pour CHAQUE victime. Si vous trouvez un N° de CIN (généralement 8 chiffres), affectez-le au champ "CIN".
+    - Si aucune information de CIN n'est clairement lisible dans l'OCR, retournez impérativement `null`.
+    - Ne devinez jamais un numéro partiel, incomplet ou ambigu.
+    - Évitez toute génération de fausse réponse en cas d'absence de données.
 11. **Âge et Date de Naissance des victimes (RÈGLE OBLIGATOIRE)** : 
     - **PRIORITÉ 1 (LA PLUS IMPORTANTE)** : Recherchez SYSTÉMATIQUEMENT et EN PREMIER la date de naissance dans le document en utilisant les mots-clés arabes suivants :
         * "مولود في" (né le)
@@ -134,17 +157,30 @@ Exemples :
 
 14. **Type de véhicule (MAPPING HIÉRARCHIQUE ET STRICT)**:
     Consigne : Pour chaque véhicule identifié, vous devez mapper sa nature vers UNE SEULE valeur de la liste officielle ci-dessous. Utilisez les indices textuels du procès-verbal pour choisir la catégorie la plus précise.
+    - ZONE CIBLE DE RECHERCHE : Cherchez le type de véhicule dans le même bloc descriptif où se trouvent le conducteur, l'assurance, l'immatriculation / le numéro de châssis et les autres infos du véhicule.
+    - CONTEXTE À PRIVILÉGIER : utilisez d'abord la section qui décrit le véhicule lui-même et sa déclaration conducteur, plutôt que les passages généraux du PV.
+    - OPTIMISATION DU MATCHING : plus la preuve textuelle est proche du véhicule (driver, assurance, plaque, châssis), plus la correspondance doit être précise.
 
     *) Liste Officielle (Valeurs Autorisées) :
-    ['Louage', 'Taxi Individuel', 'Véhicule rapide d’intervention', 'Motocyclette légère (50-125 cm³)', 'Vélo ordinaire', 'Train', 'Engin de travaux', 'Tricycle à moteur', 'Motocyclette (supérieur à 125cm3)', 'Quadricycles à moteur', 'Taxi collectif', 'Véhicule administratif', 'Auto Ecole', 'Location', 'Véhicule de transport rural', 'Véhicule touristique privé (transport personnel)', 'Taxi Touristique', 'Trottinette', 'Autobus public (transport régional) - transport personnel', 'Motocyclette (supérieur à 50cm3) - Administratif', 'Autobus TCV (transport en commun de voyageurs)', 'Ambulance', 'Objets impliqués', 'Bus', 'Motocyclette (inférieur à 50cm3)', 'voiture', 'Métro', 'véhicules Electrique', 'Remorquage', 'Remorque et semi remorque', 'Tracteur', 'véhicules', 'Camion']
+    {vehicle_types_block}
 
     
 
     **) Guide de Décision et Mots-Clés :
 
+        - MAPPING ARABE → FRANÇAIS : Si le procès-verbal contient des termes arabes pour le type de véhicule,
+            mappez-les systématiquement aux valeurs françaises canoniques ci-dessous AVANT toute correspondance
+            ou normalisation finale :
+                "سيارة الأجرة" / "تاكسي" / "تاكسي فردي"  -> "Taxi Individuel"
+                "سيارة" / "عربة"                         -> "voiture"
+            Utilisez ces correspondances en priorité quand elles apparaissent dans le bloc véhicule (conducteur, assurance, immatriculation).
+
+
     Véhicules de Tourisme :
 
-    'voiture' : Terme générique ("voiture particulière", "M1") sans précision d'usage.  
+    'voiture' : Terme générique ("voiture particulière", "M1") sans précision d'usage. Utilisez cette valeur seulement si le texte parle d'une voiture et qu'aucune précision plus spécifique n'est présente.  
+
+    'Taxi Individuel' : Utilisez cette valeur si le bloc véhicule mentionne explicitement "taxi", "taxi individuel" ou un usage taxi. Ne confondez pas avec 'voiture'.
 
     'Véhicule touristique privé (transport personnel)' : Si mention de "propriété privée" ou "usage personnel".  
 
@@ -196,6 +232,7 @@ Exemples :
 
     ***) RÈGLE D'OR :
     La valeur extraite doit correspondre EXACTEMENT à l'orthographe de la liste officielle. Si le texte est vague, privilégiez la catégorie la plus simple ('voiture' pour les automobiles, 'véhicules' pour les types indéterminés).
+    Si le texte contient explicitement "taxi", ne le classez jamais comme "voiture".
     
 15. **Type de Poste (_reasoning_Poste_Type)** : Identifiez l'organisme ayant rédigé le PV en analysant l'en-tête (en haut à droite). Vous devez effectuer un choix binaire obligatoire pour le champ interne `_reasoning_Poste_Type` :
     - Si vous voyez les mots "الحرس الوطني", inscrivez exclusivement : "Garde Nationale". Vous devez utiliser cette valeur pour remplir `nationalGuardHQ` et mettre `policeHQ` à `null`.
@@ -233,7 +270,8 @@ Exemples :
     - LINKAGE VÉHICULE↔CONDUCTEUR : Associez le CIN au bon véhicule en vous basant sur le contexte narratif (ex: "السيارة الأولى ... يقودها ... ب.ت.و 12345678" → ce CIN appartient au conducteur du premier véhicule).
     - RÈGLE ÉCRASANTE - CONDUCTEUR INDEMNE : Il est TRÈS FRÉQUENT qu'un conducteur ne soit pas blessé (non victime). Vous DEVEZ OBLIGATOIREMENT extraire son CIN dans `driverIdentity` du `vehicles[]`. Ne confondez pas le statut de victime (blessé) et l'identité du conducteur (partie impliquée). Lisez minutieusement le "بيان سائق" (déclaration du conducteur) pour trouver sa carte d'identité.
     - CAS DU CONDUCTEUR VICTIME : Si le conducteur figure également dans la liste des victimes, dupliquez son CIN dans les deux endroits : `driverIdentity` dans `vehicles[]` ET `identityNumber` dans `victims[]`. Ce sont deux champs indépendants.
-    - ABSENCE : Si aucun CIN n'est trouvable pour le conducteur d'un véhicule, renvoyez null.
+    - ABSENCE : Si aucun CIN n'est trouvable pour le conducteur d'un véhicule, renvoyez `null`.
+    - Si l'OCR ne permet pas de lire un CIN de façon fiable, n'inventez rien et retournez `null`.
 18. **Établissement de santé (Hôpital/Clinique)** : Identifiez le lieu de soins (mots-clés "مستشفى", "مصحة", "معهد" associés à "تم نقله" ou "توجيهه").
     - Transcrivez impérativement en français (ex: "Hôpital Charles Nicolle", "Clinique Hannibal").
     - ATTENTION AUX TRANSFERTS (CAS MULTIPLES) : Suivez le parcours médical détaillé dans le texte. Si au cours du récit de l'accident, la victime a été admise dans plusieurs établissements successivement (ex: d'abord un hôpital local pour les premiers soins, puis un transfert vers un établissement de référence pour une opération), vous DEVEZ déduire et retenir EXCLUSIVEMENT l'établissement final et définitif vers lequel la victime a été orientée en fin de compte. Rentrez ce nom sous forme de chaîne de caractères simple (pas de liste).
@@ -249,7 +287,7 @@ Exemples :
     - Médecin expert : Choisir la valeur la plus précise : "Médecin expert - laboratoire", "Médecin expert judiciaire", "Médecin expert assurance" ou par défaut "Médecin expert".
     - Sports : "Pétanqueur professionnel" ou "Pétanqueur" (si mentionné explicitement).
     
-    - RÈGLE : La valeur extraite doit correspondre EXACTEMENT à l'une des entrées de PROFESSION_LIST = ['Retraité', 'Sans emploi', 'Profession libérale', "Agent d'exécution", 'Enseignant universitaire', 'Pétanqueur professionnel', 'Pétanqueur', 'Médecin expert - laboratoire', 'Médecin expert', 'Médecin expert judiciaire', 'Médecin expert assurance', 'Fonctionnaire Public'].
+    - RÈGLE : La valeur extraite doit correspondre EXACTEMENT à l'une des entrées de PROFESSION_LIST = {social_state_block}.
 
 20. **Adresse de la Victime (EXTRACTION OBLIGATOIRE)** :
     - OBLIGATION STRICTE : Vous devez impérativement extraire l'adresse complète de chaque victime mentionnée dans le document.
@@ -291,6 +329,9 @@ Exemples :
     - "Non déterminé" : Si le PV mentionne que la cause exacte sera définie par une autopsie ultérieure ou si le texte est ambigu sur le lien direct.
     - "Autre" : Si le décès est dû à une cause médicale préexistante (ex: malaise cardiaque avant l'impact) ou sans lien direct avec le choc.
 
+    LISTE OFFICIELLE :
+{death_medical_cause_block}
+
 
 ### RÈGLES DE FORMATAGE :
 - Langue : FRANÇAIS exclusivement.
@@ -301,6 +342,7 @@ Exemples :
 - Type de véhicule : **CHOIX STRICT** dans la liste définie au point n°14. Ne créez aucune autre catégorie.
 - Profession : CHOIX STRICT : 'Retraité', 'Sans emploi', 'Profession libérale', "Agent d'exécution", 'Enseignant universitaire', 'Pétanqueur professionnel', 'Pétanqueur', 'Médecin expert - laboratoire', 'Médecin expert', 'Médecin expert judiciaire', 'Médecin expert assurance', 'Fonctionnaire Public'
 - Victimes : Sexe ("MALE"/"FEMALE"), Type ("INJURY"/"DEATH"), Catégorie ("DRIVER"/"PASSENGER"/"PEDESTRIAN").
+- CIN victime et CIN conducteur : si le numéro n'est pas clairement détecté par l'OCR, utilisez `null` au lieu d'inférer ou de compléter la valeur.
 - Dates : Utilisez strictement le format YYYY-MM-DD.
 
 ### STRUCTURE JSON ATTENDUE :

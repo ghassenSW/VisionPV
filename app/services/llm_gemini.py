@@ -110,6 +110,49 @@ def _get_claim_reasons_block():
 
     return "\n".join(f'    "{reason}",' for reason in claim_reasons)
 
+
+def _get_insurance_block():
+    """Return a multiline quoted list of insurance names for prompt injection."""
+    insurances = _fetch_names(InsuranceCompany)
+    if not insurances:
+        logger.warning("No insurance companies found in database for prompt injection.")
+        return '    "Inconnue"'
+
+    return "\n".join(f'    "{name}",' for name in insurances)
+
+
+def _get_vehicle_types_block():
+    """Return a single-line Python-style list of vehicle type names for the prompt."""
+    types = _fetch_names(VehicleType)
+    if not types:
+        logger.warning("No vehicle types found in database for prompt injection.")
+        return "    ['voiture']"
+
+    # Produce a compact bracketed list literal indented to match prompt formatting
+    joined = ', '.join(f"'{t}'" for t in types)
+    return f"    [{joined}]"
+
+
+def _get_death_medical_cause_block():
+    """Return a multiline quoted list of death medical causes for prompt injection."""
+    causes = _fetch_names(DeathMedicalCause)
+    if not causes:
+        logger.warning("No death medical causes found in database for prompt injection.")
+        return '    "Suite à l’accident",\n    "Non déterminé",\n    "Autre"'
+
+    return "\n".join(f'    "{c}",' for c in causes)
+
+
+def _get_social_state_block():
+    """Return a bracketed Python-style list literal for social state / profession names."""
+    states = _fetch_names(SocialState)
+    if not states:
+        logger.warning("No social states found in database for prompt injection.")
+        return "    ['Retraité', 'Sans emploi', 'Profession libérale', 'Agent d\'exécution', 'Enseignant universitaire', 'Pétanqueur professionnel', 'Pétanqueur', 'Médecin expert - laboratoire', 'Médecin expert', 'Médecin expert judiciaire', 'Médecin expert assurance', 'Fonctionnaire Public']"
+
+    joined = ', '.join(f"'{s}'" for s in states)
+    return f"    [{joined}]"
+
 CLAIM_REASON_LIST = _fetch_names(ClaimReason)
 DEATH_MEDICAL_CAUSE_LIST = _fetch_names(DeathMedicalCause)
 INSURANCE_LIST = _fetch_names(InsuranceCompany)
@@ -290,7 +333,11 @@ def run_text_step(truncated_text, date_depot="", requestId=""):
         date_depot_instruction=_date_depot_instruction(date_depot),
         requestId=requestId if requestId else "N/A",
         truncated_text=truncated_text,
-        claim_reasons_block=_get_claim_reasons_block()
+        claim_reasons_block=_get_claim_reasons_block(),
+        insurance_list_block=_get_insurance_block(),
+        vehicle_types_block=_get_vehicle_types_block(),
+        death_medical_cause_block=_get_death_medical_cause_block(),
+        social_state_block=_get_social_state_block()
     )
 
     logger.info("Calling Gemini (Narrative text analysis)...")
