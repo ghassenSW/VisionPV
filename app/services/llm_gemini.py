@@ -173,6 +173,41 @@ def _normalize_assert_key(value):
     return text.casefold()
 
 
+def robust_hospital_match(extracted_str, valid_list):
+    if not extracted_str: return None
+    import re
+    from difflib import SequenceMatcher
+    
+    def clean_hospital_name(name):
+        name = name.lower()
+        # Remove French structural words
+        name = re.sub(r"^(hôpital|hopital|clinique|polyclinique|institut|centre|complexe sanitaire)\s*(régional|regional|universitaire|local|de|d\'|circonscription|maternité)?\s*", "", name)
+        # Remove trailing governorates like "- Tunis"
+        name = re.sub(r"\s*-\s*[a-zA-Z\s]+$", "", name) 
+        return name.strip()
+
+    extracted_clean = clean_hospital_name(str(extracted_str))
+    best_match = None
+    highest_ratio = 0.0
+    
+    for item in valid_list:
+        if extracted_str.strip().lower() == item.lower():
+            return item 
+        item_clean = clean_hospital_name(item)
+        if len(extracted_clean) > 4 and (extracted_clean in item_clean or item_clean in extracted_clean):
+            return item
+
+        ratio = SequenceMatcher(None, extracted_clean, item_clean).ratio()
+        if ratio > highest_ratio:
+            highest_ratio = ratio
+            best_match = item
+            if ratio == 1.0:
+                break
+                
+    if highest_ratio >= 0.65:
+        return best_match
+    return None
+
 def assert_value_in_list(value, valid_list, field_name):
     """Return the canonical list value if present, otherwise None.
 
