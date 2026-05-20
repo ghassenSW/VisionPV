@@ -63,31 +63,23 @@ Format de sortie : YYYY-MM-DD (Convertissez les mois écrits en toutes lettres e
 
 7. **Causes de sinistre** (CLASSIFICATION MULTIPLE) :
 
-- **CIBLE D'EXTRACTION :** 
-Localisez prioritairement la section du texte commençant par "أسباب الحادث" (Causes de l'accident) ou contenant les termes "تبين وأن أسباب الحادث تتمثل في". Extrayez les causes uniquement à partir des constatations des agents ou des conclusions de l'enquête présentes dans ce bloc.
+- **CIBLE D'EXTRACTION PRINCIPALE :** 
+Cherchez OBLIGATOIREMENT ET UNIQUEMENT la section "أسباب الحادث" (Causes de l'accident) où les raisons sont listées de manière séparée (sous forme de points, de tirets ou de numérotation). Si vous trouvez cette liste explicite, vous DEVEZ VOUS CONCENTRER EXCLUSIVEMENT sur elle et ignorer totalement le reste du contexte du PV pour éviter toute confusion.
 
-- **FOCUS ABSOLU SUR LE BLOC 'أسباب الحادث' :**
-    - Priorisez exclusivement le bloc clairement intitulé "أسباب الحادث" (ou variantes proches) : ce bloc contient en général LA LISTE COMPLÈTE et explicite des causes du sinistre. Extrayez en priorité toutes les causes à partir de ce bloc.
-    - Si plusieurs occurrences du titre existent, choisissez celle qui présente la liste la plus structurée (numérotation, puces, ou énumération claire).
-    - N'utilisez d'autres sections du PV pour compléter ou remplacer les éléments extraits du bloc 'أسباب الحادث' que si ce dernier est manifestement incomplet, illisible, ou absent.
-    - Quand vous extrayez des éléments depuis ce bloc, citez textuellement la ligne ou le numéro correspondant dans `_reasoning_causes` pour justification.
+- **RÈGLE DE SUBSTITUTION (FALLBACK) :**
+Seulement SI et SEULEMENT SI la section "أسباب الحادث" est introuvable, vide ou illisible, lisez alors le récit général du PV (le contexte). Déduisez alors vous-même, de manière autonome, les causes de l'accident.
 
-- **VOTRE MISSION :** 
-Agir en tant que classifieur strict. Vous ne devez pas interpréter, mais faire correspondre les faits techniques décrits en arabe aux valeurs de la liste officielle.
+- **TRADUCTION ET MAPPING AGENTIQUE :**
+Une fois les faits (causes) extraits (soit depuis la liste "أسباب الحادث", soit déduits du contexte), traduisez ces causes en français. Ensuite, de façon "agentique" et intelligente, choisissez les valeurs qui correspondent le mieux à celles présentes dans la liste officielle ci-dessous.
 
 - **LOGIQUE DE DÉCISION PRIORITAIRE :**
-    1. **Spécificité avant tout :** Si une action précise est mentionnée (ex: demi-tour, feu rouge, sens interdit), sélectionnez la catégorie spécifique correspondante.
+    1. **Spécificité avant tout :** Si une action précise est mentionnée, sélectionnez la catégorie spécifique correspondante de la liste officielle.
     2. **Gestion du cumul "Précautions" :** Si le texte cite "عدم أخذ الاحتياطات اللازمة" (Ne pas prendre les précautions nécessaires) EN PLUS d'une faute précise (ex: changement de direction), extrayez LES DEUX.
-    3. **Localisation des responsabilités :** Si le PV liste des causes pour le conducteur 01 et le conducteur 02 (ex: 01 حسب الدراجي / 02 حسب سائق الشاحنة), extrayez toutes les raisons mentionnées dans ces points.
-
-- **RÈGLES DE FALLBACK (SÉCURITÉ) :**
-    - Si une erreur humaine est évidente mais non listée spécifiquement : utilisez "Ne pas prendre les précautions nécessaires".
-    - Si le texte mentionne un problème lié au véhicule (pneu, freins, moteur) : utilisez "Panne mécanique / technique" ou "Explosion d'une roue" selon la précision.
-    - Si la section "أسباب الحادث" est vide ou illisible : utilisez "Non mentionné / Non déterminé".
+    3. **Localisation des responsabilités :** Si le PV liste des causes pour les différents conducteurs séparément, extrayez toutes les raisons mentionnées globalement pour l'accident.
 
 - **RÈGLES DE FORMATAGE :**
-    - **INTERDICTION** de créer des catégories.
-    - **COPIER-COLLER EXACT** : Les valeurs doivent être identiques au caractère près (majuscules, accents, espaces) à la liste fournie.
+    - **INTERDICTION** de créer des catégories. Vous devez impérativement faire correspondre chaque cause traduite à une cause de la liste officielle.
+    - **COPIER-COLLER EXACT** : Les valeurs de "claimReasons" doivent être identiques au caractère près à la liste fournie.
     - **SORTIE JSON** : Retournez un tableau (array) de chaînes de caractères.
 
 - **LISTE OFFICIELLE OBLIGATOIRE :**
