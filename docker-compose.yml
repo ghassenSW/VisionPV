@@ -1,33 +1,45 @@
 services:
   db:
     image: postgres:15
-    container_name: visionpv_db
+    container_name: ${DB_CONTAINER_NAME:-agent_reference_db}
     environment:
-      POSTGRES_USER: myuser
-      POSTGRES_PASSWORD: mypassword
-      POSTGRES_DB: visionpv
+      POSTGRES_USER: ${POSTGRES_USER:?}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?}
+      POSTGRES_DB: ${POSTGRES_DB:?}
     ports:
-      - "5433:5432"
+      - "${POSTGRES_HOST_PORT:-5433}:5432"
     restart: unless-stopped
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
   api:
+    image: ${API_IMAGE_NAME:?}
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: visionpv_api
+    container_name: ${API_CONTAINER_NAME:?}
     ports:
-      - "8080:8080"
+      - "${PORT:-8080}:${PORT:-8080}"
     env_file:
       - .env
+    # Mount ADC outside /app: nested bind under .:/app breaks Docker Desktop (virtiofs).
     environment:
-      DATABASE_URL: "postgresql://myuser:mypassword@db:5432/visionpv"
+      GOOGLE_APPLICATION_CREDENTIALS: /run/gcp-adc/application_default_credentials.json
     volumes:
       - .:/app
+      - ${GOOGLE_APPLICATION_CREDENTIALS:?}:/run/gcp-adc/application_default_credentials.json:ro
     restart: unless-stopped
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+    # Run idempotent seed (creates tables + populates reference lists) before starting uvicorn.
+    command: >
+      sh -c "python -m app.db.seed_db && uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8080} --log-level info"
 
 volumes:
   postgres_data:

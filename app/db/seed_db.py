@@ -8,7 +8,7 @@ sys.path.insert(0, project_root)
 
 # Override DATABASE_URL for seeding (inside container, use db service name)
 if not os.getenv("DATABASE_URL"):
-    os.environ["DATABASE_URL"] = "postgresql://myuser:mypassword@db:5432/visionpv"
+    os.environ["DATABASE_URL"] = "postgresql://myuser:mypassword@db:5432/agent_reference_db"
 
 from sqlalchemy.orm import Session
 from app.db.database import engine

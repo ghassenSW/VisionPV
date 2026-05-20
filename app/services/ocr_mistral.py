@@ -104,7 +104,7 @@ def _extract_date_depot_gemini(pil_image):
 
     try:
         response = gemini_client.models.generate_content(
-            model='gemini-3.1-flash-lite-preview',
+            model='gemini-3.1-flash-lite',
             contents=[prompt_str, pil_image]
         )
         

@@ -21,8 +21,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of the code
 COPY . .
 
-# Expose a default port (Render will override this with its own PORT variable but it's good practice)
+# Metadata only: documents the default listen port (same as ${PORT:-8080} in CMD).
+# EXPOSE is not substituted from .env at runtime; actual port is always $PORT in CMD.
 EXPOSE 8080
 
-# Command to run the API (Uses Render's $PORT if available, else defaults to 8080)
+# Command to run the API (PORT from env, e.g. .env / Render; defaults to 8080)
 CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8080} --log-level info"]

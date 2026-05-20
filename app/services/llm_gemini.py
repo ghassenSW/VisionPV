@@ -7,6 +7,8 @@ from difflib import SequenceMatcher
 from datetime import datetime
 from dotenv import load_dotenv
 from google import genai
+from google.genai import errors as genai_errors
+from tenacity import retry, retry_if_exception, stop_after_attempt, wait_exponential_jitter, before_sleep_log
 from app.core.utils import log_timing, calculate_gemini_cost
 from app.core.prompt import PROMPT_TEMPLATE
 from sqlalchemy.orm import Session
@@ -241,11 +243,11 @@ def assert_list_backed_fields(payload):
 def get_best_fuzzy_match(extracted_str, valid_list, threshold=0.7, log_prefix="match", force_valid_list=False):
     if not extracted_str or not valid_list:
         return None if force_valid_list else extracted_str
-    
+
     best_match = None
     highest_ratio = 0.0
     extracted_lower = str(extracted_str).lower()
-    
+
     for item in valid_list:
         ratio = SequenceMatcher(None, extracted_lower, item.lower()).ratio()
         if ratio > highest_ratio:
@@ -253,12 +255,12 @@ def get_best_fuzzy_match(extracted_str, valid_list, threshold=0.7, log_prefix="m
             best_match = item
             if ratio == 1.0:  # Perfect match, no need to keep checking
                 break
-    
+
     # STRICT ENFORCEMENT: No soft thresholds, no fallbacks to original text
     if best_match is None:
         logger.warning(f"No {log_prefix} candidates found in valid list for '{extracted_str}'")
         return None
-    
+
     if highest_ratio >= threshold:
         logger.info(f"Fuzzy {log_prefix}: '{extracted_str}' -> '{best_match}' (score: {highest_ratio:.2f}) [ACCEPTED ✓]")
         return best_match
@@ -269,9 +271,9 @@ def get_best_fuzzy_match(extracted_str, valid_list, threshold=0.7, log_prefix="m
 def get_smart_fuzzy_match(query, default_list, mapping_dict=None, parent_value=None, threshold=0.7, force_valid_list=True):
     if not query:
         return None
-    
+
     search_list = default_list
-    
+
     # If we have a parent (e.g., manufacturer like "TOYOTA") and it exists in our mapping
     if mapping_dict and parent_value and parent_value in mapping_dict:
         # Get the specific sublist for this parent (e.g., models for TOYOTA)
@@ -280,7 +282,7 @@ def get_smart_fuzzy_match(query, default_list, mapping_dict=None, parent_value=N
     else:
         if parent_value and mapping_dict:
             logger.info(f"Parent '{parent_value}' not found in mapping. Using default list of {len(default_list)} items.")
-    
+
     # Perform fuzzy match with strict validation (enforces null-or-valid-list contract)
     return get_best_fuzzy_match(query, search_list, threshold, force_valid_list=force_valid_list)
 
@@ -293,11 +295,11 @@ def normalize_date_to_iso(date_str):
     """Normalize various date formats to YYYY-MM-DD format."""
     if not date_str or date_str is None:
         return None
-    
+
     date_str = str(date_str).strip()
     if not date_str or date_str.lower() in ('null', '', 'n/a', 'none'):
         return None
-    
+
     # Try common date formats
     formats_to_try = [
         '%Y-%m-%d',      # Already ISO format
@@ -308,14 +310,14 @@ def normalize_date_to_iso(date_str):
         '%Y/%m/%d',      # YYYY/MM/DD
         '%d.%m.%Y',      # DD.MM.YYYY (German style)
     ]
-    
+
     for fmt in formats_to_try:
         try:
             parsed_date = datetime.strptime(date_str, fmt)
             return parsed_date.strftime('%Y-%m-%d')
         except ValueError:
             continue
-    
+
     logger.warning(f"Could not parse date: {date_str}. Returning as-is.")
     return date_str
 
@@ -326,7 +328,18 @@ def _date_depot_instruction(date_depot):
     return 'Laissez ce champ vide (""). Ne tentez pas de chercher la date de dépôt dans le texte.'
 
 
+def _is_resource_exhausted(exc):
+    return isinstance(exc, genai_errors.ClientError) and getattr(exc, "code", None) == 429
+
+
 @log_timing
+@retry(
+    retry=retry_if_exception(_is_resource_exhausted),
+    stop=stop_after_attempt(3),
+    wait=wait_exponential_jitter(initial=2, max=30),
+    before_sleep=before_sleep_log(logger, logging.WARNING),
+    reraise=True,
+)
 def run_text_step(truncated_text, date_depot="", requestId=""):
     """Text extraction using Gemini: OCR text -> structured JSON."""
     prompt = PROMPT_TEMPLATE.format(
@@ -341,9 +354,9 @@ def run_text_step(truncated_text, date_depot="", requestId=""):
     )
 
     logger.info("Calling Gemini (Narrative text analysis)...")
-    
+
     response = client.models.generate_content(
-        model='gemini-3.1-flash-lite-preview',
+        model='gemini-3.1-flash-lite',
         contents=prompt,
         config={
             "response_mime_type": "application/json",
@@ -368,16 +381,16 @@ def run_text_step(truncated_text, date_depot="", requestId=""):
 def process_pv(ocr_text, date_depot='', requestId=""):
     refresh_reference_lists()
     payload, llm_cost = run_text_step(ocr_text, date_depot=date_depot, requestId=requestId)
-    
+
     # Prepend requestId to the final payload
     if requestId:
         final_payload = {"requestId": requestId}
     else:
         final_payload = {}
-        
+
     final_payload.update(payload)
     payload = final_payload
-    
+
     # Always include submissionDate key. If date_depot is None (not found after retries),
     # this will serialize to JSON null which is the desired fallback behavior.
     payload['submissionDate'] = date_depot
@@ -406,7 +419,7 @@ def process_pv(ocr_text, date_depot='', requestId=""):
             minutes = int(match.group(2))
             seconds = int(match.group(3) or 0)
             payload["accidentTime"] = f"{hours:02d}:{minutes:02d}:{seconds:02d}"
-    
+
     # Apply fuzzy matching to HQ names based on type
     reasoning_poste_type = payload.get("_reasoning_Poste_Type")
     national_guard_hq = payload.get("nationalGuardHQ")
@@ -440,12 +453,12 @@ def process_pv(ocr_text, date_depot='', requestId=""):
     # Apply fuzzy matching to vehicle model and manufacturer
     # if payload.get("vehicles") and isinstance(payload["vehicles"], list):
     #     for vehicle in payload["vehicles"]:
-    #         if isinstance(vehicle, dict):                
+    #         if isinstance(vehicle, dict):
     #             # Fuzzy match manufacturer (normalize to UPPERCASE first)
     #             if vehicle.get("manufacturer"):
     #                 mfg = vehicle["manufacturer"].upper().strip()
     #                 vehicle["manufacturer"] = get_best_fuzzy_match(mfg, VEHICLE_MANUFACTURER_LIST, 0.75, "vehicle_manufacturer", force_valid_list=True)
-    #             
+    #
     #             # Fuzzy match model against manufacturer-specific sublist (FORCED to be from VEHICLE_MODEL_LIST)
     #             if vehicle.get("model"):
     #                 vehicle["model"] = get_smart_fuzzy_match(
@@ -461,7 +474,7 @@ def process_pv(ocr_text, date_depot='', requestId=""):
     for field in date_fields:
         if payload.get(field):
             payload[field] = normalize_date_to_iso(payload[field])
-    
+
     # Normalize dates in victims array and apply fuzzy matching to victim fields
     if payload.get("victims") and isinstance(payload["victims"], list):
         for victim in payload["victims"]:
@@ -471,11 +484,11 @@ def process_pv(ocr_text, date_depot='', requestId=""):
                     victim["birthDate"] = normalize_date_to_iso(victim["birthDate"])
                 if victim.get("deathDate"):
                     victim["deathDate"] = normalize_date_to_iso(victim["deathDate"])
-                
+
                 # Fuzzy match deathGovernorate
                 if victim.get("deathGovernorate"):
                     victim["deathGovernorate"] = get_best_fuzzy_match(victim["deathGovernorate"], GOUVERNORAT_LIST, 0.85, "deathGovernorate", force_valid_list=True)
-                
+
                 # Fuzzy match healthInstitution
                 if victim.get("healthInstitution"):
                     victim["healthInstitution"] = get_best_fuzzy_match(victim["healthInstitution"], HEALTH_INSTITUTION_LIST, 0.60, "healthInstitution", force_valid_list=True)
@@ -486,5 +499,5 @@ def process_pv(ocr_text, date_depot='', requestId=""):
     # Remove all reasoning fields before returning
     for field in ('_reasoning_contexte', '_reasoning_causes', '_reasoning_lieu', '_reasoning_vehicules', '_reasoning_victimes', '_reasoning_Poste_Type', '_reasoning_Total_decedes', '_reasoning_Total_blesses'):
         payload.pop(field, None)
-        
+
     return payload, llm_cost

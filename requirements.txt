@@ -9,3 +9,4 @@ google-genai
 sqlalchemy
 psycopg2-binary
 pydantic
+tenacity
