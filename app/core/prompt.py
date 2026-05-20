@@ -117,6 +117,7 @@ LOGIQUE DE MAPPING :
 "كتاما" / "CTAMA" → Groupe CTAMA
 "الليد" / "اللويد" / "LLOYD" → LLoyd Tunisien
 "ت ت ت" / "تعاونية التأمين للتعليم" / "MAE" → MAE
+"تعاونية التامين للتعليم" / "تعاونية التأمين للتعليم" / "MAE" → MAE
 "المغاربية" / "MAGHRÉBIA" → Maghrébia
 "ستار" / "STAR" → STAR
 "الزيتونة" / "ZITOUNA" → Zitouna Takaful
