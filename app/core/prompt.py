@@ -276,7 +276,8 @@ Exemples :
     - Si l'OCR ne permet pas de lire un CIN de façon fiable, n'inventez rien et retournez `null`.
 18. **Établissement de santé (Hôpital/Clinique)** : Identifiez le lieu de soins (mots-clés "مستشفى", "مصحة", "معهد" associés à "تم نقله" ou "توجيهه").
     - Transcrivez impérativement en français (ex: "Hôpital Charles Nicolle", "Clinique Hannibal").
-    - ATTENTION AUX TRANSFERTS (CAS MULTIPLES) : Suivez le parcours médical détaillé dans le texte. Si au cours du récit de l'accident, la victime a été admise dans plusieurs établissements successivement (ex: d'abord un hôpital local pour les premiers soins, puis un transfert vers un établissement de référence pour une opération), vous DEVEZ déduire et retenir EXCLUSIVEMENT l'établissement final et définitif vers lequel la victime a été orientée en fin de compte. Rentrez ce nom sous forme de chaîne de caractères simple (pas de liste).
+    - ATTENTION AUX TRANSFERTS (CAS MULTIPLES) : Si la victime a été admise dans plusieurs établissements successivement, retenez le PREMIER établissement que la victime a réellement visité.
+    - Rentrez ce nom sous forme de chaîne de caractères simple (pas de liste).
     - Si aucune mention n'est trouvée pour la victime, attribuez la valeur null.
 
 19. **Catégorisation de l'État Social (MAPPING STRICT)** :
